@@ -27,6 +27,9 @@
 		18D4DD3F27FBF91900697F43 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD3E27FBF91900697F43 /* Coordinator.swift */; };
 		18D4DD4227FBFA5700697F43 /* DetailShowUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD4127FBFA5700697F43 /* DetailShowUseCase.swift */; };
 		18D4DD4627FBFBD300697F43 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD4527FBFBD300697F43 /* ListTableViewCell.swift */; };
+		18D4DD4827FC066300697F43 /* SearchViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD4727FC066300697F43 /* SearchViewControllerDelegate.swift */; };
+		18D4DD4D27FC0C5A00697F43 /* DetailShowUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD4C27FC0C5A00697F43 /* DetailShowUIViewController.swift */; };
+		18D4DD4F27FC0C7500697F43 /* DetailShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD4E27FC0C7500697F43 /* DetailShowViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +55,9 @@
 		18D4DD3E27FBF91900697F43 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		18D4DD4127FBFA5700697F43 /* DetailShowUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailShowUseCase.swift; sourceTree = "<group>"; };
 		18D4DD4527FBFBD300697F43 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		18D4DD4727FC066300697F43 /* SearchViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewControllerDelegate.swift; sourceTree = "<group>"; };
+		18D4DD4C27FC0C5A00697F43 /* DetailShowUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailShowUIViewController.swift; sourceTree = "<group>"; };
+		18D4DD4E27FC0C7500697F43 /* DetailShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailShowViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +125,7 @@
 			children = (
 				18D4DD4027FBF9B400697F43 /* Coordinator */,
 				18D4DD2227FBD00800697F43 /* SearchView */,
+				18D4DD4927FC0BFC00697F43 /* DetailView */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -200,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				18D4DD0627FBC15100697F43 /* SearchViewController.swift */,
+				18D4DD4727FC066300697F43 /* SearchViewControllerDelegate.swift */,
 				18D4DD4527FBFBD300697F43 /* ListTableViewCell.swift */,
 			);
 			path = View;
@@ -219,6 +227,31 @@
 				18D4DD3E27FBF91900697F43 /* Coordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		18D4DD4927FC0BFC00697F43 /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				18D4DD4A27FC0C0F00697F43 /* ViewModel */,
+				18D4DD4B27FC0C1F00697F43 /* View */,
+			);
+			path = DetailView;
+			sourceTree = "<group>";
+		};
+		18D4DD4A27FC0C0F00697F43 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				18D4DD4E27FC0C7500697F43 /* DetailShowViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		18D4DD4B27FC0C1F00697F43 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18D4DD4C27FC0C5A00697F43 /* DetailShowUIViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,9 +336,12 @@
 				18D4DD3327FBE1EE00697F43 /* CitySearchRepository.swift in Sources */,
 				18D4DD2827FBDE7500697F43 /* URLSessionNetworkService.swift in Sources */,
 				18D4DD2127FBCE6900697F43 /* RequestType.swift in Sources */,
+				18D4DD4F27FC0C7500697F43 /* DetailShowViewModel.swift in Sources */,
+				18D4DD4D27FC0C5A00697F43 /* DetailShowUIViewController.swift in Sources */,
 				18D4DD1E27FBCBEB00697F43 /* APICaller.swift in Sources */,
 				18D4DD3D27FBF87E00697F43 /* CitySearchUseCase.swift in Sources */,
 				18D4DD0527FBC15100697F43 /* SceneDelegate.swift in Sources */,
+				18D4DD4827FC066300697F43 /* SearchViewControllerDelegate.swift in Sources */,
 				18D4DD3727FBE2B800697F43 /* City.swift in Sources */,
 				18D4DD4227FBFA5700697F43 /* DetailShowUseCase.swift in Sources */,
 				18D4DD2627FBDB6200697F43 /* Weather.swift in Sources */,

@@ -2,7 +2,9 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    let viewModel = SearchViewModel(searchUseCase: CitySearchUseCase(searchRepository: DefaultCitySearchRepository()))
+    var viewModel: SearchViewModel?
+    weak var delegate: SearchViewControllerDelegate?
+    
     private let listTableView: UITableView = {
         let tableview = UITableView(frame: .zero)
         tableview.register(ListTableViewCell.self, forCellReuseIdentifier: String(describing: ListTableViewCell.self))
@@ -35,8 +37,9 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.viewModel.listUp().count
+        self.viewModel?.listUp().count ?? .zero
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,7 +51,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let city = self.viewModel?.listUp().first!
+        // TODO: indexPath 로 데이터 받아오기 
+        delegate?.SearchViewController(self, didSelectCell: city!)
+    }
 }
 
 

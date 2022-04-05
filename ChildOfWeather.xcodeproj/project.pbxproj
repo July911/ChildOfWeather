@@ -22,6 +22,9 @@
 		18D4DD3327FBE1EE00697F43 /* CitySearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD3227FBE1EE00697F43 /* CitySearchRepository.swift */; };
 		18D4DD3527FBE20F00697F43 /* DefaultCitySearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD3427FBE20F00697F43 /* DefaultCitySearchRepository.swift */; };
 		18D4DD3727FBE2B800697F43 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD3627FBE2B800697F43 /* City.swift */; };
+		18D4DD3B27FBF84B00697F43 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD3A27FBF84B00697F43 /* SearchViewModel.swift */; };
+		18D4DD3D27FBF87E00697F43 /* CitySearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD3C27FBF87E00697F43 /* CitySearchUseCase.swift */; };
+		18D4DD3F27FBF91900697F43 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD3E27FBF91900697F43 /* Coordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		18D4DD3227FBE1EE00697F43 /* CitySearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchRepository.swift; sourceTree = "<group>"; };
 		18D4DD3427FBE20F00697F43 /* DefaultCitySearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCitySearchRepository.swift; sourceTree = "<group>"; };
 		18D4DD3627FBE2B800697F43 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		18D4DD3A27FBF84B00697F43 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		18D4DD3C27FBF87E00697F43 /* CitySearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchUseCase.swift; sourceTree = "<group>"; };
+		18D4DD3E27FBF91900697F43 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				18D4DD2227FBD00800697F43 /* SearchView */,
+				18D4DD3E27FBF91900697F43 /* Coordinator.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -134,6 +141,8 @@
 		18D4DD2227FBD00800697F43 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
+				18D4DD3927FBF83600697F43 /* ViewModel */,
+				18D4DD3827FBF82E00697F43 /* View */,
 				18D4DD0627FBC15100697F43 /* ViewController.swift */,
 			);
 			path = SearchView;
@@ -161,6 +170,7 @@
 		18D4DD2B27FBDF7600697F43 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				18D4DD3C27FBF87E00697F43 /* CitySearchUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -180,6 +190,21 @@
 				18D4DD3227FBE1EE00697F43 /* CitySearchRepository.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		18D4DD3827FBF82E00697F43 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		18D4DD3927FBF83600697F43 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				18D4DD3A27FBF84B00697F43 /* SearchViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,8 +277,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18D4DD3F27FBF91900697F43 /* Coordinator.swift in Sources */,
 				18D4DD2E27FBDFD400697F43 /* DefaultWeatherRepository.swift in Sources */,
 				18D4DD2427FBD39B00697F43 /* Constant.swift in Sources */,
+				18D4DD3B27FBF84B00697F43 /* SearchViewModel.swift in Sources */,
 				18D4DD3127FBE03000697F43 /* WeatherRepository.swift in Sources */,
 				18D4DD0727FBC15100697F43 /* ViewController.swift in Sources */,
 				18D4DD3527FBE20F00697F43 /* DefaultCitySearchRepository.swift in Sources */,
@@ -262,6 +289,7 @@
 				18D4DD2827FBDE7500697F43 /* URLSessionNetworkService.swift in Sources */,
 				18D4DD2127FBCE6900697F43 /* RequestType.swift in Sources */,
 				18D4DD1E27FBCBEB00697F43 /* APICaller.swift in Sources */,
+				18D4DD3D27FBF87E00697F43 /* CitySearchUseCase.swift in Sources */,
 				18D4DD0527FBC15100697F43 /* SceneDelegate.swift in Sources */,
 				18D4DD3727FBE2B800697F43 /* City.swift in Sources */,
 				18D4DD2627FBDB6200697F43 /* Weather.swift in Sources */,

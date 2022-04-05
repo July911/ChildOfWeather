@@ -13,7 +13,5 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .red
     }
-
-
 }
 

@@ -14,7 +14,7 @@
 		18D4DD0F27FBC15400697F43 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18D4DD0D27FBC15400697F43 /* LaunchScreen.storyboard */; };
 		18D4DD1C27FBCA3F00697F43 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD1B27FBCA3F00697F43 /* APIRequest.swift */; };
 		18D4DD1E27FBCBEB00697F43 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD1D27FBCBEB00697F43 /* APICaller.swift */; };
-		18D4DD2127FBCE6900697F43 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD2027FBCE6900697F43 /* HTTPMethod.swift */; };
+		18D4DD2127FBCE6900697F43 /* RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD2027FBCE6900697F43 /* RequestType.swift */; };
 		18D4DD2427FBD39B00697F43 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD2327FBD39B00697F43 /* Constant.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +28,7 @@
 		18D4DD1027FBC15400697F43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18D4DD1B27FBCA3F00697F43 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		18D4DD1D27FBCBEB00697F43 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
-		18D4DD2027FBCE6900697F43 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		18D4DD2027FBCE6900697F43 /* RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestType.swift; sourceTree = "<group>"; };
 		18D4DD2327FBD39B00697F43 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +110,7 @@
 			children = (
 				18D4DD1B27FBCA3F00697F43 /* APIRequest.swift */,
 				18D4DD1D27FBCBEB00697F43 /* APICaller.swift */,
-				18D4DD2027FBCE6900697F43 /* HTTPMethod.swift */,
+				18D4DD2027FBCE6900697F43 /* RequestType.swift */,
 				18D4DD2327FBD39B00697F43 /* Constant.swift */,
 			);
 			path = NetWork;
@@ -197,7 +197,7 @@
 				18D4DD2427FBD39B00697F43 /* Constant.swift in Sources */,
 				18D4DD0727FBC15100697F43 /* ViewController.swift in Sources */,
 				18D4DD0327FBC15100697F43 /* AppDelegate.swift in Sources */,
-				18D4DD2127FBCE6900697F43 /* HTTPMethod.swift in Sources */,
+				18D4DD2127FBCE6900697F43 /* RequestType.swift in Sources */,
 				18D4DD1C27FBCA3F00697F43 /* APIRequest.swift in Sources */,
 				18D4DD1E27FBCBEB00697F43 /* APICaller.swift in Sources */,
 				18D4DD0527FBC15100697F43 /* SceneDelegate.swift in Sources */,

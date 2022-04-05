@@ -14,6 +14,7 @@ enum RequestType {
     case getCityNameFromGeocode(lat: Double, lon: Double)
     
     var fullURL: String {
+        
         switch self {
         case .getWeatherFromGeocode(let lat, let lon):
             return "\(Constant.baseURL)?lat=\(lat)&lon=\(lon)&appid=\(Constant.key)"

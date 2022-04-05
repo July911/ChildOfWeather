@@ -3,7 +3,6 @@ import UIKit
 class SearchViewController: UIViewController {
     
     var viewModel: SearchViewModel?
-    weak var delegate: SearchViewControllerDelegate?
     
     private let listTableView: UITableView = {
         let tableview = UITableView(frame: .zero)
@@ -26,6 +25,7 @@ class SearchViewController: UIViewController {
         self.configureLayout()
         self.configureTableView()
         self.configureSearchController()
+        self.configureViewModelDelegate()
     }
     
     private func configureTableView() {
@@ -53,20 +53,24 @@ class SearchViewController: UIViewController {
         self.navigationItem.searchController = searchController
         self.navigationController?.navigationBar.backgroundColor = .gray
     }
+    
+    private func configureViewModelDelegate() {
+        self.viewModel?.delegate = self
+    }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.isfiltering {
-            return self.viewModel?.listUp().count ?? .zero
-        } else {
             return self.viewModel?.filterdResults?.count ?? .zero
+        } else {
+            return self.viewModel?.listUp().count ?? .zero
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: listTableView.self), for: indexPath) as? ListTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ListTableViewCell.self), for: indexPath) as? ListTableViewCell
         else {
             return UITableViewCell()
         }
@@ -85,7 +89,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let city = self.viewModel?.listUp().first
         // TODO: indexPath 로 데이터 받아오기 
-        delegate?.searchViewController(self, didSelectCell: city!)
     }
 }
 
@@ -95,8 +98,11 @@ extension SearchViewController: UISearchResultsUpdating {
         else {
             return
         }
-        self.delegate?.searchViewController(self, textInput: text)
     }
+}
+    
+extension SearchViewController: SearchViewModelDelegate {
+    
 }
 
 

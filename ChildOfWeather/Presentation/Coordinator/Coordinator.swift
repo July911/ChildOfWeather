@@ -12,7 +12,8 @@ final class MainCoordinator {
 
     func start() {
         let viewController = SearchViewController()
-        viewController.viewModel = SearchViewModel(searchUseCase: self.searchUseCase, coodinator: self)
+        let searchViewModel = SearchViewModel(searchUseCase: self.searchUseCase, coodinator: self)
+        viewController.viewModel = searchViewModel
         self.navigationController.setViewControllers([viewController], animated: false)
     }
 

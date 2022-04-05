@@ -47,6 +47,7 @@ class ListTableViewCell: UITableViewCell {
     }
     
     private func configureLayout() {
+        self.contentView.addSubview(stackView)
         self.stackView.addArrangedSubview(nameLabel)
         self.stackView.addArrangedSubview(cityIdLabel)
         

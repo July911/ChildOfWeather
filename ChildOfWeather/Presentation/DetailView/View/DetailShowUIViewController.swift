@@ -6,6 +6,14 @@ class DetailShowUIViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.configureViewModelDelegate()
     }
+    
+    private func configureViewModelDelegate() {
+        self.viewModel?.delegate = self
+    }
+}
+
+extension DetailShowUIViewController: DetailViewModelDelegate {
+    
 }

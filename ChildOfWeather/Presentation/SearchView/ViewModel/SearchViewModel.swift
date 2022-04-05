@@ -4,6 +4,7 @@ final class SearchViewModel {
     
     private let searchUseCase: CitySearchUseCase
     private let coordinator: MainCoordinator
+    weak var delegate: SearchViewModelDelegate?
     var filterdResults: [City]?
     
     init(searchUseCase: CitySearchUseCase, coodinator: MainCoordinator) {
@@ -21,12 +22,8 @@ final class SearchViewModel {
     }
 }
 
-extension SearchViewModel: SearchViewControllerDelegate {
-    func searchViewController(_ viewController: SearchViewController, textInput text: String) {
-        let results = self.searchUseCase.search(text)
-        self.filterdResults = self.listUp(results)
-    }
+protocol SearchViewModelDelegate: AnyObject {
     
-    func searchViewController(_ viewController: SearchViewController, didSelectCell infomation: City) {
-    }
 }
+
+

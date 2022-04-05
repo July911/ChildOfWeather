@@ -14,7 +14,7 @@ enum APICallError: Error {
     case notProperStatusCode
 }
 
-class APICaller {
+final class APICaller {
     
     func request(
         _ type: RequestType,

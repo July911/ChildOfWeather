@@ -17,11 +17,11 @@ final class MainCoordinator {
     }
 
     func occuredViewEvent(with event: Event.View) {
-        let projectAddView = DetailShowUIViewController()
+        let detailShowView = DetailShowUIViewController()
 
         switch event {
-        case .presentDetailShowUIViewController(let id):
-            self.navigationController.present(projectAddView, animated: false)
+        case .presentDetailShowUIViewController(let cityName):
+            self.navigationController.present(detailShowView, animated: false)
         case .dismissDetailShowUIViewController:
             self.navigationController.dismiss(animated: false)
         }
@@ -41,7 +41,7 @@ enum Event {
 
     enum View {
 
-        case presentDetailShowUIViewController(identifier: String)
+        case presentDetailShowUIViewController(cityName: String)
         case dismissDetailShowUIViewController
     }
 }

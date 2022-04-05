@@ -1,5 +1,8 @@
 import Foundation
 
 protocol CitySearchRepository {
-    func search(name: String) -> City?
+    
+    var assetData: [City]? { get }
+    
+    func search(name: String) -> [City]?
 }

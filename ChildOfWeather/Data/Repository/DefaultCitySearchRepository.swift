@@ -9,10 +9,8 @@ final class DefaultCitySearchRepository: CitySearchRepository {
         self.assetData = decodedData()
     }
     
-    func search(name: String) -> City? {
-        return self.assetData?.filter { city in
-            city.name == name
-        }.first
+    func search(name: String) -> [City]? {
+        return self.assetData?.filter { $0.name.localizedCaseInsensitiveContains(name) }
     }
     
     private func decodedData() -> [City] {
@@ -20,7 +18,8 @@ final class DefaultCitySearchRepository: CitySearchRepository {
         
         do {
             let data = try JSONDecoder().decode([City].self, from: assetData?.data ?? Data())
-            return data
+            let filtered = data.filter{ $0.country == "KR" }
+            return filtered
         } catch {
             return []
         }

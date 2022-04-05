@@ -5,7 +5,7 @@ final class DefaultCitySearchRepository: CitySearchRepository {
     
     var assetData: [City]?
     
-    init(assetData: NSDataAsset) {
+    init() {
         self.assetData = decodedData()
     }
     

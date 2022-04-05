@@ -26,6 +26,7 @@
 		18D4DD3D27FBF87E00697F43 /* CitySearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD3C27FBF87E00697F43 /* CitySearchUseCase.swift */; };
 		18D4DD3F27FBF91900697F43 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD3E27FBF91900697F43 /* Coordinator.swift */; };
 		18D4DD4227FBFA5700697F43 /* DetailShowUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD4127FBFA5700697F43 /* DetailShowUseCase.swift */; };
+		18D4DD4627FBFBD300697F43 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD4527FBFBD300697F43 /* ListTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		18D4DD3C27FBF87E00697F43 /* CitySearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchUseCase.swift; sourceTree = "<group>"; };
 		18D4DD3E27FBF91900697F43 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		18D4DD4127FBFA5700697F43 /* DetailShowUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailShowUseCase.swift; sourceTree = "<group>"; };
+		18D4DD4527FBFBD300697F43 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,7 +147,6 @@
 			children = (
 				18D4DD3927FBF83600697F43 /* ViewModel */,
 				18D4DD3827FBF82E00697F43 /* View */,
-				18D4DD0627FBC15100697F43 /* SearchViewController.swift */,
 			);
 			path = SearchView;
 			sourceTree = "<group>";
@@ -198,6 +199,8 @@
 		18D4DD3827FBF82E00697F43 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				18D4DD0627FBC15100697F43 /* SearchViewController.swift */,
+				18D4DD4527FBFBD300697F43 /* ListTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				18D4DD3127FBE03000697F43 /* WeatherRepository.swift in Sources */,
 				18D4DD0727FBC15100697F43 /* SearchViewController.swift in Sources */,
 				18D4DD3527FBE20F00697F43 /* DefaultCitySearchRepository.swift in Sources */,
+				18D4DD4627FBFBD300697F43 /* ListTableViewCell.swift in Sources */,
 				18D4DD0327FBC15100697F43 /* AppDelegate.swift in Sources */,
 				18D4DD3327FBE1EE00697F43 /* CitySearchRepository.swift in Sources */,
 				18D4DD2827FBDE7500697F43 /* URLSessionNetworkService.swift in Sources */,

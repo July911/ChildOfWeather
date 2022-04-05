@@ -7,4 +7,8 @@ final class SearchViewModel {
     init(searchUseCase: CitySearchUseCase) {
         self.searchUseCase = searchUseCase
     }
+    
+    func listUp() -> [City] {
+        []
+    }
 }

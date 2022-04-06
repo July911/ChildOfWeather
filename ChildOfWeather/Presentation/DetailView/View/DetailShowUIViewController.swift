@@ -18,9 +18,7 @@ final class DetailShowUIViewController: UIViewController {
         super.viewDidLoad()
         self.configureViewModelDelegate()
         self.view.addSubview(WebView)
-        let string = (self.viewModel?.createURL())!
-        let url = URL(string: string)!
-        WebView.load(URLRequest(url: url))
+        self.viewModel?.createURL()
     }
     
     override func viewDidLayoutSubviews() {
@@ -35,4 +33,7 @@ final class DetailShowUIViewController: UIViewController {
 
 extension DetailShowUIViewController: DetailViewModelDelegate {
     
+    func loadWebView(url: URL) {
+       WebView.load(URLRequest(url: url))
+    }
 }

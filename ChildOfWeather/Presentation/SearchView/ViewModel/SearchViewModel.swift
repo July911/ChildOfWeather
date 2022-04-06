@@ -3,7 +3,7 @@ import Foundation
 final class SearchViewModel {
     
     private let searchUseCase: CitySearchUseCase
-    private let coordinator: MainCoordinator
+    let coordinator: MainCoordinator
     weak var delegate: SearchViewModelDelegate?
     var filterdResults: [City]?
     

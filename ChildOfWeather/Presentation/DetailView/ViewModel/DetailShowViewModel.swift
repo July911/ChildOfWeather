@@ -15,13 +15,19 @@ final class DetailShowViewModel {
         self.city = city
     }
     
-    func createURL() -> String {
-        let location = self.locationSearchUseCase.search(latitude: city.coord.lat, longitude: city.coord.lon)
-        let strings = self.detailShowUseCase.weatherRepository.getURLFromLoaction(text: location ?? "")
-        return strings
+    func createURL() {
+        let location = self.locationSearchUseCase.search(latitude: city.coord.lat, longitude: city.coord.lon, completion: { [weak self] strings in
+//            let url = self?.detailShowUseCase.weatherRepository.getURLFromLoaction(text: strings ?? "")
+//            let realURL = URL(string: url ?? "https://www.google.com")
+            let testURL = "https://www.google.com/search?q=swift"
+            let url = URL(string: testURL)
+            DispatchQueue.main.async {
+               self?.delegate?.loadWebView(url: url!)
+            }
+        })
     }
 }
 
 protocol DetailViewModelDelegate: AnyObject {
-    
+    func loadWebView(url: URL)
 }

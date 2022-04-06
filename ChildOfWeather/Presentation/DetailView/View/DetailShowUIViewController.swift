@@ -1,6 +1,6 @@
 import UIKit
 
-class DetailShowUIViewController: UIViewController {
+final class DetailShowUIViewController: UIViewController {
     
     var viewModel: DetailShowViewModel?
 

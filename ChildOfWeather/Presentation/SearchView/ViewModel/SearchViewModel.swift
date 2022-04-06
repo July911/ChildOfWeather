@@ -12,18 +12,24 @@ final class SearchViewModel {
         self.coordinator = coodinator
     }
     
-    func listUp(_ lists: [City]? = nil) -> [City] {
+    func listUp(_ text: String? = nil) {
         
-        if lists == nil {
-            return self.searchUseCase.extractAll()
+        if text == nil {
+            self.filterdResults = self.searchUseCase.extractAll()
         } else {
-            return lists ?? []
+            let cities = self.searchUseCase.search(text ?? "")
+            self.filterdResults = cities ?? []
+        }
+        
+        DispatchQueue.main.async {
+            self.delegate?.didSearchData()
         }
     }
 }
 
 protocol SearchViewModelDelegate: AnyObject {
     
+    func didSearchData()
 }
 
 

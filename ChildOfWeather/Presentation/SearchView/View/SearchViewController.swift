@@ -26,6 +26,7 @@ class SearchViewController: UIViewController {
         self.configureTableView()
         self.configureSearchController()
         self.configureViewModelDelegate()
+        self.viewModel?.listUp()
     }
     
     private func configureTableView() {
@@ -62,11 +63,7 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.isfiltering {
-            return self.viewModel?.filterdResults?.count ?? .zero
-        } else {
-            return self.viewModel?.listUp().count ?? .zero
-        }
+        return self.viewModel?.filterdResults?.count ?? .zero
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,21 +72,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if self.isfiltering {
-            let cities = self.viewModel?.filterdResults
-            cell.configureCell(city: cities?[indexPath.row] ?? City.EMPTY)
-        } else {
-            let cities = self.viewModel?.listUp()
-            cell.configureCell(city: cities?[indexPath.row] ?? City.EMPTY)
-        }
+        let cities = self.viewModel?.filterdResults
+        cell.configureCell(city: cities?[indexPath.row] ?? City.EMPTY)
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let city = self.viewModel?.listUp().first
-        // TODO: indexPath 로 데이터 받아오기 
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let city = self.viewModel?.listUp().first
+//        // TODO: indexPath 로 데이터 받아오기
+//    }
 }
 
 extension SearchViewController: UISearchResultsUpdating {
@@ -98,11 +90,19 @@ extension SearchViewController: UISearchResultsUpdating {
         else {
             return
         }
+        
+        if isfiltering {
+            self.viewModel?.listUp(text)
+        } else {
+            self.viewModel?.listUp()
+        }
     }
 }
     
 extension SearchViewController: SearchViewModelDelegate {
-    
+    func didSearchData() {
+        self.listTableView.reloadData()
+    }
 }
 
 

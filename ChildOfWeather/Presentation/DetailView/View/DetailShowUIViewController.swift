@@ -18,7 +18,9 @@ final class DetailShowUIViewController: UIViewController {
         super.viewDidLoad()
         self.configureViewModelDelegate()
         self.view.addSubview(WebView)
-        WebView.load(URLRequest(url: <#T##URL#>))
+        let string = (self.viewModel?.createURL())!
+        let url = URL(string: string)!
+        WebView.load(URLRequest(url: url))
     }
     
     override func viewDidLayoutSubviews() {

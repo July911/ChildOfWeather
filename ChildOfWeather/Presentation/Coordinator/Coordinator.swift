@@ -30,7 +30,8 @@ final class MainCoordinator {
 
     private func configureDetailShowViewController(city: City) -> UINavigationController {
         let viewController = DetailShowUIViewController()
-        viewController.viewModel = DetailShowViewModel(detailShowUseCase: self.detailShowUseCase, coodinator: self)
+        let locationSearchUseCase = LocationSearchUseCase()
+        viewController.viewModel = DetailShowViewModel(detailShowUseCase: self.detailShowUseCase, locationSearchUseCase: locationSearchUseCase, coodinator: self, city: city)
         let navigationController = UINavigationController(rootViewController: viewController)
 
         return navigationController

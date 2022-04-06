@@ -23,4 +23,11 @@ final class DefaultWeatherRepository: WeatherRepository {
         
         return resultData
     }
+    
+    func getURLFromLoaction(text: String) -> String {
+        
+        let type: RequestType = .getMapfromLocationInformation(location: text)
+        return type.fullURL
+    }
+
 }

@@ -51,6 +51,8 @@ class SearchViewController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = true
         searchController.searchBar.placeholder = "please search the city that you want to get weather infomation"
         searchController.searchBar.tintColor = .white
+        searchController.isActive = true
+        searchController.searchResultsUpdater = self
         self.navigationItem.searchController = searchController
         self.navigationController?.navigationBar.backgroundColor = .gray
     }

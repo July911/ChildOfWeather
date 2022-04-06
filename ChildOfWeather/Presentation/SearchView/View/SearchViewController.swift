@@ -80,10 +80,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let city = self.viewModel?.listUp().first
-//        // TODO: indexPath 로 데이터 받아오기
-//    }
+    func tableView(_ tableView: UITableView,didSelectRowAt indexPath: IndexPath) {
+        let city = self.viewModel?.filterdResults?[indexPath.row]
+        
+        // TODO: indexPath 로 데이터 받아오기
+    }
 }
 
 extension SearchViewController: UISearchResultsUpdating {

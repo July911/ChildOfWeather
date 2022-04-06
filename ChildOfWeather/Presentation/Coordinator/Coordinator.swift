@@ -18,17 +18,17 @@ final class MainCoordinator {
     }
 
     func occuredViewEvent(with event: Event.View) {
-        let detailShowView = DetailShowUIViewController()
 
         switch event {
         case .presentDetailShowUIViewController(let cityName):
-            self.navigationController.present(detailShowView, animated: false)
+            let detailShowViewController = self.configureDetailShowViewController(city: cityName)
+            self.navigationController.present(detailShowViewController, animated: false)
         case .dismissDetailShowUIViewController:
             self.navigationController.dismiss(animated: false)
         }
     }
 
-    private func configureDetailShowViewController() -> UINavigationController {
+    private func configureDetailShowViewController(city: City) -> UINavigationController {
         let viewController = DetailShowUIViewController()
         viewController.viewModel = DetailShowViewModel(detailShowUseCase: self.detailShowUseCase, coodinator: self)
         let navigationController = UINavigationController(rootViewController: viewController)
@@ -42,7 +42,7 @@ enum Event {
 
     enum View {
 
-        case presentDetailShowUIViewController(cityName: String)
+        case presentDetailShowUIViewController(cityName: City)
         case dismissDetailShowUIViewController
     }
 }

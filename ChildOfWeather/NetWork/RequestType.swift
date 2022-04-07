@@ -13,7 +13,8 @@ enum RequestType {
         case .getWeatherFromGeocode(let lat, let lon):
             return "\(Constant.baseURL)lat=\(lat)&lon=\(lon)&appid=\(Constant.key)"
         case .getWeatherFromCityName(let city):
-            return "\(Constant.baseURL)q=" + city + "&appid=" + Constant.key
+            print("\(Constant.baseURL)q=" + city + "&appid=" + Constant.key + "&lang=en")
+            return "\(Constant.baseURL)q=" + city + "&appid=" + Constant.key + "&lang=en"
         case .getCityNameFromGeocode(let lan, let lon):
             return "\(Constant.baseURL)"
         case .getMapfromLocationInformation(let location):

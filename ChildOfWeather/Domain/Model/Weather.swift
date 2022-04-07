@@ -2,23 +2,23 @@ import Foundation
 
 // MARK: - Welcome
 struct WeatherInformation: Codable {
-    let coord: Coord
-    let weather: [Weather]
+//    let coord: Coord
+//    let weather: [Weather]
     let base: String
     let main: Main
-    let visibility: Int
-    let wind: Wind
-    let clouds: Clouds
-    let dt: Int
+//    let visibility: Int
+//    let wind: Wind
+//    let clouds: Clouds
+//    let dt: Int
     let sys: Sys
-    let timezone, id: Int
-    let name: String
-    let cod: Int
+//    let timezone, id: Int
+//    let name: String
+//    let cod: Int
 }
-
-extension WeatherInformation {
-    static let Empty = WeatherInformation(coord: Coord(lon: 0, lat: 0), weather: [], base: "", main: Main(temp: 1, feelsLike: 1, tempMin: 1, tempMax: 1, pressure: 1, humidity: 1, seaLevel: 1, grndLevel: 1), visibility: 1, wind: Wind(speed: 1, deg: 1, gust: 1), clouds: Clouds(all: 1), dt: 1, sys: Sys(type: 1, id: 1, country: "", sunrise: 1, sunset: 1), timezone: 1, id: 1, name: "", cod: 1)
-}
+//
+//extension WeatherInformation {
+//    static let Empty = WeatherInformation(base: "", main: Main(temp: 1, feelsLike: 1, tempMin: 1, tempMax: 1, pressure: 1, humidity: 1, seaLevel: 1, grndLevel: 1), visibility: 1, wind: Wind(speed: 1, deg: 1, gust: 1), clouds: Clouds(all: 1), dt: 1, sys: Sys(type: 1, id: 1, country: "", sunrise: 1, sunset: 1), timezone: 1, id: 1, name: "", cod: 1)
+//}
 
 // MARK: - Clouds
 struct Clouds: Codable {

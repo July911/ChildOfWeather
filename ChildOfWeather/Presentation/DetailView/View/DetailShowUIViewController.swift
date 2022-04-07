@@ -79,12 +79,8 @@ final class DetailShowUIViewController: UIViewController {
         _ = self.viewModel?.detailShowUseCase.extractWeather(data: city, completion: { result in
             switch result {
             case .success(let weather):
-                let maxTemp = weather.main.tempMax
-                let minTemp = weather.main.tempMin
-                let sunrise = weather.sys.sunrise
-                let sunset = weather.sys.sunset
                 DispatchQueue.main.async {
-                    self.weatherTextView.text = "최고 기온은 \(maxTemp.description)이고 최저는 \(minTemp.description)입니다. 일출은 \(sunrise.description)이고 일몰은 \(sunset.description)입니다."
+                    self.weatherTextView.text = "\(weather)"
                 }
             case .failure(let error):
                 DispatchQueue.main.async {

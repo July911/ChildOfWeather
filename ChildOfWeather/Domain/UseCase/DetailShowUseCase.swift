@@ -8,12 +8,11 @@ final class DetailShowUseCase {
         self.weatherRepository = weatherRepository
     }
     
-    func extractWeather(data city: City, completion: @escaping (Result<WeatherInformation,dataError>) -> Void) {
+    func extractWeather(data city: City, completion: @escaping (Result<[String: Any],dataError>) -> Void) {
         let cityName = city.name
 
         self.weatherRepository.getDataFromCity(text: cityName, completion: { data in
-            print(data)
-            guard let weatherInformation = try? JSONDecoder().decode(WeatherInformation.self, from: data ?? Data())
+            guard let weatherInformation = try? JSONSerialization.jsonObject(with: data!) as? [String: Any]
             else {
                 completion(.failure(dataError.dataNotCome))
                 return
@@ -21,6 +20,7 @@ final class DetailShowUseCase {
             completion(.success(weatherInformation))
         })
     }
+
 }
 
 enum dataError: Error {

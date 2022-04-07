@@ -8,25 +8,22 @@ final class DefaultWeatherRepository: WeatherRepository {
         self.service = service
     }
     
-    func getDataFromCity(text: String) -> Data? {
+    func getDataFromCity(text: String, completion: @escaping (Data?) -> Void) {
         let request: RequestType = .getWeatherFromCityName(city: text)
-        var resultData: Data?
         
         service.request(request) { result in
             switch result {
             case .success(let data):
-                resultData = data
+                completion(data)
             case .failure(let _):
-                resultData = Data()
+                completion(nil)
             }
         }
-        
-        return resultData
     }
     
     func getURLFromLoaction(text: String) -> String {
-        
         let type: RequestType = .getMapfromLocationInformation(location: text)
+        
         return type.fullURL
     }
 

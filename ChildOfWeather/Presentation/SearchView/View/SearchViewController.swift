@@ -83,7 +83,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView,didSelectRowAt indexPath: IndexPath) {
         let city = self.viewModel?.filterdResults?[indexPath.row] ?? City.EMPTY
         self.viewModel?.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
-        // TODO: indexPath 로 데이터 받아오기
     }
 }
 

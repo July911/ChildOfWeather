@@ -21,7 +21,7 @@ final class DetailShowViewModel {
     }
     
     func createURL() {
-        self.locationSearchUseCase.search(
+        self.locationSearchUseCase.searchLocation(
             latitude: city.coord.lat,
             longitude: city.coord.lon,
             completion: { [weak self] strings in

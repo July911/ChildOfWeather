@@ -22,6 +22,7 @@ final class MainCoordinator {
         switch event {
         case .presentDetailShowUIViewController(let cityName):
             let detailShowViewController = self.configureDetailShowViewController(city: cityName)
+            detailShowViewController.modalPresentationStyle = .fullScreen
             self.navigationController.present(detailShowViewController, animated: false)
         case .dismissDetailShowUIViewController:
             self.navigationController.dismiss(animated: false)

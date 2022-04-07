@@ -11,9 +11,9 @@ enum RequestType {
         
         switch self {
         case .getWeatherFromGeocode(let lat, let lon):
-            return "\(Constant.baseURL)?lat=\(lat)&lon=\(lon)&appid=\(Constant.key)"
+            return "\(Constant.baseURL)lat=\(lat)&lon=\(lon)&appid=\(Constant.key)"
         case .getWeatherFromCityName(let city):
-            return "\(Constant.baseURL)?q=\(city)&appid=\(Constant.key)"
+            return "\(Constant.baseURL)q=" + city + "&appid=" + Constant.key
         case .getCityNameFromGeocode(let lan, let lon):
             return "\(Constant.baseURL)"
         case .getMapfromLocationInformation(let location):

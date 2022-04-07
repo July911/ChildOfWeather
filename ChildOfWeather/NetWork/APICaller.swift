@@ -19,8 +19,13 @@ final class APICaller: URLSessionNetworkService {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: url) { data, URLResponse, error in
+        let request = URLRequest(url: url)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, URLResponse, error in
             if let error = error {
+#if DEBUG
+                print(error)
+#endif
                 completion(.failure(APICallError.errorExist))
             }
             
@@ -40,7 +45,7 @@ final class APICaller: URLSessionNetworkService {
                 completion(.failure(APICallError.invalidResponse))
                 return
             }
-            
+
             completion(.success(data))
         }
         

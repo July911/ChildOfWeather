@@ -11,22 +11,39 @@ class ListTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let cityIdLabel: UILabel = {
+    private let latLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
-        label.textAlignment = .center
         label.font = .preferredFont(forTextStyle: .caption1)
-        label.text = "weather"
+        label.text = "lan"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private let stackView: UIStackView = {
+    private let lonLabel: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.text = "lon"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private let locationStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 15
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
+    
+    private let entireStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
-        stackView.alignment = .center
+        stackView.alignment = .leading
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
@@ -43,20 +60,24 @@ class ListTableViewCell: UITableViewCell {
     
     func configureCell(city: City) {
         self.nameLabel.text = city.name
-        self.cityIdLabel.text = city.id.description
+        self.latLabel.text = "위도: \(city.coord.lat.description)"
+        self.lonLabel.text = "경도: \(city.coord.lon.description)"
     }
     
     private func configureLayout() {
-        self.contentView.addSubview(stackView)
-        self.stackView.addArrangedSubview(nameLabel)
-        self.stackView.addArrangedSubview(cityIdLabel)
+        self.locationStackView.addArrangedSubview(lonLabel)
+        self.locationStackView.addArrangedSubview(latLabel)
         
-        let stackViewLayout: [NSLayoutConstraint] = [
-            stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+        self.contentView.addSubview(entireStackView)
+        self.entireStackView.addArrangedSubview(nameLabel)
+        self.entireStackView.addArrangedSubview(locationStackView)
+        
+        let entireStackViewLayout: [NSLayoutConstraint] = [
+            entireStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            entireStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            entireStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            entireStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ]
-        NSLayoutConstraint.activate(stackViewLayout)
+        NSLayoutConstraint.activate(entireStackViewLayout)
     }
 }

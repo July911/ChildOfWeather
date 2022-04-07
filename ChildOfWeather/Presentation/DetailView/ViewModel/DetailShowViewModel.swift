@@ -17,12 +17,12 @@ final class DetailShowViewModel {
     
     func createURL() {
         let location = self.locationSearchUseCase.search(latitude: city.coord.lat, longitude: city.coord.lon, completion: { [weak self] strings in
-//            let url = self?.detailShowUseCase.weatherRepository.getURLFromLoaction(text: strings ?? "")
-//            let realURL = URL(string: url ?? "https://www.google.com")
-            let testURL = "https://www.google.com/search?q=swift"
-            let url = URL(string: testURL)
+            let urlString = self?.detailShowUseCase.weatherRepository.getURLFromLoaction(text: strings ?? "")
+            let replace = urlString?.replacingOccurrences(of: " ", with: "%20")
+            let realURL = URL(string: replace!)!
+          
             DispatchQueue.main.async {
-               self?.delegate?.loadWebView(url: url!)
+               self?.delegate?.loadWebView(url: realURL)
             }
         })
     }

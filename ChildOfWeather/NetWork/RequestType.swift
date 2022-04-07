@@ -17,7 +17,7 @@ enum RequestType {
         case .getCityNameFromGeocode(let lan, let lon):
             return "\(Constant.baseURL)"
         case .getMapfromLocationInformation(let location):
-            return "\(Constant.googleBaseURL)\(location)"
+            return "\(Constant.googleBaseURL)" + location
         }
     }
 }

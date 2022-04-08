@@ -5,7 +5,6 @@ class ListTableViewCell: UITableViewCell {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title1)
-        label.text = "name"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -14,7 +13,6 @@ class ListTableViewCell: UITableViewCell {
     private let latLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .caption1)
-        label.text = "lan"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -23,7 +21,6 @@ class ListTableViewCell: UITableViewCell {
     private let lonLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .caption1)
-        label.text = "lon"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label

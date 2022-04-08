@@ -20,7 +20,6 @@ final class DetailShowUseCase {
             completion(.success(weatherInformation))
         })
     }
-
 }
 
 enum dataError: Error {

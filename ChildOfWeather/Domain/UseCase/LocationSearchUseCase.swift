@@ -12,7 +12,6 @@ final class LocationSearchUseCase {
         geocoder.reverseGeocodeLocation(
                 findLocation,
                 preferredLocale: locale) { (place, error) in
-
                     let city = place?.last?.name
                     completion(city)
             }

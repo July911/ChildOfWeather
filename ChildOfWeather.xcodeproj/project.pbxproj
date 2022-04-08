@@ -145,10 +145,9 @@
 		18D4DD1F27FBCE4D00697F43 /* NetWork */ = {
 			isa = PBXGroup;
 			children = (
+				18D7B1F4280020910077119A /* Utility */,
 				18D4DD2C27FBDF8E00697F43 /* Protocol */,
 				18D4DD1D27FBCBEB00697F43 /* APICaller.swift */,
-				18D4DD2027FBCE6900697F43 /* RequestType.swift */,
-				18D4DD2327FBD39B00697F43 /* Constant.swift */,
 			);
 			path = NetWork;
 			sourceTree = "<group>";
@@ -258,6 +257,15 @@
 				18D4DD4C27FC0C5A00697F43 /* DetailShowUIViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		18D7B1F4280020910077119A /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				18D4DD2027FBCE6900697F43 /* RequestType.swift */,
+				18D4DD2327FBD39B00697F43 /* Constant.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

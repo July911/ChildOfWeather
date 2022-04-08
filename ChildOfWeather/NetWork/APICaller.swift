@@ -18,17 +18,9 @@ final class APICaller: URLSessionNetworkService {
         else {
             return
         }
-        
-        var request = URLRequest(url: url)
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let request = URLRequest(url: url)
 
-        let task = URLSession.shared.dataTask(with: request) { data, URLResponse, error in
-            if let error = error {
-#if DEBUG
-                print(error)
-#endif
-                completion(.failure(APICallError.errorExist))
-            }
+        let task = URLSession.shared.dataTask(with: request) { data, URLResponse, _ in
             
             guard let response = URLResponse as? HTTPURLResponse
             else {
@@ -49,7 +41,3 @@ final class APICaller: URLSessionNetworkService {
     }
 }
 
-
-struct EE {
-    var visi:Int
-}

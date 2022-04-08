@@ -15,7 +15,7 @@ final class DefaultWeatherRepository: WeatherRepository {
             switch result {
             case .success(let data):
                 completion(data)
-            case .failure(let _):
+            case .failure(_):
                 completion(nil)
             }
         }

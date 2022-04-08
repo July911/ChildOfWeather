@@ -3,8 +3,8 @@ import Foundation
 final class SearchViewModel {
     
     let coordinator: MainCoordinator
-    weak var delegate: SearchViewModelDelegate?
     var filterdResults: [City]?
+    weak var delegate: SearchViewModelDelegate?
     private let searchUseCase: CitySearchUseCase
     
     init(searchUseCase: CitySearchUseCase, coodinator: MainCoordinator) {

@@ -1,6 +1,6 @@
 import UIKit
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
     
     var viewModel: SearchViewModel?
     

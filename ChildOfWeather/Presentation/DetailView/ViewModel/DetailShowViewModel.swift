@@ -44,8 +44,16 @@ final class DetailShowViewModel {
             }
         })
     }
+    
+    func loadCacheImage() {
+        if self.imageCacheUseCase.checkCacheExist(cityName: self.city.name) == true {
+            self.delegate?.loadImageView()
+        } 
+    }
 }
 
 protocol DetailViewModelDelegate: AnyObject {
     func loadWebView(url: URL)
+    func loadImageView()
+    func cacheImage()
 }

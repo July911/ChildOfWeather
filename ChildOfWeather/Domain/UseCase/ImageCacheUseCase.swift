@@ -9,10 +9,8 @@ final class ImageCacheUseCase {
         self.imageProvideRepository = imageProvideRepository
     }
 
-    func cache(cityName: String, image: UIImage) {
-        if self.checkCacheExist(cityName: cityName) {
-            self.imageProvideRepository.setCache(text: cityName, image: image)
-        }
+    func setCache(cityName: String, image: UIImage) {
+        self.imageProvideRepository.setCache(text: cityName, image: image)
     }
     
     func getImage(cityName: String) -> UIImage? {

@@ -35,10 +35,10 @@ final class DetailShowUIViewController: UIViewController {
     private let imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isHidden = true
         
         return imageView
     }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,15 +46,21 @@ final class DetailShowUIViewController: UIViewController {
         self.configureViewModelDelegate()
         self.configureLayout()
         self.configureViewSetting()
+        self.viewModel?.loadCacheImage()
     }
     
     private func configureNavigationItem() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancelButton))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(didTapAddButton))
         self.navigationItem.title = "지도와 날씨"
     }
     
     @objc func didTapCancelButton() {
         self.viewModel?.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
+    }
+    
+    @objc func didTapAddButton() {
+        self.webviewSnapshot { }
     }
     
     private func configureViewSetting() {
@@ -67,27 +73,30 @@ final class DetailShowUIViewController: UIViewController {
     }
     
     private func configureLayout() {
-        self.entireStackView.addArrangedSubview(self.WebView)
-        self.entireStackView.addArrangedSubview(self.weatherTextView)
-        self.view.addSubview(entireStackView)
-        self.view.addSubview(imageView)
+        self.view.addSubview(self.WebView)
+        self.view.addSubview(self.weatherTextView)
+        self.view.addSubview(self.imageView)
 
         let webViewLayout: [NSLayoutConstraint] = [
-            self.WebView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6)
+            self.WebView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6),
+            self.WebView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.WebView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.WebView.topAnchor.constraint(equalTo: self.view.topAnchor)
         ]
         
         let entireStackViewLayout: [NSLayoutConstraint] = [
-            self.entireStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.entireStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.entireStackView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            self.entireStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.weatherTextView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.4),
+            self.weatherTextView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.weatherTextView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.weatherTextView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ]
         
         let imageViewLayout: [NSLayoutConstraint] = [
-            self.imageView.leadingAnchor.constraint(equalTo: self.WebView.leadingAnchor),
-            self.imageView.trailingAnchor.constraint(equalTo: self.WebView.trailingAnchor),
-            self.imageView.topAnchor.constraint(equalTo: self.WebView.topAnchor),
-            self.imageView.bottomAnchor.constraint(equalTo: self.WebView.bottomAnchor)
+            self.imageView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6),
+            self.imageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.imageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.imageView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.imageView.bottomAnchor.constraint(equalTo: self.weatherTextView.topAnchor)
         ]
         
         NSLayoutConstraint.activate(webViewLayout)
@@ -108,7 +117,7 @@ final class DetailShowUIViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.weatherTextView.text = "\(weather)"
                 }
-            case .failure(let error):
+            case .failure(let _):
                 DispatchQueue.main.async {
                     self.weatherTextView.text = "에러다아아아아아아"
                 }
@@ -116,12 +125,10 @@ final class DetailShowUIViewController: UIViewController {
         }
     }
     
-    private func webviewSnapshot() {
+    private func webviewSnapshot(completion: @escaping () -> Void) {
         let configuration = WKSnapshotConfiguration()
-        configuration.rect = CGRect(x: 0, y: 0, width: self.WebView.bounds.width, height: self.WebView.bounds.height)
         self.WebView.takeSnapshot(with: configuration) { [weak self] (image, error) in
-            self?.viewModel?.imageCacheUseCase.cache(
-                cityName: self?.viewModel?.city.name ?? "",
+            self?.viewModel?.imageCacheUseCase.setCache(cityName: self?.viewModel?.city.name ?? "",
                 image: image ?? UIImage()
             )
         }
@@ -132,5 +139,21 @@ extension DetailShowUIViewController: DetailViewModelDelegate {
     
     func loadWebView(url: URL) {
        WebView.load(URLRequest(url: url))
+    }
+    
+    func loadImageView() {
+
+        guard let image = self.viewModel?.imageCacheUseCase.getImage(cityName: self.viewModel?.city.name ?? "")
+        else {
+            return
+        }
+        WebView.isHidden = true
+        imageView.isHidden = false
+        
+        self.imageView.image = image
+    }
+    
+    func cacheImage() {
+        self.webviewSnapshot { }
     }
 }

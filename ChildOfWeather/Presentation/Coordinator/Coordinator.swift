@@ -3,7 +3,7 @@ import UIKit
 final class MainCoordinator {
 
     private let navigationController: UINavigationController
-    private lazy var imageCacheUseCase = ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
+    private let imageCacheUseCase = ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController

@@ -7,6 +7,9 @@ final class DefaultImageProvideRepository: ImageProvideRepository {
     
     func setCache(text: String, image: UIImage) {
         cache.setObject(image, forKey: text as NSString)
+#if DEBUG
+        print("\(text) 데이터 세팅함")
+#endif
     }
     
     func getCache(text: String) -> UIImage? {
@@ -14,7 +17,9 @@ final class DefaultImageProvideRepository: ImageProvideRepository {
         else {
             return nil
         }
-        
+#if DEBUG
+        print("\(text) 데이터 가져감")
+#endif
         return image
     }
 }

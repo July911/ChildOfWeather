@@ -35,9 +35,19 @@ final class DetailShowUIViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureNavigationItem()
         self.configureViewModelDelegate()
         self.configureLayout()
         self.configureViewSetting()
+    }
+    
+    private func configureNavigationItem() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancelButton))
+        self.navigationItem.title = "지도와 날씨"
+    }
+    
+    @objc func didTapCancelButton() {
+        self.viewModel?.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
     }
     
     private func configureViewSetting() {

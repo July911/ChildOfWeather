@@ -1,8 +1,8 @@
 import Foundation
 
 protocol CitySearchRepository {
-    
-    var assetData: [City]? { get }
-    
+        
     func search(name: String) -> [City]?
+    
+    func sortCity(by country: Country) -> [City]
 }

@@ -13,6 +13,6 @@ final class CitySearchUseCase {
     }
     
     func extractAll() -> [City] {
-        self.searchRepository.assetData ?? []
+        self.searchRepository.sortCity(by: .kr)
     }
 }

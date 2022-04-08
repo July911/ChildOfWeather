@@ -2,20 +2,23 @@ import Foundation
 
 final class DetailShowViewModel {
     
-    let detailShowUseCase: DetailShowUseCase
     let coordinator: MainCoordinator
     let city: City
+    let detailShowUseCase: DetailShowUseCase
     let locationSearchUseCase: LocationSearchUseCase
+    let imageCacheUseCase: ImageCacheUseCase
     weak var delegate: DetailViewModelDelegate?
     
     init(
         detailShowUseCase: DetailShowUseCase,
          locationSearchUseCase: LocationSearchUseCase,
+        imageCacheUseCase: ImageCacheUseCase,
         coodinator: MainCoordinator,
         city: City
     ) {
         self.detailShowUseCase = detailShowUseCase
         self.locationSearchUseCase = locationSearchUseCase
+        self.imageCacheUseCase = imageCacheUseCase
         self.coordinator = coodinator
         self.city = city
     }

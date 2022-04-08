@@ -32,6 +32,13 @@ final class DetailShowUIViewController: UIViewController {
         return stackView
     }()
     
+    private let imageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageView
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +70,7 @@ final class DetailShowUIViewController: UIViewController {
         self.entireStackView.addArrangedSubview(self.WebView)
         self.entireStackView.addArrangedSubview(self.weatherTextView)
         self.view.addSubview(entireStackView)
+        self.view.addSubview(imageView)
 
         let webViewLayout: [NSLayoutConstraint] = [
             self.WebView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6)
@@ -75,8 +83,16 @@ final class DetailShowUIViewController: UIViewController {
             self.entireStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ]
         
+        let imageViewLayout: [NSLayoutConstraint] = [
+            self.imageView.leadingAnchor.constraint(equalTo: self.WebView.leadingAnchor),
+            self.imageView.trailingAnchor.constraint(equalTo: self.WebView.trailingAnchor),
+            self.imageView.topAnchor.constraint(equalTo: self.WebView.topAnchor),
+            self.imageView.bottomAnchor.constraint(equalTo: self.WebView.bottomAnchor)
+        ]
+        
         NSLayoutConstraint.activate(webViewLayout)
         NSLayoutConstraint.activate(entireStackViewLayout)
+        NSLayoutConstraint.activate(imageViewLayout)
     }
     
     private func configureWeatherInformation() {
@@ -86,7 +102,7 @@ final class DetailShowUIViewController: UIViewController {
             return
         }
         
-        _ = self.viewModel?.detailShowUseCase.extractWeather(data: city, completion: { result in
+        _ = self.viewModel?.detailShowUseCase.extractWeather(data: city) { result in
             switch result {
             case .success(let weather):
                 DispatchQueue.main.async {
@@ -97,7 +113,18 @@ final class DetailShowUIViewController: UIViewController {
                     self.weatherTextView.text = "에러다아아아아아아"
                 }
             }
-        })
+        }
+    }
+    
+    private func webviewSnapshot() {
+        let configuration = WKSnapshotConfiguration()
+        configuration.rect = CGRect(x: 0, y: 0, width: self.WebView.bounds.width, height: self.WebView.bounds.height)
+        self.WebView.takeSnapshot(with: configuration) { [weak self] (image, error) in
+            self?.viewModel?.imageCacheUseCase.cache(
+                cityName: self?.viewModel?.city.name ?? "",
+                image: image ?? UIImage()
+            )
+        }
     }
 }
 

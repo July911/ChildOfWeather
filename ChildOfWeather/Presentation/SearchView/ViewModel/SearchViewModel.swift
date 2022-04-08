@@ -2,10 +2,10 @@ import Foundation
 
 final class SearchViewModel {
     
-    private let searchUseCase: CitySearchUseCase
     let coordinator: MainCoordinator
     weak var delegate: SearchViewModelDelegate?
     var filterdResults: [City]?
+    private let searchUseCase: CitySearchUseCase
     
     init(searchUseCase: CitySearchUseCase, coodinator: MainCoordinator) {
         self.searchUseCase = searchUseCase

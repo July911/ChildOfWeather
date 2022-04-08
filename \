@@ -1,0 +1,25 @@
+feat: DefaultImageProvideRepository 구현 
+
+- NSCache를 사용한 캐싱 구현
+- ImageCacheUseCase 생성 및 DetailShowViewModel에 참조 
+- WebView Snapshot 구현 
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is up to date with 'origin/main'.
+#
+# Changes to be committed:
+#	modified:   ChildOfWeather.xcodeproj/project.pbxproj
+#	modified:   ChildOfWeather/Data/Repository/DefaultCitySearchRepository.swift
+#	new file:   ChildOfWeather/Data/Repository/DefaultImageProvideRepository.swift
+#	modified:   ChildOfWeather/Data/Repository/Protocol/CitySearchRepository.swift
+#	new file:   ChildOfWeather/Data/Repository/Protocol/ImageProvideRepository.swift
+#	modified:   ChildOfWeather/Domain/UseCase/CitySearchUseCase.swift
+#	new file:   ChildOfWeather/Domain/UseCase/ImageCacheUseCase.swift
+#	modified:   ChildOfWeather/Presentation/Coordinator/Coordinator.swift
+#	modified:   ChildOfWeather/Presentation/DetailView/View/DetailShowUIViewController.swift
+#	modified:   ChildOfWeather/Presentation/DetailView/ViewModel/DetailShowViewModel.swift
+#	modified:   ChildOfWeather/Presentation/SearchView/ViewModel/SearchViewModel.swift
+#

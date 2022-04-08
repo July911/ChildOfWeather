@@ -3,16 +3,16 @@ import UIKit
 final class MainCoordinator {
 
     private let navigationController: UINavigationController
-    private lazy var searchUseCase = CitySearchUseCase(searchRepository: DefaultCitySearchRepository())
-    private lazy var detailShowUseCase = DetailShowUseCase(weatherRepository: DefaultWeatherRepository(service: APICaller()))
-
+    private lazy var imageCacheUseCase = ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
+    
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
     func start() {
         let viewController = SearchViewController()
-        let searchViewModel = SearchViewModel(searchUseCase: self.searchUseCase, coodinator: self)
+        let searchUseCase = CitySearchUseCase(searchRepository: DefaultCitySearchRepository())
+        let searchViewModel = SearchViewModel(searchUseCase: searchUseCase, coodinator: self)
         viewController.viewModel = searchViewModel
         self.navigationController.setViewControllers([viewController], animated: false)
     }
@@ -32,7 +32,8 @@ final class MainCoordinator {
     private func configureDetailShowViewController(city: City) -> UINavigationController {
         let viewController = DetailShowUIViewController()
         let locationSearchUseCase = LocationSearchUseCase()
-        viewController.viewModel = DetailShowViewModel(detailShowUseCase: self.detailShowUseCase, locationSearchUseCase: locationSearchUseCase, coodinator: self, city: city)
+        let detailShowUseCase = DetailShowUseCase(weatherRepository: DefaultWeatherRepository(service: APICaller()))
+        viewController.viewModel = DetailShowViewModel(detailShowUseCase: detailShowUseCase, locationSearchUseCase: locationSearchUseCase, imageCacheUseCase: self.imageCacheUseCase, coodinator: self, city: city)
         let navigationController = UINavigationController(rootViewController: viewController)
 
         return navigationController

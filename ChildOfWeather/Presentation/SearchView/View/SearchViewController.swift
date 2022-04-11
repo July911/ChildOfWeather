@@ -7,6 +7,8 @@ final class SearchViewController: UIViewController {
     private let listTableView: UITableView = {
         let tableview = UITableView(frame: .zero)
         tableview.register(ListTableViewCell.self, forCellReuseIdentifier: String(describing: ListTableViewCell.self))
+        tableview.estimatedRowHeight = 70
+        tableview.rowHeight = 60
         tableview.translatesAutoresizingMaskIntoConstraints = false
         
         return tableview

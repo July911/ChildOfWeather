@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180650EC2803BFDB005E9F0E /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180650EB2803BFDB005E9F0E /* Weather.swift */; };
 		18CE477A27FDE27300C402D9 /* LocationSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CE477927FDE27300C402D9 /* LocationSearchUseCase.swift */; };
 		18D4DD0327FBC15100697F43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD0227FBC15100697F43 /* AppDelegate.swift */; };
 		18D4DD0527FBC15100697F43 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD0427FBC15100697F43 /* SceneDelegate.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		180650EB2803BFDB005E9F0E /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		18CE477927FDE27300C402D9 /* LocationSearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchUseCase.swift; sourceTree = "<group>"; };
 		18D4DCFF27FBC15100697F43 /* ChildOfWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChildOfWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D4DD0227FBC15100697F43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -118,7 +120,7 @@
 		18D4DD1827FBC33500697F43 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				18D4DD2A27FBDF7100697F43 /* Model */,
+				18D4DD2A27FBDF7100697F43 /* Entity */,
 				18D4DD2B27FBDF7600697F43 /* UseCase */,
 			);
 			path = Domain;
@@ -155,8 +157,8 @@
 		18D4DD2227FBD00800697F43 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
-				18D4DD3927FBF83600697F43 /* ViewModel */,
 				18D4DD3827FBF82E00697F43 /* View */,
+				18D4DD3927FBF83600697F43 /* ViewModel */,
 			);
 			path = SearchView;
 			sourceTree = "<group>";
@@ -172,12 +174,13 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		18D4DD2A27FBDF7100697F43 /* Model */ = {
+		18D4DD2A27FBDF7100697F43 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				18D4DD3627FBE2B800697F43 /* City.swift */,
+				180650EB2803BFDB005E9F0E /* Weather.swift */,
 			);
-			path = Model;
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		18D4DD2B27FBDF7600697F43 /* UseCase */ = {
@@ -354,6 +357,7 @@
 				18D4DD4F27FC0C7500697F43 /* DetailShowViewModel.swift in Sources */,
 				18D4DD4D27FC0C5A00697F43 /* DetailShowUIViewController.swift in Sources */,
 				18D7B1EF27FFC9330077119A /* ImageCacheUseCase.swift in Sources */,
+				180650EC2803BFDB005E9F0E /* Weather.swift in Sources */,
 				18D4DD1E27FBCBEB00697F43 /* APICaller.swift in Sources */,
 				18D4DD3D27FBF87E00697F43 /* CitySearchUseCase.swift in Sources */,
 				18D4DD0527FBC15100697F43 /* SceneDelegate.swift in Sources */,

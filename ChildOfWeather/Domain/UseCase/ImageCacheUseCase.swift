@@ -1,4 +1,3 @@
-import Foundation
 import UIKit
 
 final class ImageCacheUseCase {
@@ -21,3 +20,4 @@ final class ImageCacheUseCase {
         self.imageProvideRepository.getCache(text: cityName) == nil ? false : true
     }
 }
+

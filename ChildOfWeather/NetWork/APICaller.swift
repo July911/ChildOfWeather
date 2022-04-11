@@ -22,6 +22,10 @@ final class APICaller: URLSessionNetworkService {
 
         let task = URLSession.shared.dataTask(with: request) { data, URLResponse, _ in
             
+            guard let data = data else {
+                return
+            }
+            
             guard let response = URLResponse as? HTTPURLResponse
             else {
                 completion(.failure(APICallError.invalidResponse))
@@ -33,8 +37,8 @@ final class APICaller: URLSessionNetworkService {
                 completion(.failure(APICallError.notProperStatusCode))
                 return
             }
-            
-            completion(.success(data!))
+  
+            completion(.success(data))
         }
         
         task.resume()

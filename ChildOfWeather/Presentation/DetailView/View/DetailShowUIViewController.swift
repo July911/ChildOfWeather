@@ -111,13 +111,13 @@ final class DetailShowUIViewController: UIViewController {
             return
         }
         
-        _ = self.viewModel?.detailShowUseCase.extractWeather(data: city) { result in
+        self.viewModel?.detailShowUseCase.extractWeather(data: city) { result in
             switch result {
             case .success(let weather):
                 DispatchQueue.main.async {
-                    self.weatherTextView.text = "\(weather)"
+                    self.weatherTextView.text = "일출을 \(weather.sunrise) 일몰은 \(weather.sunset), 최고기온은 \(weather.maxTemperature) 최저기온은 \(weather.lowTemperature)"
                 }
-            case .failure(let _):
+            case .failure(_):
                 DispatchQueue.main.async {
                     self.weatherTextView.text = "에러다아아아아아아"
                 }

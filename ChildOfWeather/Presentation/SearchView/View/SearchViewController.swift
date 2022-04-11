@@ -56,7 +56,7 @@ final class SearchViewController: UIViewController {
         searchController.isActive = true
         searchController.searchResultsUpdater = self
         self.navigationItem.searchController = searchController
-        self.navigationController?.navigationBar.backgroundColor = .gray
+        self.navigationController?.navigationBar.backgroundColor = .white
     }
     
     private func configureViewModelDelegate() {

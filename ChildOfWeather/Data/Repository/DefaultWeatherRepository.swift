@@ -8,7 +8,10 @@ final class DefaultWeatherRepository: WeatherRepository {
         self.service = service
     }
     
-    func getWeatherInformation(cityName text: String, completion: @escaping (TodayWeather?) -> Void) {
+    func getWeatherInformation(
+        cityName text: String,
+        completion: @escaping (TodayWeather?) -> Void
+    ) {
         let request: RequestType = .getWeatherFromCityName(city: text)
         
         service.request(request) { result in

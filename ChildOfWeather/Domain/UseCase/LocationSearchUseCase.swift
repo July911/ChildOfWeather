@@ -3,7 +3,11 @@ import CoreLocation
 
 final class LocationSearchUseCase {
     
-    func searchLocation(latitude: Double, longitude: Double, completion: @escaping (String?) -> Void) {
+    func searchLocation(
+        latitude: Double,
+        longitude: Double,
+        completion: @escaping (String?) -> Void
+    ) {
         let findLocation = CLLocation(latitude: latitude, longitude: longitude)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "en-US")

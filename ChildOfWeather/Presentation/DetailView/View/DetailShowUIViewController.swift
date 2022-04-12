@@ -49,8 +49,15 @@ final class DetailShowUIViewController: UIViewController {
     }
     
     private func configureNavigationItem() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancelButton))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(didTapAddButton))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self, action: #selector(didTapCancelButton)
+        )
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .camera,
+            target: self,
+            action: #selector(didTapAddButton)
+        )
         self.navigationItem.title = "지도와 날씨"
     }
     
@@ -137,7 +144,9 @@ extension DetailShowUIViewController: DetailViewModelDelegate {
 
     func loadImageView() {
 
-        guard let cacheObject = self.viewModel?.extractCache(key: self.viewModel?.city.name ?? "")
+        guard let cacheObject = self.viewModel?.extractCache(
+            key: self.viewModel?.city.name ?? ""
+        )
         else {
             return
         }

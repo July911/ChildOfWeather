@@ -36,6 +36,11 @@ extension WeatherInformation {
         let minTeperature = self.main.minTemperature
         let sunSet = self.sys.sunset
         let sunRise = self.sys.sunrise
-        return .init(maxTemperature: maxTemperature, minTemperature: minTeperature, sunrise: sunRise, sunset: sunSet)
+        return .init(
+            maxTemperature: maxTemperature,
+            minTemperature: minTeperature,
+            sunrise: sunRise,
+            sunset: sunSet
+        )
     }
 }

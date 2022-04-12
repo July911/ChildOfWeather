@@ -35,7 +35,12 @@ final class MainCoordinator {
         let detailShowUseCase = DetailShowUseCase(
             weatherRepository: DefaultWeatherRepository(service: APIService<WeatherInformation>())
         )
-        viewController.viewModel = DetailShowViewModel(detailShowUseCase: detailShowUseCase, locationSearchUseCase: locationSearchUseCase, imageCacheUseCase: self.imageCacheUseCase, coodinator: self, city: city)
+        viewController.viewModel = DetailShowViewModel(
+            detailShowUseCase: detailShowUseCase,
+            locationSearchUseCase: locationSearchUseCase,
+            imageCacheUseCase: self.imageCacheUseCase,
+            coodinator: self, city: city
+        )
         let navigationController = UINavigationController(rootViewController: viewController)
 
         return navigationController

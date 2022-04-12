@@ -90,6 +90,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension SearchViewController: UISearchResultsUpdating {
+    
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text
         else {
@@ -105,6 +106,7 @@ extension SearchViewController: UISearchResultsUpdating {
 }
     
 extension SearchViewController: SearchViewModelDelegate {
+    
     func didSearchData() {
         self.listTableView.reloadData()
     }

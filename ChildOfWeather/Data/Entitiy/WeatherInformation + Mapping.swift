@@ -29,8 +29,6 @@ struct Sys: Codable {
     let sunset: Int
 }
 
-
-
 extension WeatherInformation {
     
     func toDomain() -> TodayWeather {

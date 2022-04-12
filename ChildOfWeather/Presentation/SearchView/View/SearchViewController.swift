@@ -28,7 +28,7 @@ final class SearchViewController: UIViewController {
         self.configureTableView()
         self.configureSearchController()
         self.configureViewModelDelegate()
-        self.viewModel?.listUp()
+        self.viewModel?.configureLoactionLists()
     }
     
     private func configureTableView() {
@@ -97,9 +97,9 @@ extension SearchViewController: UISearchResultsUpdating {
         }
         
         if isfiltering {
-            self.viewModel?.listUp(text)
+            self.viewModel?.configureLoactionLists(text)
         } else {
-            self.viewModel?.listUp()
+            self.viewModel?.configureLoactionLists()
         }
     }
 }

@@ -38,12 +38,6 @@ final class APIService<T: Decodable> {
                 return
             }
             
-            guard let jsonArr = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            else {
-                completion(.failure(APICallError.failureDecoding))
-                return
-            }
-            
             guard let decodedObject = try? JSONDecoder().decode(T.self, from: data)
             else {
                 completion(.failure(APICallError.failureDecoding))

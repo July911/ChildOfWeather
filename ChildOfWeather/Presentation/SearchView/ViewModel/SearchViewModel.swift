@@ -3,7 +3,7 @@ import Foundation
 final class SearchViewModel {
     
     let coordinator: MainCoordinator
-    var filterdResults: [City]?
+    var filterdResults: [City]? 
     weak var delegate: SearchViewModelDelegate?
     private let searchUseCase: CitySearchUseCase
     
@@ -12,7 +12,7 @@ final class SearchViewModel {
         self.coordinator = coodinator
     }
     
-    func listUp(_ text: String? = nil) {
+    func configureLoactionLists(_ text: String? = nil) {
         
         if text == nil {
             self.filterdResults = self.searchUseCase.extractAll()

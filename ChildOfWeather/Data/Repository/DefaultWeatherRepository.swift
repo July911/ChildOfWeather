@@ -15,10 +15,6 @@ final class DefaultWeatherRepository: WeatherRepository {
             switch result {
             case .success(let weatherInformation):
                 let todayWeather = weatherInformation.toDomain()
-#if DEBUG
-                print("weatherInformation: \(weatherInformation)")
-                print("todayWeather: \(todayWeather)")
-#endif
                 completion(todayWeather)
             case .failure(_):
                 completion(nil)

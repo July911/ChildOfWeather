@@ -63,7 +63,7 @@ final class DetailShowUIViewController: UIViewController {
     }
     
     private func configureViewSettingUseViewModel() {
-        self.viewModel?.createURL()
+        self.viewModel?.extractURLForMap()
         self.viewModel?.loadCacheImage()
         self.viewModel?.extractWeatherDescription()
     }
@@ -107,9 +107,18 @@ final class DetailShowUIViewController: UIViewController {
     private func webviewSnapshot(completion: @escaping () -> Void) {
         let configuration = WKSnapshotConfiguration()
         self.WebView.takeSnapshot(with: configuration) { [weak self] (image, error) in
-            self?.viewModel?.imageCacheUseCase.setCache(cityName: self?.viewModel?.city.name ?? "",
-                image: image ?? UIImage()
-            )
+            
+            guard let cityName = self?.viewModel?.city.name as? NSString
+            else {
+                return
+            }
+            
+            guard let image = image else {
+                return
+            }
+
+            let cacheObject = ImageCacheData(key: cityName, value: image)
+            self?.viewModel?.cache(object: cacheObject)
         }
     }
 }
@@ -128,14 +137,15 @@ extension DetailShowUIViewController: DetailViewModelDelegate {
 
     func loadImageView() {
 
-        guard let image = self.viewModel?.imageCacheUseCase.getImage(cityName: self.viewModel?.city.name ?? "")
+        guard let cacheObject = self.viewModel?.extractCache(key: self.viewModel?.city.name ?? "")
         else {
             return
         }
+        
         WebView.isHidden = true
         imageView.isHidden = false
         
-        self.imageView.image = image
+        self.imageView.image = cacheObject.value
     }
     
     func cacheImage() {

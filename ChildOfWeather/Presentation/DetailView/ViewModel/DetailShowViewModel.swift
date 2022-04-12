@@ -4,9 +4,9 @@ final class DetailShowViewModel {
     
     let coordinator: MainCoordinator
     let city: City
-    let detailShowUseCase: DetailShowUseCase
-    let locationSearchUseCase: LocationSearchUseCase
-    let imageCacheUseCase: ImageCacheUseCase
+    private let detailShowUseCase: DetailShowUseCase
+    private let locationSearchUseCase: LocationSearchUseCase
+    private let imageCacheUseCase: ImageCacheUseCase
     weak var delegate: DetailViewModelDelegate?
     
     init(
@@ -23,7 +23,7 @@ final class DetailShowViewModel {
         self.city = city
     }
     
-    func createURL() {
+    func extractURLForMap() {
         self.locationSearchUseCase.searchLocation(
             latitude: city.coord.lat,
             longitude: city.coord.lon,
@@ -50,19 +50,22 @@ final class DetailShowViewModel {
         })
     }
     
+    func cache(object: ImageCacheData) {
+        self.imageCacheUseCase.setCache(object: object)
+    }
+    
+    func extractCache(key: String) -> ImageCacheData? {
+        self.imageCacheUseCase.getImage(cityName: key)
+    }
+    
     func extractWeatherDescription() {
-        guard self.city.name != nil
-        else {
-            return
-        }
         self.detailShowUseCase.extractTodayWeather(
             cityName: self.city.name) { [weak self] (weather) in
             let sunrise = weather.sunrise.toKoreanTime()
             let sunset = weather.sunset.toKoreanTime()
             let maxTemp = weather.maxTemperature.toCelsius()
-            let minTemp = weather.minTemperature.toCelsius()
-            
             let weatherDescription = "일출은 \(sunrise) 입니다. 일몰은 \(sunset) 기온은 \(maxTemp)입니다."
+                
             self?.delegate?.loadTodayDescription(weather: weatherDescription)
         }
     }

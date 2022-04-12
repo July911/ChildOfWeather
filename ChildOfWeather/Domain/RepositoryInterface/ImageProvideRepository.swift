@@ -1,10 +1,10 @@
 import Foundation
-import UIKit
 
 protocol ImageProvideRepository {
+        
+    var service: CacheService { get }
     
-    func setCache(text: String, image: UIImage) 
+    func setCache(object: ImageCacheData)
 
-    func getCache(text: String) -> UIImage?
-
+    func getCache(key: String) -> ImageCacheData?
 }

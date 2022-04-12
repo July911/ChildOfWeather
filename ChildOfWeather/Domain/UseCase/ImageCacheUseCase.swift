@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 final class ImageCacheUseCase {
     
@@ -8,16 +8,16 @@ final class ImageCacheUseCase {
         self.imageProvideRepository = imageProvideRepository
     }
 
-    func setCache(cityName: String, image: UIImage) {
-        self.imageProvideRepository.setCache(text: cityName, image: image)
+    func setCache(object: ImageCacheData) {
+        self.imageProvideRepository.setCache(object: object)
     }
     
-    func getImage(cityName: String) -> UIImage? {
-        self.imageProvideRepository.getCache(text: cityName)
+    func getImage(cityName: String) -> ImageCacheData? {
+        self.imageProvideRepository.getCache(key: cityName)
     }
     
     func checkCacheExist(cityName: String) -> Bool {
-        self.imageProvideRepository.getCache(text: cityName) == nil ? false : true
+        self.imageProvideRepository.getCache(key: cityName) == nil ? false : true
     }
 }
 

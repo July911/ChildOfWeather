@@ -2,27 +2,32 @@ import Foundation
 
 final class DefaultWeatherRepository: WeatherRepository {
     
-    let service: URLSessionNetworkService
+    let service: APIService<WeatherInformation>
     
-    init(service: URLSessionNetworkService) {
+    init(service: APIService<WeatherInformation>) {
         self.service = service
     }
     
-    func getDataFromCity(text: String, completion: @escaping (Data?) -> Void) {
+    func getWeatherInformation(cityName text: String, completion: @escaping (TodayWeather?) -> Void) {
         let request: RequestType = .getWeatherFromCityName(city: text)
         
         service.request(request) { result in
             switch result {
-            case .success(let data):
-                completion(data)
+            case .success(let weatherInformation):
+                let todayWeather = weatherInformation.toDomain()
+#if DEBUG
+                print("weatherInformation: \(weatherInformation)")
+                print("todayWeather: \(todayWeather)")
+#endif
+                completion(todayWeather)
             case .failure(_):
                 completion(nil)
             }
         }
     }
     
-    func getURLFromLoaction(text: String) -> String {
-        let type: RequestType = .getMapfromLocationInformation(location: text)
+    func getURLFromLoaction(locationAdress adress: String) -> String {
+        let type: RequestType = .getMapfromLocationInformation(location: adress)
         
         return type.fullURL
     }

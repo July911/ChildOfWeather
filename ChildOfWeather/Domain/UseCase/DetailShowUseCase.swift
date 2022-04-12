@@ -2,36 +2,28 @@ import Foundation
 
 final class DetailShowUseCase {
     
-    let weatherRepository: WeatherRepository
+    private let weatherRepository: WeatherRepository
     
     init(weatherRepository: WeatherRepository) {
         self.weatherRepository = weatherRepository
     }
     
-    func extractWeather(data city: City, completion: @escaping (Result<Weather,dataError>) -> Void) {
-        let cityName = city.name
-        
-        self.weatherRepository.getDataFromCity(text: cityName, completion: { data in
-            
-            guard let data = data
+    func extractTodayWeather(
+        cityName: String,
+        completion: @escaping (TodayWeather) -> Void
+    ) {
+        self.weatherRepository.getWeatherInformation(cityName: cityName) { (todayWeather) in
+            guard let todayWeather = todayWeather
             else {
                 return
             }
             
-            guard let weatherInformation = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-            else {
-                completion(.failure(dataError.dataNotCome))
-                return
-            }
-            
-            guard let weather = Weather(data: weatherInformation)
-            else {
-                completion(.failure(dataError.dataNotCome))
-                return
-            }
-            
-            completion(.success(weather))
-        })
+            completion(todayWeather)
+        }
+    }
+    
+    func getURL(from cityAdress: String) -> String {
+        self.weatherRepository.getURLFromLoaction(locationAdress: cityAdress)
     }
 }
 

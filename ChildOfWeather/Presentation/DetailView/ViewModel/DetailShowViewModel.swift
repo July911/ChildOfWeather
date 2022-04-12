@@ -28,7 +28,12 @@ final class DetailShowViewModel {
             latitude: city.coord.lat,
             longitude: city.coord.lon,
             completion: { [weak self] strings in
-            let urlString = self?.detailShowUseCase.weatherRepository.getURLFromLoaction(text: strings ?? "")
+            guard let adress = strings
+                else {
+                return
+            }
+                
+            let urlString = self?.detailShowUseCase.getURL(from: adress)
                 
             guard let replace = urlString?.replacingOccurrences(of: " ", with: "%20")
                 else {
@@ -45,6 +50,23 @@ final class DetailShowViewModel {
         })
     }
     
+    func extractWeatherDescription() {
+        guard self.city.name != nil
+        else {
+            return
+        }
+        self.detailShowUseCase.extractTodayWeather(
+            cityName: self.city.name) { [weak self] (weather) in
+            let sunrise = weather.sunrise.toKoreanTime()
+            let sunset = weather.sunset.toKoreanTime()
+            let maxTemp = weather.maxTemperature.toCelsius()
+            let minTemp = weather.minTemperature.toCelsius()
+            
+            let weatherDescription = "일출은 \(sunrise) 입니다. 일몰은 \(sunset) 기온은 \(maxTemp)입니다."
+            self?.delegate?.loadTodayDescription(weather: weatherDescription)
+        }
+    }
+    
     func loadCacheImage() {
         if self.imageCacheUseCase.checkCacheExist(cityName: self.city.name) == true {
             self.delegate?.loadImageView()
@@ -54,6 +76,14 @@ final class DetailShowViewModel {
 
 protocol DetailViewModelDelegate: AnyObject {
     func loadWebView(url: URL)
+    func loadTodayDescription(weather description: String)
     func loadImageView()
     func cacheImage()
+}
+
+private extension Double {
+    
+    func toCelsius() -> Double {
+        return (self - 32)/1.8
+    }
 }

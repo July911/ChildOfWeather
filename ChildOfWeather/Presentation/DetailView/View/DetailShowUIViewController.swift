@@ -45,8 +45,7 @@ final class DetailShowUIViewController: UIViewController {
         self.configureNavigationItem()
         self.configureViewModelDelegate()
         self.configureLayout()
-        self.configureViewSetting()
-        self.viewModel?.loadCacheImage()
+        self.configureViewSettingUseViewModel()
     }
     
     private func configureNavigationItem() {
@@ -63,9 +62,10 @@ final class DetailShowUIViewController: UIViewController {
         self.webviewSnapshot { }
     }
     
-    private func configureViewSetting() {
+    private func configureViewSettingUseViewModel() {
         self.viewModel?.createURL()
-        self.configureWeatherInformation()
+        self.viewModel?.loadCacheImage()
+        self.viewModel?.extractWeatherDescription()
     }
     
     private func configureViewModelDelegate() {
@@ -104,27 +104,6 @@ final class DetailShowUIViewController: UIViewController {
         NSLayoutConstraint.activate(imageViewLayout)
     }
     
-    private func configureWeatherInformation() {
-        
-        guard let city = self.viewModel?.city
-        else {
-            return
-        }
-        
-        self.viewModel?.detailShowUseCase.extractWeather(data: city) { result in
-            switch result {
-            case .success(let weather):
-                DispatchQueue.main.async {
-                    self.weatherTextView.text = "일출을 \(weather.sunrise) 일몰은 \(weather.sunset), 최고기온은 \(weather.maxTemperature) 최저기온은 \(weather.lowTemperature)"
-                }
-            case .failure(_):
-                DispatchQueue.main.async {
-                    self.weatherTextView.text = "에러다아아아아아아"
-                }
-            }
-        }
-    }
-    
     private func webviewSnapshot(completion: @escaping () -> Void) {
         let configuration = WKSnapshotConfiguration()
         self.WebView.takeSnapshot(with: configuration) { [weak self] (image, error) in
@@ -141,6 +120,12 @@ extension DetailShowUIViewController: DetailViewModelDelegate {
        WebView.load(URLRequest(url: url))
     }
     
+    func loadTodayDescription(weather description: String) {
+        DispatchQueue.main.async {
+            self.weatherTextView.text = "\(description)"
+        }
+    }
+
     func loadImageView() {
 
         guard let image = self.viewModel?.imageCacheUseCase.getImage(cityName: self.viewModel?.city.name ?? "")

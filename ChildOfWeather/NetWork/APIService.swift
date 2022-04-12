@@ -7,11 +7,11 @@ enum APICallError: Error {
     case notProperStatusCode
 }
 
-final class APICaller: URLSessionNetworkService {
-    
+final class APIService<T: Decodable> {
+        
     func request(
         _ type: RequestType,
-        completion: @escaping (Result<Data, Error>) -> Void
+        completion: @escaping (Result<T, Error>) -> Void
     ) {
         
         guard let url = URL(string: type.fullURL)
@@ -37,8 +37,20 @@ final class APICaller: URLSessionNetworkService {
                 completion(.failure(APICallError.notProperStatusCode))
                 return
             }
+            
+            guard let jsonArr = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            else {
+                completion(.failure(APICallError.failureDecoding))
+                return
+            }
+            
+            guard let decodedObject = try? JSONDecoder().decode(T.self, from: data)
+            else {
+                completion(.failure(APICallError.failureDecoding))
+                return
+            }
   
-            completion(.success(data))
+            completion(.success(decodedObject))
         }
         
         task.resume()

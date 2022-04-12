@@ -1,7 +1,6 @@
 import Foundation
 import CoreLocation
 
-
 final class LocationSearchUseCase {
     
     func searchLocation(latitude: Double, longitude: Double, completion: @escaping (String?) -> Void) {

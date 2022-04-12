@@ -2,7 +2,7 @@ import UIKit
 
 final class ImageCacheUseCase {
     
-    let imageProvideRepository: ImageProvideRepository
+    private let imageProvideRepository: ImageProvideRepository
     
     init(imageProvideRepository: ImageProvideRepository) {
         self.imageProvideRepository = imageProvideRepository

@@ -1,6 +1,6 @@
 import Foundation
 
-struct City: Codable {
+struct City: Decodable {
     
     let id: Int
     let name: String
@@ -10,9 +10,9 @@ struct City: Codable {
 }
 
 extension City {
-    static let EMPTY = City(id: .zero, name: "", state: "", country: "", coord: Coord(lon: 1, lat: 1))
+    static let EMPTY = City(id: .zero, name: "", state: "", country: "", coord: Coord(lat: 1, lon: 1))
 }
 
 struct Coord: Codable {
-    let lon, lat: Double
+    let lat, lon: Double
 }

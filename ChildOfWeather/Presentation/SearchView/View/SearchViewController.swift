@@ -2,11 +2,14 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
-    var viewModel: SearchViewModel?
+    var viewModel: SearchViewViewModelProtocol?
     
     private let listTableView: UITableView = {
         let tableview = UITableView(frame: .zero)
-        tableview.register(ListTableViewCell.self, forCellReuseIdentifier: String(describing: ListTableViewCell.self))
+        tableview.register(
+            ListTableViewCell.self,
+            forCellReuseIdentifier: String(describing: ListTableViewCell.self)
+        )
         tableview.estimatedRowHeight = 70
         tableview.rowHeight = 60
         tableview.translatesAutoresizingMaskIntoConstraints = false
@@ -20,7 +23,7 @@ final class SearchViewController: UIViewController {
         self.configureTableView()
         self.configureSearchController()
         self.configureViewModelDelegate()
-        self.viewModel?.configureLoactionLists()
+        self.viewModel?.configureLoactionLists(nil)
     }
     
     private func configureTableView() {
@@ -77,12 +80,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         
-        guard let city = self.viewModel?.filterdResults?[indexPath.row]
-        else {
-            return
+        (viewModel?.filterdResults?[indexPath.row]).flatMap {
+            viewModel?.occuredCellTapEvent(city: $0)
         }
-        
-        self.viewModel?.occuredCellTapEvent(city: city)
     }
 }
 

@@ -1,9 +1,9 @@
 import Foundation
 
-final class DetailShowViewModel {
+final class DetailShowViewModel: DetailShowViewModelProtocol {
     
-    let coordinator: MainCoordinator
     let city: City
+    private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
     private let locationSearchUseCase: LocationSearchUseCase
     private let imageCacheUseCase: ImageCacheUseCase
@@ -75,6 +75,10 @@ final class DetailShowViewModel {
         if self.imageCacheUseCase.checkCacheExist(cityName: self.city.name) == true {
             self.delegate?.loadImageView()
         } 
+    }
+    
+    func occuredBackButtonTapEvent() {
+        self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
     }
 }
 

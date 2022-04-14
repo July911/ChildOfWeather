@@ -1,6 +1,6 @@
 import Foundation
 
-final class SearchViewModel {
+final class SearchViewModel: SearchViewViewModelProtocol {
     
     var filterdResults: [City]? 
     weak var delegate: SearchViewModelDelegate?

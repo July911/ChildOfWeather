@@ -3,7 +3,7 @@ import WebKit
 
 final class DetailShowUIViewController: UIViewController {
     
-    var viewModel: DetailShowViewModel?
+    var viewModel: DetailShowViewModelProtocol?
 
     private let webView: WKWebView = {
         let preferences = WKWebpagePreferences()
@@ -62,7 +62,7 @@ final class DetailShowUIViewController: UIViewController {
     }
     
     @objc func didTapCancelButton() {
-        self.viewModel?.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
+        self.viewModel?.occuredBackButtonTapEvent()
     }
     
     @objc func didTapAddButton() {

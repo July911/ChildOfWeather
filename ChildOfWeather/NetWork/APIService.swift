@@ -7,14 +7,15 @@ enum APICallError: Error {
     case notProperStatusCode
 }
 
-final class APIService<T: Decodable> {
+final class APIService {
         
-    func request(
-        _ type: RequestType,
-        completion: @escaping (Result<T, Error>) -> Void
+    func request<T: Decodable>(
+        decodedType: T.Type,
+        requestType: RequestType,
+        completion: @escaping (Result<T, APICallError>) -> Void
     ) {
         
-        guard let url = URL(string: type.fullURL)
+        guard let url = URL(string: requestType.fullURL)
         else {
             return
         }

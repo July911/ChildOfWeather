@@ -1,9 +1,15 @@
 import UIKit
+import CoreLocation
 
 final class MainCoordinator {
 
     private let navigationController: UINavigationController
-    private let imageCacheUseCase = ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
+    private let imageCacheUseCase = ImageCacheUseCase(
+        imageProvideRepository: DefaultImageProvideRepository()
+    )
+    private let defaultLocationRepository = DefaultAddressSearchRepository(
+        service: CLGeocoder()
+    )
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -31,7 +37,7 @@ final class MainCoordinator {
 
     private func configureDetailShowViewController(city: City) -> UINavigationController {
         let viewController = DetailShowUIViewController()
-        let locationSearchUseCase = LocationSearchUseCase()
+        let locationSearchUseCase = LocationSearchUseCase(addressRepository: defaultLocationRepository)
         let detailShowUseCase = DetailShowUseCase(
             weatherRepository: DefaultWeatherRepository(service: APIService<WeatherInformation>())
         )

@@ -12,7 +12,7 @@ final class DetailShowUseCase {
         cityName: String,
         completion: @escaping (TodayWeather) -> Void
     ) {
-        self.weatherRepository.getWeatherInformation(cityName: cityName) { (todayWeather) in
+        self.weatherRepository.fetchWeatherInformation(cityName: cityName) { (todayWeather) in
             guard let todayWeather = todayWeather
             else {
                 return
@@ -22,11 +22,11 @@ final class DetailShowUseCase {
         }
     }
     
-    func getURL(from cityAdress: String) -> String {
-        self.weatherRepository.getURLFromLoaction(locationAdress: cityAdress)
+    func fetchURL(from cityAddress: String) -> String {
+        self.weatherRepository.fetchURLFromLoaction(locationAddress: cityAddress)
     }
 }
 
-enum dataError: Error {
+enum DataError: Error {
     case dataNotCome
 }

@@ -33,7 +33,7 @@ final class DetailShowViewModel {
                 return
             }
                 
-            let urlString = self?.detailShowUseCase.getURL(from: adress)
+            let urlString = self?.detailShowUseCase.fetchURL(from: adress)
                 
             guard let replace = urlString?.replacingOccurrences(of: " ", with: "%20")
                 else {
@@ -55,7 +55,7 @@ final class DetailShowViewModel {
     }
     
     func extractCache(key: String) -> ImageCacheData? {
-        self.imageCacheUseCase.getImage(cityName: key)
+        self.imageCacheUseCase.fetchImage(cityName: key)
     }
     
     func extractWeatherDescription() {

@@ -6,5 +6,5 @@ protocol ImageProvideRepository {
     
     func setCache(object: ImageCacheData)
 
-    func getCache(key: String) -> ImageCacheData?
+    func fetchCache(key: String) -> ImageCacheData?
 }

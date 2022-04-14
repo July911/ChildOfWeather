@@ -2,10 +2,10 @@ import Foundation
 
 protocol WeatherRepository {
     
-    func getWeatherInformation(
+    func fetchWeatherInformation(
         cityName text: String,
         completion: @escaping (TodayWeather?) -> Void
     )
     
-    func getURLFromLoaction(locationAdress adress: String) -> String
+    func fetchURLFromLoaction(locationAddress address: String) -> String
 }

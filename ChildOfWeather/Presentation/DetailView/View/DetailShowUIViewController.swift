@@ -5,7 +5,7 @@ final class DetailShowUIViewController: UIViewController {
     
     var viewModel: DetailShowViewModel?
 
-    private let WebView: WKWebView = {
+    private let webView: WKWebView = {
         let preferences = WKWebpagePreferences()
         preferences.allowsContentJavaScript = true
         let configuration = WKWebViewConfiguration()
@@ -80,15 +80,15 @@ final class DetailShowUIViewController: UIViewController {
     }
     
     private func configureLayout() {
-        self.view.addSubview(self.WebView)
+        self.view.addSubview(self.webView)
         self.view.addSubview(self.weatherTextView)
         self.view.addSubview(self.imageView)
 
         let webViewLayout: [NSLayoutConstraint] = [
-            self.WebView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6),
-            self.WebView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.WebView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.WebView.topAnchor.constraint(equalTo: self.view.topAnchor)
+            self.webView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6),
+            self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.webView.topAnchor.constraint(equalTo: self.view.topAnchor)
         ]
         
         let entireStackViewLayout: [NSLayoutConstraint] = [
@@ -113,7 +113,7 @@ final class DetailShowUIViewController: UIViewController {
     
     private func webviewSnapshot(completion: @escaping () -> Void) {
         let configuration = WKSnapshotConfiguration()
-        self.WebView.takeSnapshot(with: configuration) { [weak self] (image, error) in
+        self.webView.takeSnapshot(with: configuration) { [weak self] (image, error) in
             
             guard let cityName = self?.viewModel?.city.name as? NSString
             else {
@@ -133,7 +133,7 @@ final class DetailShowUIViewController: UIViewController {
 extension DetailShowUIViewController: DetailViewModelDelegate {
     
     func loadWebView(url: URL) {
-       WebView.load(URLRequest(url: url))
+       webView.load(URLRequest(url: url))
     }
     
     func loadTodayDescription(weather description: String) {
@@ -151,7 +151,7 @@ extension DetailShowUIViewController: DetailViewModelDelegate {
             return
         }
         
-        WebView.isHidden = true
+        webView.isHidden = true
         imageView.isHidden = false
         
         self.imageView.image = cacheObject.value

@@ -12,12 +12,12 @@ final class ImageCacheUseCase {
         self.imageProvideRepository.setCache(object: object)
     }
     
-    func getImage(cityName: String) -> ImageCacheData? {
-        self.imageProvideRepository.getCache(key: cityName)
+    func fetchImage(cityName: String) -> ImageCacheData? {
+        self.imageProvideRepository.fetchCache(key: cityName)
     }
     
     func checkCacheExist(cityName: String) -> Bool {
-        self.imageProvideRepository.getCache(key: cityName) == nil ? false : true
+        self.imageProvideRepository.fetchCache(key: cityName) == nil ? false : true
     }
 }
 

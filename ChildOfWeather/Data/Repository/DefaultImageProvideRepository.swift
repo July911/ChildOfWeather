@@ -9,7 +9,7 @@ final class DefaultImageProvideRepository: ImageProvideRepository {
         self.service.cache.setObject(object, forKey: key as NSString)
     }
     
-    func getCache(key: String) -> ImageCacheData? {
+    func fetchCache(key: String) -> ImageCacheData? {
         self.service.cache.object(forKey: key as NSString)
     }
 }

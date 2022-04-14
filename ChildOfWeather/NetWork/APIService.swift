@@ -44,7 +44,7 @@ final class APIService {
                 completion(.failure(APICallError.failureDecoding))
                 return
             }
-  
+
             completion(.success(decodedObject))
         }
         

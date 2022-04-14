@@ -82,10 +82,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView,didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        let city = self.viewModel?.filterdResults?[indexPath.row] ?? City.EMPTY
-        self.viewModel?.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
+        
+        guard let city = self.viewModel?.filterdResults?[indexPath.row]
+        else {
+            return
+        }
+        self.viewModel?.coordinator.occuredViewEvent(
+            with: .presentDetailShowUIViewController(cityName: city)
+        )
     }
 }
 

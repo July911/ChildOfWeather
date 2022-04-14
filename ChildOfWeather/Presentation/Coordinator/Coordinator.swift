@@ -17,8 +17,14 @@ final class MainCoordinator {
 
     func start() {
         let viewController = SearchViewController()
-        let searchUseCase = CitySearchUseCase(searchRepository: DefaultCitySearchRepository())
-        let searchViewModel = SearchViewModel(searchUseCase: searchUseCase, coodinator: self)
+        let citySearchRepository = DefaultCitySearchRepository()
+        let searchUseCase = CitySearchUseCase(
+            searchRepository: citySearchRepository
+        )
+        let searchViewModel = SearchViewModel(
+            searchUseCase: searchUseCase,
+            coodinator: self
+        )
         viewController.viewModel = searchViewModel
         self.navigationController.setViewControllers([viewController], animated: false)
     }
@@ -37,9 +43,10 @@ final class MainCoordinator {
 
     private func configureDetailShowViewController(city: City) -> UINavigationController {
         let viewController = DetailShowUIViewController()
-        let locationSearchUseCase = LocationSearchUseCase(addressRepository: defaultLocationRepository)
+        let locationSearchUseCase = LocationSearchUseCase(addressRepository: self.defaultLocationRepository)
+        let weatherRepository =  DefaultWeatherRepository(service: APIService())
         let detailShowUseCase = DetailShowUseCase(
-            weatherRepository: DefaultWeatherRepository(service: APIService<WeatherInformation>())
+            weatherRepository: weatherRepository
         )
         viewController.viewModel = DetailShowViewModel(
             detailShowUseCase: detailShowUseCase,

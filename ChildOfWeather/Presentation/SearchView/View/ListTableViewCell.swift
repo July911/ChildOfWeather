@@ -57,8 +57,8 @@ class ListTableViewCell: UITableViewCell {
     
     func configureCell(city: City) {
         self.nameLabel.text = city.name
-        self.latLabel.text = "위도: \(city.coord.lat.description)"
-        self.lonLabel.text = "경도: \(city.coord.lon.description)"
+        self.latLabel.text = "위도: \(city.coord.lat.toInt.description)"
+        self.lonLabel.text = "경도: \(city.coord.lon.toInt.description)"
     }
     
     private func configureLayout() {
@@ -76,5 +76,12 @@ class ListTableViewCell: UITableViewCell {
             entireStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ]
         NSLayoutConstraint.activate(entireStackViewLayout)
+    }
+}
+
+private extension Double {
+    
+    var toInt: Int {
+        Int(self)
     }
 }

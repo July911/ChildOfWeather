@@ -13,14 +13,6 @@ final class SearchViewController: UIViewController {
         
         return tableview
     }()
-    
-    private var isfiltering: Bool {
-        let searchController = self.navigationItem.searchController
-        let isActive = searchController?.isActive ?? false
-        let isSearchBarHasText = searchController?.searchBar.text?.isEmpty == false
-        
-        return isActive && isSearchBarHasText
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +46,7 @@ final class SearchViewController: UIViewController {
         searchController.searchBar.placeholder = "please search the city that you want to get weather infomation"
         searchController.searchBar.tintColor = .white
         searchController.isActive = true
-        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         self.navigationItem.searchController = searchController
         self.navigationController?.navigationBar.backgroundColor = .white
     }
@@ -89,25 +81,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         else {
             return
         }
-        self.viewModel?.coordinator.occuredViewEvent(
-            with: .presentDetailShowUIViewController(cityName: city)
-        )
+        
+        self.viewModel?.occuredCellTapEvent(city: city)
     }
 }
 
-extension SearchViewController: UISearchResultsUpdating {
+extension SearchViewController: UISearchBarDelegate {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text
-        else {
-            return
-        }
-        
-        if isfiltering {
-            self.viewModel?.configureLoactionLists(text)
-        } else {
-            self.viewModel?.configureLoactionLists()
-        }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.viewModel?.configureLoactionLists(searchText)
     }
 }
     

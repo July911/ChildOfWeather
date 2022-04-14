@@ -2,9 +2,9 @@ import Foundation
 
 final class SearchViewModel {
     
-    let coordinator: MainCoordinator
     var filterdResults: [City]? 
     weak var delegate: SearchViewModelDelegate?
+    private let coordinator: MainCoordinator
     private let searchUseCase: CitySearchUseCase
     
     init(searchUseCase: CitySearchUseCase, coodinator: MainCoordinator) {
@@ -24,6 +24,10 @@ final class SearchViewModel {
         DispatchQueue.main.async {
             self.delegate?.didSearchData()
         }
+    }
+    
+    func occuredCellTapEvent(city: City) {
+        self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
     }
 }
 

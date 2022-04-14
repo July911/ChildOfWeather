@@ -5,6 +5,7 @@ enum APICallError: Error {
     case errorExist
     case failureDecoding
     case notProperStatusCode
+    case dataNotfetched
 }
 
 final class APIService {
@@ -21,9 +22,17 @@ final class APIService {
         }
         let request = URLRequest(url: url)
 
-        let task = URLSession.shared.dataTask(with: request) { data, URLResponse, _ in
+        let task = URLSession.shared.dataTask(with: request) { data, URLResponse, error in
             
-            guard let data = data else {
+            guard error == nil
+            else {
+                completion(.failure(APICallError.errorExist))
+                return
+            }
+            
+            guard let data = data
+            else {
+                completion(.failure(APICallError.dataNotfetched))
                 return
             }
             

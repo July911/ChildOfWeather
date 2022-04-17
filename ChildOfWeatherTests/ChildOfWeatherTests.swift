@@ -40,4 +40,18 @@ class ChildOfWeatherTests: XCTestCase {
         XCTAssertEqual(weatherInformation.main.maxTemperature, weatherFromEntity.maxTemperature)
         XCTAssertEqual(weatherInformation.main.minTemperature, weatherFromEntity.minTemperature)
     }
+    
+    func test_ImageCacheUseCase_cache를_하였을때_정확한_이름으로_들어간다() {
+        let image = UIImage(systemName: "plus")
+        let key = UUID().uuidString as! NSString
+        let data = ImageCacheData(key: key, value: image!)
+        
+        let imageCacheRepository = DefaultImageProvideRepository()
+        let imagaCacheUseCase = ImageCacheUseCase(imageProvideRepository: imageCacheRepository)
+        
+        imagaCacheUseCase.setCache(object: data)
+        let cachedImage = imagaCacheUseCase.fetchImage(cityName: key as String)
+        
+        XCTAssertEqual(cachedImage?.value, image)
+    }
 }

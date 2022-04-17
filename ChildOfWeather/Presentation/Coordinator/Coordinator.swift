@@ -7,9 +7,7 @@ final class MainCoordinator {
     private let imageCacheUseCase = ImageCacheUseCase(
         imageProvideRepository: DefaultImageProvideRepository()
     )
-    private let defaultLocationRepository = DefaultAddressSearchRepository(
-        service: CLGeocoder()
-    )
+    private let defaultLocationRepository = DefaultAddressSearchRepository()
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -43,7 +41,7 @@ final class MainCoordinator {
 
     private func configureDetailShowViewController(city: City) -> UINavigationController {
         let viewController = DetailShowUIViewController()
-        let locationSearchUseCase = LocationSearchUseCase(addressRepository: self.defaultLocationRepository)
+        let locationSearchUseCase = AddressSearchUseCase(addressRepository: self.defaultLocationRepository)
         let weatherRepository =  DefaultWeatherRepository(service: APIService())
         let detailShowUseCase = DetailShowUseCase(
             weatherRepository: weatherRepository

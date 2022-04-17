@@ -43,7 +43,7 @@ class ChildOfWeatherTests: XCTestCase {
     
     func test_ImageCacheUseCase_cache를_하였을때_정확한_이름으로_들어간다() {
         let image = UIImage(systemName: "plus")
-        let key = UUID().uuidString as! NSString
+        let key = UUID().uuidString as NSString
         let data = ImageCacheData(key: key, value: image!)
         
         let imageCacheRepository = DefaultImageProvideRepository()
@@ -53,5 +53,20 @@ class ChildOfWeatherTests: XCTestCase {
         let cachedImage = imagaCacheUseCase.fetchImage(cityName: key as String)
         
         XCTAssertEqual(cachedImage?.value, image)
+    }
+    
+    func test_AddressSearchUseCase_이매동_위경도를_입력했을때_이매동_주소가_나온다() {
+        let imaelatitude = 37.39508700000
+        let imaelongitude = 127.12415500000
+        let addressSearchRepository = DefaultAddressSearchRepository()
+        let addressSearchUseCase = AddressSearchUseCase(addressRepository: addressSearchRepository)
+        
+        let promise = expectation(description: "")
+        addressSearchUseCase.searchLocation(latitude: imaelatitude, longitude: imaelongitude) { (address) in
+            XCTAssertEqual(address!, "153-2 Imae-dong")
+            promise.fulfill()
+        }
+        
+        wait(for: [promise], timeout: 3)
     }
 }

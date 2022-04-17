@@ -5,13 +5,13 @@ final class DetailShowViewModel: DetailShowViewModelProtocol {
     let city: City
     private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
-    private let locationSearchUseCase: LocationSearchUseCase
+    private let locationSearchUseCase: AddressSearchUseCase
     private let imageCacheUseCase: ImageCacheUseCase
     weak var delegate: DetailViewModelDelegate?
     
     init(
         detailShowUseCase: DetailShowUseCase,
-         locationSearchUseCase: LocationSearchUseCase,
+         locationSearchUseCase: AddressSearchUseCase,
         imageCacheUseCase: ImageCacheUseCase,
         coodinator: MainCoordinator,
         city: City

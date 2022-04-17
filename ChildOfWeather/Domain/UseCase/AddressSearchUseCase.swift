@@ -1,7 +1,7 @@
 import Foundation
 import CoreLocation
 
-final class LocationSearchUseCase {
+final class AddressSearchUseCase {
     
     let addressRepository: AddressSearchReopsitory
     
@@ -20,8 +20,8 @@ final class LocationSearchUseCase {
         self.addressRepository.service.reverseGeocodeLocation(
                 findLocation,
                 preferredLocale: locale) { (place, error) in
-                    let city = place?.last?.name
-                    completion(city)
+                    let cityAddress = place?.last?.name
+                    completion(cityAddress)
             }
     }
 }

@@ -1,16 +1,19 @@
 import XCTest
 @testable import ChildOfWeather
 
-class ChildOfWeatherTests: XCTestCase {
+
+class CitySearchUseCaseTests: XCTestCase {
+    
+    var sut: CitySearchUseCase?
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+        let cityRepository = DefaultCitySearchRepository()
+        sut = CitySearchUseCase(searchRepository: cityRepository)
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        sut = nil
     }
-
+    
     func test_CitySearchUseCase_아무것도_입력하지_않았을때_데이터를_전부_받아온다() {
         let cityRepository = DefaultCitySearchRepository()
         let cities = cityRepository.sortCity().count
@@ -39,34 +42,5 @@ class ChildOfWeatherTests: XCTestCase {
         XCTAssertEqual(weatherInformation.sys.sunrise, weatherFromEntity.sunrise)
         XCTAssertEqual(weatherInformation.main.maxTemperature, weatherFromEntity.maxTemperature)
         XCTAssertEqual(weatherInformation.main.minTemperature, weatherFromEntity.minTemperature)
-    }
-    
-    func test_ImageCacheUseCase_cache를_하였을때_정확한_이름으로_들어간다() {
-        let image = UIImage(systemName: "plus")
-        let key = UUID().uuidString as NSString
-        let data = ImageCacheData(key: key, value: image!)
-        
-        let imageCacheRepository = DefaultImageProvideRepository()
-        let imagaCacheUseCase = ImageCacheUseCase(imageProvideRepository: imageCacheRepository)
-        
-        imagaCacheUseCase.setCache(object: data)
-        let cachedImage = imagaCacheUseCase.fetchImage(cityName: key as String)
-        
-        XCTAssertEqual(cachedImage?.value, image)
-    }
-    
-    func test_AddressSearchUseCase_이매동_위경도를_입력했을때_이매동_주소가_나온다() {
-        let imaelatitude = 37.39508700000
-        let imaelongitude = 127.12415500000
-        let addressSearchRepository = DefaultAddressSearchRepository()
-        let addressSearchUseCase = AddressSearchUseCase(addressRepository: addressSearchRepository)
-        
-        let promise = expectation(description: "")
-        addressSearchUseCase.searchLocation(latitude: imaelatitude, longitude: imaelongitude) { (address) in
-            XCTAssertEqual(address!, "153-2 Imae-dong")
-            promise.fulfill()
-        }
-        
-        wait(for: [promise], timeout: 3)
     }
 }

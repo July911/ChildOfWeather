@@ -356,6 +356,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		18D77A33280CFAE2002CED15 /* UseCaseTests */ = {
+			isa = PBXGroup;
+			children = (
+				18D77A29280CF6C8002CED15 /* CitySearchUseCaseTests.swift */,
+				18D77A2D280CF740002CED15 /* DetailShowUseCaseTests.swift */,
+				18D77A2F280CF74F002CED15 /* ImageCacheUseCaseTests.swift */,
+				18D77A31280CF764002CED15 /* AddressSearchUseCaseTests.swift */,
+			);
+			path = UseCaseTests;
+			sourceTree = "<group>";
+		};
 		18D7B1F4280020910077119A /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -385,10 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				18D11CD6280C0D24006D8701 /* TestDouble */,
-				18D77A29280CF6C8002CED15 /* CitySearchUseCaseTests.swift */,
-				18D77A2D280CF740002CED15 /* DetailShowUseCaseTests.swift */,
-				18D77A2F280CF74F002CED15 /* ImageCacheUseCaseTests.swift */,
-				18D77A31280CF764002CED15 /* AddressSearchUseCaseTests.swift */,
+				18D77A33280CFAE2002CED15 /* UseCaseTests */,
 			);
 			path = ChildOfWeatherTests;
 			sourceTree = "<group>";

@@ -1,7 +1,6 @@
 import XCTest
 @testable import ChildOfWeather
 
-
 class CitySearchUseCaseTests: XCTestCase {
     
     var sut: CitySearchUseCase?
@@ -9,22 +8,23 @@ class CitySearchUseCaseTests: XCTestCase {
     override func setUpWithError() throws {
         let cityRepository = DefaultCitySearchRepository()
         sut = CitySearchUseCase(searchRepository: cityRepository)
-
+    }
+    
     override func tearDownWithError() throws {
         sut = nil
     }
     
     func test_CitySearchUseCase_아무것도_입력하지_않았을때_데이터를_전부_받아온다() {
-        let cityRepository = DefaultCitySearchRepository()
-        let cities = cityRepository.sortCity().count
-        let cityfromKr = cityRepository.sortCity(by: .kr).count
+        let cities = self.sut?.extractAll().count
+        let repository = DefaultCitySearchRepository()
+        
+        let cityfromKr = repository.sortCity(by: .kr).count
         
         XCTAssertEqual(cities, cityfromKr)
     }
     
     func test_CitySearchUseCase_yongin을_search했을때_값은_yongin이다() {
-        let cityRepository = DefaultCitySearchRepository()
-        let city = cityRepository.search(name: "yong")?.first
+        let city = self.sut?.search("yong")?.first
         let cityName = city?.name
         
         XCTAssertEqual(cityName!, "Yongin")

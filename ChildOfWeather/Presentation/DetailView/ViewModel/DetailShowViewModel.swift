@@ -5,26 +5,23 @@ final class DetailShowViewModel: DetailShowViewModelProtocol {
     let city: City
     private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
-    private let locationSearchUseCase: AddressSearchUseCase
     private let imageCacheUseCase: ImageCacheUseCase
     weak var delegate: DetailViewModelDelegate?
     
     init(
         detailShowUseCase: DetailShowUseCase,
-         locationSearchUseCase: AddressSearchUseCase,
         imageCacheUseCase: ImageCacheUseCase,
         coodinator: MainCoordinator,
         city: City
     ) {
         self.detailShowUseCase = detailShowUseCase
-        self.locationSearchUseCase = locationSearchUseCase
         self.imageCacheUseCase = imageCacheUseCase
         self.coordinator = coodinator
         self.city = city
     }
     
     func extractURLForMap() {
-        self.locationSearchUseCase.searchLocation(
+        LocationManager.shared.searchLocation(
             latitude: city.coord.lat,
             longitude: city.coord.lon,
             completion: { [weak self] strings in

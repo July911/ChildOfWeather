@@ -8,3 +8,4 @@ protocol URLSessionNetworkService {
         completion: @escaping (Result<T, APICallError>) -> Void
     )
 }
+

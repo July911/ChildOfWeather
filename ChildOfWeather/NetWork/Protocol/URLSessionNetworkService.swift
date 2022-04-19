@@ -2,10 +2,9 @@ import Foundation
 
 protocol URLSessionNetworkService {
     
-    associatedtype decodedType: Decodable
-    
-    func request(
-        _ type: RequestType,
-        completion: @escaping (Result<decodedType, Error>) -> Void
+    func request<T: Decodable>(
+        decodedType: T.Type,
+        requestType: RequestType,
+        completion: @escaping (Result<T, APICallError>) -> Void
     )
 }

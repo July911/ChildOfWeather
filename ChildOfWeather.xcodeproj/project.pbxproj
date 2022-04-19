@@ -46,6 +46,7 @@
 		18DDE2F62807E553000775FB /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DDE2F52807E553000775FB /* DateFormatter.swift */; };
 		18DDE2F928084377000775FB /* SearchViewViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DDE2F828084377000775FB /* SearchViewViewModelProtocol.swift */; };
 		18DDE2FC28084444000775FB /* DetailShowViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DDE2FB28084444000775FB /* DetailShowViewModelProtocol.swift */; };
+		18E00263280E77BD00C63E71 /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E00262280E77BD00C63E71 /* MockAPIService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		18DDE2F52807E553000775FB /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		18DDE2F828084377000775FB /* SearchViewViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewViewModelProtocol.swift; sourceTree = "<group>"; };
 		18DDE2FB28084444000775FB /* DetailShowViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailShowViewModelProtocol.swift; sourceTree = "<group>"; };
+		18E00262280E77BD00C63E71 /* MockAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
 		18E07781280B086B00CC17F2 /* ChildOfWeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChildOfWeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -156,6 +158,7 @@
 		18D11CD6280C0D24006D8701 /* TestDouble */ = {
 			isa = PBXGroup;
 			children = (
+				18E00262280E77BD00C63E71 /* MockAPIService.swift */,
 			);
 			path = TestDouble;
 			sourceTree = "<group>";
@@ -542,6 +545,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18D77A2A280CF6C9002CED15 /* CitySearchUseCaseTests.swift in Sources */,
+				18E00263280E77BD00C63E71 /* MockAPIService.swift in Sources */,
 				18D77A32280CF764002CED15 /* AddressSearchUseCaseTests.swift in Sources */,
 				18D77A30280CF74F002CED15 /* ImageCacheUseCaseTests.swift in Sources */,
 				18D77A2E280CF740002CED15 /* DetailShowUseCaseTests.swift in Sources */,

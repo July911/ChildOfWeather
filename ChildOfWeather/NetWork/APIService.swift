@@ -8,7 +8,7 @@ enum APICallError: Error {
     case dataNotfetched
 }
 
-final class APIService {
+final class APIService: URLSessionNetworkService {
         
     func request<T: Decodable>(
         decodedType: T.Type,

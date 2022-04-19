@@ -30,6 +30,13 @@ class CitySearchUseCaseTests: XCTestCase {
         XCTAssertEqual(cityName!, "Yongin")
     }
     
+    func test_존재하지_않는_도시명을_검색하면_nil이_나온다() {
+        let city = self.sut?.search("London")?.first
+        let cityName = city?.name
+        
+        XCTAssertNil(cityName)
+    }
+    
     func test_DataLayer의_DTO인_WeatherInformation이_Model로_정상적으로_변환된다() {
         let main = Main(temp: 32, maxTemperature: 35, minTemperature: 28)
         let sys = Sys(sunrise: 14, sunset: 2)

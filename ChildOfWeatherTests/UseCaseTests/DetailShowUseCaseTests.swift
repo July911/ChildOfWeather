@@ -6,7 +6,7 @@ class DetailShowUseCaseTests: XCTestCase {
     var sut: DetailShowUseCase?
 
     override func setUpWithError() throws {
-        let repository = DefaultWeatherRepository(service: APIService())
+        let repository = DefaultWeatherRepository(service: MockAPIService())
         sut = DetailShowUseCase(weatherRepository: repository)
     }
 

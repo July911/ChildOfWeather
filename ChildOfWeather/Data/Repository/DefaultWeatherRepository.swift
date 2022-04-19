@@ -2,9 +2,9 @@ import Foundation
 
 final class DefaultWeatherRepository: WeatherRepository {
     
-    let service: APIService
+    let service: URLSessionNetworkService
     
-    init(service: APIService) {
+    init(service: URLSessionNetworkService) {
         self.service = service
     }
     

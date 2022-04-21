@@ -48,7 +48,6 @@
 		18E30DA928105422005AEF96 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 18E30DA828105422005AEF96 /* RxCocoa */; };
 		18E30DAB28105422005AEF96 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 18E30DAA28105422005AEF96 /* RxRelay */; };
 		18E30DAD28105422005AEF96 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 18E30DAC28105422005AEF96 /* RxSwift */; };
-		18E30DAF28105422005AEF96 /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = 18E30DAE28105422005AEF96 /* RxTest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,7 +109,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18E30DAF28105422005AEF96 /* RxTest in Frameworks */,
 				18E30DAD28105422005AEF96 /* RxSwift in Frameworks */,
 				18E30DAB28105422005AEF96 /* RxRelay in Frameworks */,
 				18E30DA928105422005AEF96 /* RxCocoa in Frameworks */,
@@ -174,6 +172,7 @@
 				18D4DD0127FBC15100697F43 /* ChildOfWeather */,
 				18E07782280B086B00CC17F2 /* ChildOfWeatherTests */,
 				18D4DD0027FBC15100697F43 /* Products */,
+				18E30DB028119976005AEF96 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -406,6 +405,13 @@
 			path = ChildOfWeatherTests;
 			sourceTree = "<group>";
 		};
+		18E30DB028119976005AEF96 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -426,7 +432,6 @@
 				18E30DA828105422005AEF96 /* RxCocoa */,
 				18E30DAA28105422005AEF96 /* RxRelay */,
 				18E30DAC28105422005AEF96 /* RxSwift */,
-				18E30DAE28105422005AEF96 /* RxTest */,
 			);
 			productName = ChildOfWeather;
 			productReference = 18D4DCFF27FBC15100697F43 /* ChildOfWeather.app */;
@@ -619,6 +624,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -634,6 +640,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/,
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/,
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -679,6 +689,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -688,6 +699,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/,
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/,
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -704,6 +719,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChildOfWeather/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -730,6 +746,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChildOfWeather/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -841,11 +858,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 18E30DA728105422005AEF96 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
-		};
-		18E30DAE28105422005AEF96 /* RxTest */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 18E30DA728105422005AEF96 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxTest;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

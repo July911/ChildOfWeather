@@ -2,6 +2,14 @@ import Foundation
 
 final class DetailShowViewModel: DetailShowViewModelProtocol {
     
+    struct Input {
+        
+    }
+    
+    struct Output {
+        
+    }
+    
     let city: City
     private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
@@ -76,6 +84,10 @@ final class DetailShowViewModel: DetailShowViewModelProtocol {
     
     func occuredBackButtonTapEvent() {
         self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
+    }
+    
+    func transform(input: Input) -> Output {
+        <#code#>
     }
 }
 

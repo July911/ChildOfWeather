@@ -2,6 +2,14 @@ import Foundation
 
 final class SearchViewModel: SearchViewViewModelProtocol {
     
+    struct Input {
+        
+    }
+    
+    struct Output {
+        
+    }
+    
     var filterdResults: [City]? 
     weak var delegate: SearchViewModelDelegate?
     private let coordinator: MainCoordinator
@@ -17,8 +25,8 @@ final class SearchViewModel: SearchViewViewModelProtocol {
         if text == nil {
             
         } else {
-            let cities = self.searchUseCase.search(text ?? "")
-            self.filterdResults = cities ?? []
+//            let cities = self.searchUseCase.search(text ?? "")
+//            self.filterdResults = cities ?? []
         }
         
         DispatchQueue.main.async {
@@ -28,6 +36,10 @@ final class SearchViewModel: SearchViewViewModelProtocol {
     
     func occuredCellTapEvent(city: City) {
         self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
+    }
+    
+    func transform(input: Input) -> Output {
+        <#code#>
     }
 }
 

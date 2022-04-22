@@ -2,6 +2,9 @@ import Foundation
 
 protocol DetailShowViewModelProtocol {
     
+    associatedtype Input
+    associatedtype Output
+    
     var delegate: DetailViewModelDelegate? { get set }
     var city: City { get }
     
@@ -16,4 +19,6 @@ protocol DetailShowViewModelProtocol {
     func loadCacheImage()
     
     func occuredBackButtonTapEvent()
+    
+    func transform(input: Input) -> Output
 }

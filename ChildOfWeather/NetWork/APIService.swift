@@ -1,4 +1,5 @@
 import Foundation
+import RxSwift
 
 enum APICallError: Error {
     case invalidResponse
@@ -9,55 +10,60 @@ enum APICallError: Error {
 }
 
 final class APIService: URLSessionNetworkService {
-        
+    
     func request<T: Decodable>(
         decodedType: T.Type,
-        requestType: RequestType,
-        completion: @escaping (Result<T, APICallError>) -> Void
-    ) {
+        requestType: RequestType) -> Observable<Result<T, APICallError>>
+    {
         
         guard let url = URL(string: requestType.fullURL)
         else {
-            return
-        }
-        let request = URLRequest(url: url)
-
-        let task = URLSession.shared.dataTask(with: request) { data, URLResponse, error in
-            
-            guard error == nil
-            else {
-                completion(.failure(APICallError.errorExist))
-                return
-            }
-            
-            guard let data = data
-            else {
-                completion(.failure(APICallError.dataNotfetched))
-                return
-            }
-            
-            guard let response = URLResponse as? HTTPURLResponse
-            else {
-                completion(.failure(APICallError.invalidResponse))
-                return
-            }
-            
-            guard (200...299) ~= response.statusCode
-            else {
-                completion(.failure(APICallError.notProperStatusCode))
-                return
-            }
-            
-            guard let decodedObject = try? JSONDecoder().decode(T.self, from: data)
-            else {
-                completion(.failure(APICallError.failureDecoding))
-                return
-            }
-
-            completion(.success(decodedObject))
+            return Observable.error(APICallError.errorExist)
         }
         
-        task.resume()
+        return Observable.create() { emitter in
+            let request = URLRequest(url: url)
+            let task = URLSession.shared.dataTask(with: request) { data, URLResponse, error in
+                
+                guard error == nil
+                else {
+                    emitter.onError(APICallError.errorExist)
+                    return
+                }
+                
+                guard let data = data
+                else {
+                    emitter.onError(APICallError.dataNotfetched)
+                    return
+                }
+                
+                guard let response = URLResponse as? HTTPURLResponse
+                else {
+                    emitter.onError(APICallError.invalidResponse)
+                    return
+                }
+                
+                guard (200...299) ~= response.statusCode
+                else {
+                    emitter.onError(APICallError.notProperStatusCode)
+                    return
+                }
+                
+                guard let decodedObject = try? JSONDecoder().decode(T.self, from: data)
+                else {
+                    emitter.onError(APICallError.failureDecoding)
+                    return
+                }
+                
+                emitter.onNext(.success(decodedObject))
+                emitter.onCompleted()
+            }
+            task.resume()
+            
+            return Disposables.create {
+                task.cancel()
+            }
+        }
     }
 }
 

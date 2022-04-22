@@ -13,50 +13,50 @@ final class APIService: URLSessionNetworkService {
     
     func request<T: Decodable>(
         decodedType: T.Type,
-        requestType: RequestType) -> Observable<Result<T, APICallError>>
+        requestType: RequestType) -> Single<T>
     {
         
-        guard let url = URL(string: requestType.fullURL)
-        else {
-            return Observable.error(APICallError.errorExist)
-        }
-        
-        return Observable.create() { emitter in
+        return Single<T>.create { single in
+            
+            guard let url = URL(string: requestType.fullURL)
+            else {
+                single(.failure(APICallError.errorExist))
+                return Disposables.create()
+            }
+            
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) { data, URLResponse, error in
                 
                 guard error == nil
                 else {
-                    emitter.onError(APICallError.errorExist)
                     return
                 }
                 
                 guard let data = data
                 else {
-                    emitter.onError(APICallError.dataNotfetched)
+                    single(.failure(APICallError.errorExist))
                     return
                 }
                 
                 guard let response = URLResponse as? HTTPURLResponse
                 else {
-                    emitter.onError(APICallError.invalidResponse)
+                    single(.failure(APICallError.errorExist))
                     return
                 }
                 
                 guard (200...299) ~= response.statusCode
                 else {
-                    emitter.onError(APICallError.notProperStatusCode)
+                    single(.failure(APICallError.errorExist))
                     return
                 }
                 
                 guard let decodedObject = try? JSONDecoder().decode(T.self, from: data)
                 else {
-                    emitter.onError(APICallError.failureDecoding)
+                    single(.failure(APICallError.errorExist))
                     return
                 }
                 
-                emitter.onNext(.success(decodedObject))
-                emitter.onCompleted()
+                single(.success(decodedObject))
             }
             task.resume()
             

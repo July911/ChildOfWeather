@@ -1,4 +1,6 @@
 import Foundation
+import RxSwift
+import RxRelay
 
 final class SearchViewModel {
     
@@ -13,11 +15,12 @@ final class SearchViewModel {
     }
   
     struct Input {
-        
+        let viewWillAppear: Observable<Void>
+        let didSelectedCell: Observable<City>
     }
     
     struct Output {
-        
+        let cityInformation: Observable<[City]>
     }
     
     func configureLoactionLists(_ text: String? = nil) {

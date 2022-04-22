@@ -1,4 +1,5 @@
 import Foundation
+import RxSwift
 
 final class DetailShowViewModel {
     
@@ -21,11 +22,16 @@ final class DetailShowViewModel {
     }
     
     struct Input {
-        
+        let viewWillAppear: Observable<Void>
+        let didCaptureView: Observable<ImageCacheData>
+        let touchUpbackButton: Observable<Void>
     }
     
     struct Output {
-        
+        let selectedCity: Observable<City>
+        let selectedWeather: Observable<TodayWeather>
+        let selectedURLForMap: Observable<String>
+        let cachedImage: Observable<ImageCacheData>?
     }
     
     func extractURLForMap() {

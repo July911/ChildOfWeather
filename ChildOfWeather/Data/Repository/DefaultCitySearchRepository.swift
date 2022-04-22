@@ -4,28 +4,34 @@ import RxSwift
 
 final class DefaultCitySearchRepository: CitySearchRepository {
     
-    private var assetData: BehaviorRelay<[City]>?
-    private let bag = DisposeBag()
+    private let assetData = BehaviorRelay<[City]>(value: [])
     
     init() {
-        self.assetData = sortCity()
+        self.fetchCityList()
     }
     
-    func search(name: String) {
-        guard let searchData = (assetData?.value.filter { $0.name == name })
+    func search(name: String? = nil) {
+        guard name == nil
         else {
+            self.fetchCityList()
             return
         }
         
-        assetData?.accept(searchData)
+        let filteredCity = assetData.value.filter { $0.name == name }
+        
+        self.assetData.accept(filteredCity)
     }
     
-    func sortCity(by country: Country = .kr) -> BehaviorRelay<[City]> {
+    func extractCities(by country: Country = .kr) -> BehaviorRelay<[City]> {
+        return self.assetData
+    }
+    
+    private func fetchCityList(by country: Country = .kr) {
         let assetData = NSDataAsset(name: "city.list")
         let data = try? JSONDecoder().decode([City].self, from: assetData?.data ?? Data())
         let filtered = data?.filter{ $0.country == "\(country.description)" }
         
-        return BehaviorRelay<[City]>(value: filtered ?? [])
+        self.assetData.accept(filtered ?? [])
     }
 }
 

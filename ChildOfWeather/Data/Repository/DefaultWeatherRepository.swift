@@ -25,7 +25,7 @@ final class DefaultWeatherRepository: WeatherRepository {
                 }
             }.disposed(by: self.bag)
             
-            return Disposables.create() 
+            return Disposables.create()
         }
     }
     

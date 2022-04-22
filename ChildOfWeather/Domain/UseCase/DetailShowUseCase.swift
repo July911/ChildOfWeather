@@ -1,4 +1,5 @@
 import Foundation
+import RxSwift
 
 final class DetailShowUseCase {
     
@@ -9,17 +10,9 @@ final class DetailShowUseCase {
     }
     
     func extractTodayWeather(
-        cityName: String,
-        completion: @escaping (TodayWeather) -> Void
-    ) {
-        self.weatherRepository.fetchWeatherInformation(cityName: cityName) { (todayWeather) in
-            guard let todayWeather = todayWeather
-            else {
-                return
-            }
-            
-            completion(todayWeather)
-        }
+        cityName: String
+    ) -> Observable<TodayWeather> {
+        return self.weatherRepository.fetchWeatherInformation(cityName: cityName)
     }
     
     func fetchURL(from cityAddress: String) -> String {

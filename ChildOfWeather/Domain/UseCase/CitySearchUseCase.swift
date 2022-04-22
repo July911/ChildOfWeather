@@ -1,4 +1,5 @@
 import Foundation
+import RxRelay
 
 final class CitySearchUseCase {
     
@@ -8,11 +9,11 @@ final class CitySearchUseCase {
         self.searchRepository = searchRepository
     }
     
-    func search(_ string: String) -> [City]? {
-        self.searchRepository.search(name: string) ?? []
+    func search(_ string: String) {
+        self.searchRepository.search(name: string)
     }
     
-    func extractAll() -> [City] {
-        self.searchRepository.sortCity(by: .kr)
+    func extractCities() -> BehaviorRelay<[City]> {
+        self.searchRepository.extractCities(by: .kr)
     }
 }

@@ -15,7 +15,7 @@ final class SearchViewModel: SearchViewViewModelProtocol {
     func configureLoactionLists(_ text: String? = nil) {
         
         if text == nil {
-            self.filterdResults = self.searchUseCase.extractAll()
+            
         } else {
             let cities = self.searchUseCase.search(text ?? "")
             self.filterdResults = cities ?? []

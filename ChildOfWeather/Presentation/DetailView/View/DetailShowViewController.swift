@@ -3,7 +3,7 @@ import WebKit
 
 final class DetailShowUIViewController: UIViewController {
     
-    var viewModel: DetailShowViewModelProtocol?
+    var viewModel: DetailShowViewModel?
 
     private let webView: WKWebView = {
         let preferences = WKWebpagePreferences()

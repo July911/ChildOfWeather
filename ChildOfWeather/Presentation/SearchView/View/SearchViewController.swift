@@ -2,7 +2,7 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
-    var viewModel: SearchViewViewModelProtocol?
+    var viewModel: SearchViewModel?
     
     private let listTableView: UITableView = {
         let tableview = UITableView(frame: .zero)

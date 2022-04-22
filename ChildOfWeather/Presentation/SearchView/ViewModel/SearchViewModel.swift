@@ -1,14 +1,6 @@
 import Foundation
 
-final class SearchViewModel: SearchViewViewModelProtocol {
-    
-    struct Input {
-        
-    }
-    
-    struct Output {
-        
-    }
+final class SearchViewModel {
     
     var filterdResults: [City]? 
     weak var delegate: SearchViewModelDelegate?
@@ -18,6 +10,14 @@ final class SearchViewModel: SearchViewViewModelProtocol {
     init(searchUseCase: CitySearchUseCase, coodinator: MainCoordinator) {
         self.searchUseCase = searchUseCase
         self.coordinator = coodinator
+    }
+  
+    struct Input {
+        
+    }
+    
+    struct Output {
+        
     }
     
     func configureLoactionLists(_ text: String? = nil) {

@@ -1,14 +1,6 @@
 import Foundation
 
-final class DetailShowViewModel: DetailShowViewModelProtocol {
-    
-    struct Input {
-        
-    }
-    
-    struct Output {
-        
-    }
+final class DetailShowViewModel {
     
     let city: City
     private let coordinator: MainCoordinator
@@ -26,6 +18,14 @@ final class DetailShowViewModel: DetailShowViewModelProtocol {
         self.imageCacheUseCase = imageCacheUseCase
         self.coordinator = coodinator
         self.city = city
+    }
+    
+    struct Input {
+        
+    }
+    
+    struct Output {
+        
     }
     
     func extractURLForMap() {

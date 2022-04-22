@@ -1,8 +1,9 @@
 import Foundation
+import RxRelay
 
 protocol CitySearchRepository {
         
-    func search(name: String) -> [City]?
+    func search(name: String)
     
-    func sortCity(by country: Country) -> [City]
+    func sortCity(by country: Country) -> BehaviorRelay<[City]>
 }

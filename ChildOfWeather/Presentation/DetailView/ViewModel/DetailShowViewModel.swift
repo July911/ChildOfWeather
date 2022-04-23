@@ -3,7 +3,7 @@ import RxSwift
 
 final class DetailShowViewModel {
     
-    let city: City
+    private let city: Observable<City>
     private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
     private let imageCacheUseCase: ImageCacheUseCase
@@ -13,7 +13,7 @@ final class DetailShowViewModel {
         detailShowUseCase: DetailShowUseCase,
         imageCacheUseCase: ImageCacheUseCase,
         coodinator: MainCoordinator,
-        city: City
+        city: Observable<City>
     ) {
         self.detailShowUseCase = detailShowUseCase
         self.imageCacheUseCase = imageCacheUseCase
@@ -94,6 +94,12 @@ final class DetailShowViewModel {
     
     func transform(input: Input) -> Output {
         <#code#>
+    }
+    
+    private func configureOutput() -> Output {
+        let location = LocationManager.shared.searchLocation(latitude: city.coord.lat, longitude: city.coord.lon)
+        
+        return Output(selectedCity: <#T##Observable<City>#>, selectedWeather: <#T##Observable<TodayWeather>#>, selectedURLForMap: location, cachedImage: <#T##Observable<ImageCacheData>?#>)
     }
 }
 

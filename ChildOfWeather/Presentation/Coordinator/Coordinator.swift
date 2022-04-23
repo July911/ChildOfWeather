@@ -1,5 +1,6 @@
 import UIKit
 import CoreLocation
+import RxSwift
 
 final class MainCoordinator {
 
@@ -44,6 +45,7 @@ final class MainCoordinator {
         let detailShowUseCase = DetailShowUseCase(
             weatherRepository: weatherRepository
         )
+        let city = Observable<City>.just(city)
         viewController.viewModel = DetailShowViewModel(
             detailShowUseCase: detailShowUseCase,
             imageCacheUseCase: self.imageCacheUseCase,

@@ -7,6 +7,7 @@ final class DetailShowViewModel {
     private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
     private let imageCacheUseCase: ImageCacheUseCase
+    private let bag = DisposeBag()
     
     init(
         detailShowUseCase: DetailShowUseCase,
@@ -22,15 +23,16 @@ final class DetailShowViewModel {
     
     struct Input {
         let viewWillAppear: Observable<Void>
-        let didCaptureView: Observable<ImageCacheData>
+        let didCaptureView: Observable<Void>
+        let capturedImage: Observable<ImageCacheData>
         let touchUpbackButton: Observable<Void>
     }
     
     struct Output {
         let selectedCity: Observable<City>
-        let selectedWeather: Observable<TodayWeather>
         let selectedURLForMap: Observable<String>
         let cachedImage: Observable<ImageCacheData>?
+        let weatehrDescription: Observable<String>
     }
     
     func cache(object: ImageCacheData) {
@@ -41,37 +43,63 @@ final class DetailShowViewModel {
         self.imageCacheUseCase.fetchImage(cityName: key)
     }
     
-    func extractWeatherDescription() {
-        self.detailShowUseCase.extractTodayWeather(
-            cityName: self.city.name) { [weak self] (weather) in
+    private func extractWeatherDescription(city: City) -> Observable<String> {
+        return self.detailShowUseCase.extractTodayWeather(cityName: city.name).map { (weather) -> String in
             let sunrise = weather.sunrise.toKoreanTime
             let sunset = weather.sunset.toKoreanTime
             let maxTemp = weather.maxTemperature.toCelsius
             let minTemp = weather.minTemperature.toCelsius
             let weatherDescription = "일출은 오전\(sunrise)\n일몰은 오후\(sunset)\n최고 기온은  섭씨\(maxTemp)도\n최저 기온은 섭씨\(minTemp)도입니다."
-                
-            self?.delegate?.loadTodayDescription(weather: weatherDescription)
+            return weatherDescription
         }
     }
     
-    func loadCacheImage() {
-        if self.imageCacheUseCase.checkCacheExist(cityName: self.city.name) == true {
-          
-        } 
+    private func loadCacheImage(city: City) -> Observable<ImageCacheData>? {
+        guard self.imageCacheUseCase.checkCacheExist(cityName: city.name)
+        else {
+            return nil
+        }
+        guard let image = self.imageCacheUseCase.fetchImage(cityName: city.name)
+        else {
+            return nil
+        }
+        return Observable.just(image)
     }
-    
-    func occuredBackButtonTapEvent() {
-        self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
-    }
+//
+//    func occuredBackButtonTapEvent() {
+//        self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
+//    }
     
     func transform(input: Input) -> Output {
-        <#code#>
+        let output = configureOutput()
+        
+        
+        return output
     }
     
     private func configureOutput() -> Output {
-        let location = LocationManager.shared.searchLocation(latitude: city.coord.lat, longitude: city.coord.lon)
+        var selectedCity: Observable<City>
+        var selectedURLForMap: Observable<String>
+        var cachedImage: Observable<ImageCacheData>?
+        var weatehrDescription: Observable<String>
         
-        return Output(selectedCity: self.city, selectedWeather: <#T##Observable<TodayWeather>#>, selectedURLForMap: location, cachedImage: <#T##Observable<ImageCacheData>?#>)
+        self.city
+            .withUnretained(self)
+            .subscribe(onNext: {(self, city) in
+            selectedURLForMap = LocationManager.shared.searchLocation(
+                latitude: city.coord.lat,
+                longitude: city.coord.lon
+            )
+            weatehrDescription = self.extractWeatherDescription(city: city)
+            cachedImage = self.loadCacheImage(city: city)
+        }).disposed(by: self.bag)
+        
+        return Output(
+            selectedCity: selectedCity,
+            selectedURLForMap: selectedURLForMap,
+            cachedImage: cachedImage,
+            weatehrDescription: weatehrDescription
+        )
     }
 }
 

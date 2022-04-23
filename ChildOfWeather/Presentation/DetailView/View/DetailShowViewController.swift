@@ -1,10 +1,14 @@
 import UIKit
 import WebKit
+import RxSwift
+import RxCocoa
 
 final class DetailShowUIViewController: UIViewController {
     
     var viewModel: DetailShowViewModel?
-
+    private var backButtonItem: UIBarButtonItem?
+    private var snapshotButtonItem: UIBarButtonItem?
+    
     private let webView: WKWebView = {
         let preferences = WKWebpagePreferences()
         preferences.allowsContentJavaScript = true
@@ -44,33 +48,21 @@ final class DetailShowUIViewController: UIViewController {
         super.viewDidLoad()
         self.configureNavigationItem()
         self.configureLayout()
-        self.configureViewSettingUseViewModel()
     }
     
     private func configureNavigationItem() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
-            target: self, action: #selector(didTapCancelButton)
+            target: self, action: nil
         )
+        self.backButtonItem = self.navigationItem.leftBarButtonItem
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .camera,
-            target: self,
-            action: #selector(didTapAddButton)
+            target: self, action: nil
         )
+        self.snapshotButtonItem = self.navigationItem.rightBarButtonItem
         self.navigationItem.title = "지도와 날씨"
-    }
-    
-    @objc func didTapCancelButton() {
-        self.viewModel?.occuredBackButtonTapEvent()
-    }
-    
-    @objc func didTapAddButton() {
-        self.webviewSnapshot { }
-    }
-    
-    private func configureViewSettingUseViewModel() {
-        self.viewModel?.loadCacheImage()
-        self.viewModel?.extractWeatherDescription()
     }
     
     private func configureLayout() {
@@ -105,21 +97,39 @@ final class DetailShowUIViewController: UIViewController {
         NSLayoutConstraint.activate(imageViewLayout)
     }
     
-    private func webviewSnapshot(completion: @escaping () -> Void) {
-        let configuration = WKSnapshotConfiguration()
-        self.webView.takeSnapshot(with: configuration) { [weak self] (image, error) in
-            
-            guard let cityName = self?.viewModel?.city.name as? NSString
-            else {
-                return
-            }
-            
-            guard let image = image else {
-                return
-            }
+    private func bindViewModel() {
+        guard let snapshotButtonEvent = self.snapshotButtonItem?.rx.tap,
+              let backButtonEvent = self.backButtonItem?.rx.tap
+        else {
+            return
+        }
 
-            let cacheObject = ImageCacheData(key: cityName, value: image)
-            self?.viewModel?.cache(object: cacheObject)
+        let input = DetailShowViewModel.Input(
+            viewWillAppear: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in },
+            didCaptureView: snapshotButtonEvent.asObservable(),
+            capturedImage: self.webviewSnapshot(city: <#T##String#>),
+            touchUpbackButton: backButtonEvent.asObservable()
+        )
+        let output = self.viewModel?.transform(input: input)
+    
+        output.
+    }
+    
+    private func webviewSnapshot(city: String) -> Observable<ImageCacheData> {
+        return Observable<ImageCacheData>.create { emitter in
+            let configuration = WKSnapshotConfiguration()
+            self.webView.takeSnapshot(with: configuration) { [weak self] (image, error) in
+                
+                guard let image = image
+                else {
+                    return
+                }
+                
+                let cacheObject = ImageCacheData(key: city as NSString, value: image)
+                emitter.onNext(cacheObject)
+            }
+            
+            return Disposables.create()
         }
     }
 }

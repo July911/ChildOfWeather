@@ -1,5 +1,6 @@
 import Foundation
 import CoreLocation
+import RxSwift
 
 final class LocationManager {
     
@@ -13,17 +14,25 @@ final class LocationManager {
     
     func searchLocation(
         latitude: Double,
-        longitude: Double,
-        completion: @escaping (String?) -> Void
-    ) {
+        longitude: Double
+    ) -> Observable<String> {
+        
+        return Observable<String>.create { emitter in
         let findLocation = CLLocation(latitude: latitude, longitude: longitude)
         let locale = Locale(identifier: "en-US")
         
         self.geocoder.reverseGeocodeLocation(
             findLocation,
             preferredLocale: locale) { (place, error) in
-                let cityAddress = place?.last?.name
-                completion(cityAddress)
+                guard let city = place?.last?.name
+                else {
+                    emitter.onError(APICallError.errorExist)
+                    return
+                } 
+                emitter.onNext(city)
             }
+            
+            return Disposables.create ()
+        }
     }
 }

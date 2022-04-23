@@ -7,7 +7,6 @@ final class DetailShowViewModel {
     private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
     private let imageCacheUseCase: ImageCacheUseCase
-    weak var delegate: DetailViewModelDelegate?
     
     init(
         detailShowUseCase: DetailShowUseCase,
@@ -34,33 +33,6 @@ final class DetailShowViewModel {
         let cachedImage: Observable<ImageCacheData>?
     }
     
-    func extractURLForMap() {
-        LocationManager.shared.searchLocation(
-            latitude: city.coord.lat,
-            longitude: city.coord.lon,
-            completion: { [weak self] strings in
-            guard let adress = strings
-                else {
-                return
-            }
-                
-            let urlString = self?.detailShowUseCase.fetchURL(from: adress)
-                
-            guard let replace = urlString?.replacingOccurrences(of: " ", with: "%20")
-                else {
-                return
-            }
-            guard let url = URL(string: replace)
-                else {
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self?.delegate?.loadWebView(url: url)
-            }
-        })
-    }
-    
     func cache(object: ImageCacheData) {
         self.imageCacheUseCase.setCache(object: object)
     }
@@ -84,7 +56,7 @@ final class DetailShowViewModel {
     
     func loadCacheImage() {
         if self.imageCacheUseCase.checkCacheExist(cityName: self.city.name) == true {
-            self.delegate?.loadImageView()
+          
         } 
     }
     
@@ -99,15 +71,8 @@ final class DetailShowViewModel {
     private func configureOutput() -> Output {
         let location = LocationManager.shared.searchLocation(latitude: city.coord.lat, longitude: city.coord.lon)
         
-        return Output(selectedCity: <#T##Observable<City>#>, selectedWeather: <#T##Observable<TodayWeather>#>, selectedURLForMap: location, cachedImage: <#T##Observable<ImageCacheData>?#>)
+        return Output(selectedCity: self.city, selectedWeather: <#T##Observable<TodayWeather>#>, selectedURLForMap: location, cachedImage: <#T##Observable<ImageCacheData>?#>)
     }
-}
-
-protocol DetailViewModelDelegate: AnyObject {
-    func loadWebView(url: URL)
-    func loadTodayDescription(weather description: String)
-    func loadImageView()
-    func cacheImage()
 }
 
 fileprivate extension Double {

@@ -43,7 +43,6 @@ final class DetailShowUIViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureNavigationItem()
-        self.configureViewModelDelegate()
         self.configureLayout()
         self.configureViewSettingUseViewModel()
     }
@@ -70,13 +69,8 @@ final class DetailShowUIViewController: UIViewController {
     }
     
     private func configureViewSettingUseViewModel() {
-        self.viewModel?.extractURLForMap()
         self.viewModel?.loadCacheImage()
         self.viewModel?.extractWeatherDescription()
-    }
-    
-    private func configureViewModelDelegate() {
-        self.viewModel?.delegate = self
     }
     
     private func configureLayout() {
@@ -130,34 +124,3 @@ final class DetailShowUIViewController: UIViewController {
     }
 }
 
-extension DetailShowUIViewController: DetailViewModelDelegate {
-    
-    func loadWebView(url: URL) {
-       webView.load(URLRequest(url: url))
-    }
-    
-    func loadTodayDescription(weather description: String) {
-        DispatchQueue.main.async {
-            self.weatherTextView.text = "\(description)"
-        }
-    }
-
-    func loadImageView() {
-
-        guard let cacheObject = self.viewModel?.extractCache(
-            key: self.viewModel?.city.name ?? ""
-        )
-        else {
-            return
-        }
-        
-        webView.isHidden = true
-        imageView.isHidden = false
-        
-        self.imageView.image = cacheObject.value
-    }
-    
-    func cacheImage() {
-        self.webviewSnapshot { }
-    }
-}

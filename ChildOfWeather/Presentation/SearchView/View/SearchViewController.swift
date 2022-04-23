@@ -22,7 +22,6 @@ final class SearchViewController: UIViewController {
         self.configureLayout()
         self.configureTableView()
         self.configureSearchController()
-        self.configureViewModelDelegate()
         self.viewModel?.configureLoactionLists(nil)
     }
     
@@ -52,10 +51,6 @@ final class SearchViewController: UIViewController {
         searchController.searchBar.delegate = self
         self.navigationItem.searchController = searchController
         self.navigationController?.navigationBar.backgroundColor = .white
-    }
-    
-    private func configureViewModelDelegate() {
-        self.viewModel?.delegate = self
     }
 }
 
@@ -93,12 +88,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
     
-extension SearchViewController: SearchViewModelDelegate {
-    
-    func didSearchData() {
-        self.listTableView.reloadData()
-    }
-}
+
 
 
 

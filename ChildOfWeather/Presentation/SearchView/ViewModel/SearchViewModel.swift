@@ -5,7 +5,6 @@ import RxRelay
 final class SearchViewModel {
     
     var filterdResults: [City]? 
-    weak var delegate: SearchViewModelDelegate?
     private let coordinator: MainCoordinator
     private let searchUseCase: CitySearchUseCase
     
@@ -46,9 +45,5 @@ final class SearchViewModel {
     }
 }
 
-protocol SearchViewModelDelegate: AnyObject {
-    
-    func didSearchData()
-}
 
 

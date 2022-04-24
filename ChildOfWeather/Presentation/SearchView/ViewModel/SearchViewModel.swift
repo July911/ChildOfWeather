@@ -1,47 +1,45 @@
 import Foundation
 import RxSwift
 import RxRelay
+import RxCocoa
 
 final class SearchViewModel {
     
-    var filterdResults: [City]? 
     private let coordinator: MainCoordinator
     private let searchUseCase: CitySearchUseCase
+    private let cities: BehaviorRelay<[City]>
+    private let bag = DisposeBag()
     
     init(searchUseCase: CitySearchUseCase, coodinator: MainCoordinator) {
         self.searchUseCase = searchUseCase
         self.coordinator = coodinator
+        self.cities = BehaviorRelay<[City]>(value: [])
     }
   
     struct Input {
         let viewWillAppear: Observable<Void>
         let didSelectedCell: Observable<City>
+        let searchBarInput: Observable<Void>
+        let searchBarText: Observable<String>
     }
     
     struct Output {
-        let cityInformation: Observable<[City]>
-    }
-    
-    func configureLoactionLists(_ text: String? = nil) {
-        
-        if text == nil {
-            
-        } else {
-//            let cities = self.searchUseCase.search(text ?? "")
-//            self.filterdResults = cities ?? []
-        }
-        
-        DispatchQueue.main.async {
-            self.delegate?.didSearchData()
-        }
-    }
-    
-    func occuredCellTapEvent(city: City) {
-        self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
+        let initialCities: Observable<[City]>
     }
     
     func transform(input: Input) -> Output {
-        <#code#>
+        let cities = self.searchUseCase.extractCities().asObservable()
+        
+        input.searchBarInput.withLatestFrom(input.searchBarText)
+            .subscribe(onNext: { text in
+                self.searchUseCase.search(text)
+            }).disposed(by: self.bag)
+        
+        input.didSelectedCell.subscribe(onNext:{ city in
+            self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
+        }).disposed(by: self.bag)
+        
+        return Output(initialCities: cities)
     }
 }
 

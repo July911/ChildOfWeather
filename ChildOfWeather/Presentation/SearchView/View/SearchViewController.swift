@@ -20,14 +20,7 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureLayout()
-        self.configureTableView()
         self.configureSearchController()
-        self.viewModel?.configureLoactionLists(nil)
-    }
-    
-    private func configureTableView() {
-        self.listTableView.dataSource = self
-        self.listTableView.delegate = self
     }
     
     private func configureLayout() {
@@ -48,45 +41,12 @@ final class SearchViewController: UIViewController {
         searchController.searchBar.placeholder = "please search the city that you want to get weather infomation"
         searchController.searchBar.tintColor = .white
         searchController.isActive = true
-        searchController.searchBar.delegate = self
         self.navigationItem.searchController = searchController
         self.navigationController?.navigationBar.backgroundColor = .white
     }
 }
 
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel?.filterdResults?.count ?? .zero
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ListTableViewCell.self), for: indexPath) as? ListTableViewCell
-        else {
-            return UITableViewCell()
-        }
-        
-        let cities = self.viewModel?.filterdResults
-        cell.configureCell(city: cities?[indexPath.row] ?? City.EMPTY)
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-        
-        (viewModel?.filterdResults?[indexPath.row]).flatMap {
-            viewModel?.occuredCellTapEvent(city: $0)
-        }
-    }
-}
 
-extension SearchViewController: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.viewModel?.configureLoactionLists(searchText)
-    }
-}
     
 
 

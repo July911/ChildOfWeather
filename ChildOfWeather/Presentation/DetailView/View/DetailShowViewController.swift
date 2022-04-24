@@ -8,6 +8,7 @@ final class DetailShowUIViewController: UIViewController {
     var viewModel: DetailShowViewModel?
     private var backButtonItem: UIBarButtonItem?
     private var snapshotButtonItem: UIBarButtonItem?
+    private let bag = DisposeBag()
     
     private let webView: WKWebView = {
         let preferences = WKWebpagePreferences()
@@ -112,7 +113,24 @@ final class DetailShowUIViewController: UIViewController {
         )
         let output = self.viewModel?.transform(input: input)
     
-        output.
+        output?.weatehrDescription.asDriver(onErrorJustReturn: "")
+            .drive(self.weatherTextView.rx.text)
+            .disposed(by: self.bag)
+        
+        output?.cachedImage?.asDriver(onErrorJustReturn: ImageCacheData(key: "", value: UIImage()))
+            .map { (imageCached) -> UIImage in
+                return imageCached.value
+            }
+            .drive(self.imageView.rx.image)
+            .disposed(by: self.bag)
+        
+        output?.selectedURLForMap
+            .withUnretained(self)
+            .subscribe(onNext: { (self,string) in
+                let url = URL(string: string)
+                let request = URLRequest(url: url!)
+                self.webView.load(request)
+            }).disposed(by: self.bag)
     }
     
     private func webviewSnapshot(city: String) -> Observable<ImageCacheData> {

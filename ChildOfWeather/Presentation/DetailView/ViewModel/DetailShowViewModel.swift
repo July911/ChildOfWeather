@@ -29,7 +29,6 @@ final class DetailShowViewModel {
     }
     
     struct Output {
-        let selectedCity: Observable<City>
         let selectedURLForMap: Observable<String>
         let cachedImage: Observable<ImageCacheData>?
         let weatehrDescription: Observable<String>
@@ -65,20 +64,27 @@ final class DetailShowViewModel {
         }
         return Observable.just(image)
     }
-//
-//    func occuredBackButtonTapEvent() {
-//        self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
-//    }
-    
+
     func transform(input: Input) -> Output {
-        let output = configureOutput()
+        let output = self.configureOutput()
         
+        input.capturedImage.sample(input.didCaptureView)
+            .withUnretained(self)
+            .subscribe(onNext: { (self, image) in
+                self.imageCacheUseCase.setCache(object: image)
+            }).disposed(by: self.bag)
+        
+        input.touchUpbackButton
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe( onNext: { _ in
+                self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
+            }).disposed(by: self.bag)
         
         return output
     }
     
     private func configureOutput() -> Output {
-        var selectedCity: Observable<City>
         var selectedURLForMap: Observable<String>
         var cachedImage: Observable<ImageCacheData>?
         var weatehrDescription: Observable<String>
@@ -95,7 +101,6 @@ final class DetailShowViewModel {
         }).disposed(by: self.bag)
         
         return Output(
-            selectedCity: selectedCity,
             selectedURLForMap: selectedURLForMap,
             cachedImage: cachedImage,
             weatehrDescription: weatehrDescription

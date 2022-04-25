@@ -19,7 +19,7 @@ final class LocationManager {
         
         return Observable<String>.create { emitter in
         let findLocation = CLLocation(latitude: latitude, longitude: longitude)
-        let locale = Locale(identifier: "en-US")
+        let locale = Locale(identifier: "ko-KR")
         
         self.geocoder.reverseGeocodeLocation(
             findLocation,

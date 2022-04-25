@@ -3,7 +3,7 @@ import RxSwift
 
 final class DetailShowViewModel {
     
-    private let city: Observable<City>
+    private let city: BehaviorSubject<City>
     private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
     private let imageCacheUseCase: ImageCacheUseCase
@@ -13,7 +13,7 @@ final class DetailShowViewModel {
         detailShowUseCase: DetailShowUseCase,
         imageCacheUseCase: ImageCacheUseCase,
         coodinator: MainCoordinator,
-        city: Observable<City>
+        city: BehaviorSubject<City>
     ) {
         self.detailShowUseCase = detailShowUseCase
         self.imageCacheUseCase = imageCacheUseCase
@@ -43,13 +43,13 @@ final class DetailShowViewModel {
     }
     
     private func extractWeatherDescription(city: City) -> Observable<String> {
-        return self.detailShowUseCase.extractTodayWeather(cityName: city.name).map { (weather) -> String in
+        return self.detailShowUseCase.extractTodayWeather(cityName: city.name).flatMap { (weather) -> Observable<String> in
             let sunrise = weather.sunrise.toKoreanTime
             let sunset = weather.sunset.toKoreanTime
             let maxTemp = weather.maxTemperature.toCelsius
             let minTemp = weather.minTemperature.toCelsius
             let weatherDescription = "일출은 오전\(sunrise)\n일몰은 오후\(sunset)\n최고 기온은  섭씨\(maxTemp)도\n최저 기온은 섭씨\(minTemp)도입니다."
-            return weatherDescription
+            return Observable.just(weatherDescription)
         }
     }
     
@@ -62,11 +62,15 @@ final class DetailShowViewModel {
         else {
             return nil
         }
+        
         return Observable.just(image)
     }
 
-    func transform(input: Input) -> Output {
-        let output = self.configureOutput()
+    func transform(input: Input) -> Output? {
+        guard let output = self.configureOutput()
+        else {
+            return nil 
+        }
         
         input.capturedImage.sample(input.didCaptureView)
             .withUnretained(self)
@@ -84,27 +88,22 @@ final class DetailShowViewModel {
         return output
     }
     
-    private func configureOutput() -> Output {
-        var selectedURLForMap: Observable<String>
-        var cachedImage: Observable<ImageCacheData>?
-        var weatehrDescription: Observable<String>
+    private func configureOutput() -> Output? {
+        let url = self.city
+            .flatMap { LocationManager.shared.searchLocation(latitude: $0.coord.lat, longitude: $0.coord.lon) }
+            .map { self.detailShowUseCase.fetchURL(from: $0) }
         
-        self.city
-            .withUnretained(self)
-            .subscribe(onNext: {(self, city) in
-            selectedURLForMap = LocationManager.shared.searchLocation(
-                latitude: city.coord.lat,
-                longitude: city.coord.lon
-            )
-            weatehrDescription = self.extractWeatherDescription(city: city)
-            cachedImage = self.loadCacheImage(city: city)
-        }).disposed(by: self.bag)
-        
-        return Output(
-            selectedURLForMap: selectedURLForMap,
-            cachedImage: cachedImage,
-            weatehrDescription: weatehrDescription
-        )
+        guard let city = try? self.city.value()
+        else {
+            return nil
+        }
+        let cache = self.loadCacheImage(city: city)
+        let weatherDescription = self.extractWeatherDescription(city: city)
+        return Output(selectedURLForMap: url, cachedImage: cache, weatehrDescription: weatherDescription)
+    }
+    
+    func extractCity() -> BehaviorSubject<City> {
+        return self.city
     }
 }
 

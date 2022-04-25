@@ -6,5 +6,5 @@ protocol WeatherRepository {
     func fetchWeatherInformation(
         cityName text: String) -> Observable<TodayWeather>
     
-    func fetchURLFromLoaction(locationAddress address: String) -> String
+    func fetchURLFromLocation(locationAddress address: String) -> String
 }

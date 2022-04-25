@@ -30,7 +30,7 @@ final class DefaultWeatherRepository: WeatherRepository {
         }
     }
     
-    func fetchURLFromLoaction(locationAddress address: String) -> String {
+    func fetchURLFromLocation(locationAddress address: String) -> String {
         let type: RequestType = .getMapfromLocationInformation(location: address)
         
         return type.fullURL

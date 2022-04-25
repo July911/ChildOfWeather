@@ -49,6 +49,7 @@ final class DetailShowUIViewController: UIViewController {
         super.viewDidLoad()
         self.configureNavigationItem()
         self.configureLayout()
+        self.bindViewModel()
     }
     
     private func configureNavigationItem() {
@@ -108,46 +109,41 @@ final class DetailShowUIViewController: UIViewController {
         let input = DetailShowViewModel.Input(
             viewWillAppear: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in },
             didCaptureView: snapshotButtonEvent.asObservable(),
-            capturedImage: self.webviewSnapshot(city: <#T##String#>),
+            capturedImage: self.webviewSnapshot(),
             touchUpbackButton: backButtonEvent.asObservable()
         )
-        let output = self.viewModel?.transform(input: input)
+        
+        guard let output = self.viewModel?.transform(input: input)
+        else {
+            return
+        }
     
-        output?.weatehrDescription.asDriver(onErrorJustReturn: "")
+        output.weatehrDescription.asDriver(onErrorJustReturn: "")
             .drive(self.weatherTextView.rx.text)
             .disposed(by: self.bag)
         
-        output?.cachedImage?.asDriver(onErrorJustReturn: ImageCacheData(key: "", value: UIImage()))
+        output.cachedImage?.asDriver(onErrorJustReturn: ImageCacheData(key: "", value: UIImage()))
             .map { (imageCached) -> UIImage in
                 return imageCached.value
             }
             .drive(self.imageView.rx.image)
             .disposed(by: self.bag)
         
-        output?.selectedURLForMap
+        output.selectedURLForMap
             .withUnretained(self)
-            .subscribe(onNext: { (self,string) in
-                let url = URL(string: string)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { (DetailviewController ,string) in
+                let k = string.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                let url = URL(string: k!)
                 let request = URLRequest(url: url!)
-                self.webView.load(request)
+                DetailviewController.webView.load(request)
             }).disposed(by: self.bag)
     }
     
-    private func webviewSnapshot(city: String) -> Observable<ImageCacheData> {
+    private func webviewSnapshot() -> Observable<ImageCacheData> {
         return Observable<ImageCacheData>.create { emitter in
-            let configuration = WKSnapshotConfiguration()
-            self.webView.takeSnapshot(with: configuration) { [weak self] (image, error) in
-                
-                guard let image = image
-                else {
-                    return
-                }
-                
-                let cacheObject = ImageCacheData(key: city as NSString, value: image)
-                emitter.onNext(cacheObject)
-            }
-            
-            return Disposables.create()
+            self.viewModel.cac
+            emitter.onNext(<#T##element: ImageCacheData##ImageCacheData#>)
         }
     }
 }

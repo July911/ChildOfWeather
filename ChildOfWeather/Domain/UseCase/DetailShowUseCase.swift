@@ -16,7 +16,7 @@ final class DetailShowUseCase {
     }
     
     func fetchURL(from cityAddress: String) -> String {
-        self.weatherRepository.fetchURLFromLoaction(locationAddress: cityAddress)
+        self.weatherRepository.fetchURLFromLocation(locationAddress: cityAddress)
     }
 }
 

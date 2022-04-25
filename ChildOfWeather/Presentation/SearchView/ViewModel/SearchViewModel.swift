@@ -20,7 +20,7 @@ final class SearchViewModel {
         let viewWillAppear: Observable<Void>
         let didSelectedCell: Observable<City>
         let searchBarInput: Observable<Void>
-        let searchBarText: Observable<String>
+        let searchBarText: Observable<String?>
     }
     
     struct Output {
@@ -29,15 +29,19 @@ final class SearchViewModel {
     
     func transform(input: Input) -> Output {
         let cities = self.searchUseCase.extractCities().asObservable()
-        
+            
         input.searchBarInput.withLatestFrom(input.searchBarText)
             .subscribe(onNext: { text in
-                self.searchUseCase.search(text)
+                self.searchUseCase.search(text ?? "")
             }).disposed(by: self.bag)
         
-        input.didSelectedCell.subscribe(onNext:{ city in
+        input.didSelectedCell.subscribe(onNext: { (city) in
             self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
         }).disposed(by: self.bag)
+        
+        input.viewWillAppear.subscribe(onNext: { _ in
+            
+        })
         
         return Output(initialCities: cities)
     }

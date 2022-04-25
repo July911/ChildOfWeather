@@ -45,7 +45,7 @@ final class MainCoordinator {
         let detailShowUseCase = DetailShowUseCase(
             weatherRepository: weatherRepository
         )
-        let city = Observable<City>.just(city)
+        let city = BehaviorSubject<City>(value: city)
         viewController.viewModel = DetailShowViewModel(
             detailShowUseCase: detailShowUseCase,
             imageCacheUseCase: self.imageCacheUseCase,

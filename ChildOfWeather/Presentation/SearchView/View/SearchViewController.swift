@@ -1,8 +1,11 @@
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class SearchViewController: UIViewController {
     
     var viewModel: SearchViewModel?
+    private let bag = DisposeBag()
     
     private let listTableView: UITableView = {
         let tableview = UITableView(frame: .zero)
@@ -21,6 +24,7 @@ final class SearchViewController: UIViewController {
         super.viewDidLoad()
         self.configureLayout()
         self.configureSearchController()
+        self.bindViewModel()
     }
     
     private func configureLayout() {
@@ -43,6 +47,32 @@ final class SearchViewController: UIViewController {
         searchController.isActive = true
         self.navigationItem.searchController = searchController
         self.navigationController?.navigationBar.backgroundColor = .white
+    }
+    
+    private func bindViewModel() {
+        
+        guard let text = self.navigationItem.searchController?.searchBar.rx.text.asObservable(),
+              let searchBarEvent = self.navigationItem.searchController?.searchBar.rx.textDidBeginEditing.asObservable()
+        else {
+            return
+        }
+        
+        let input = SearchViewModel.Input(
+            viewWillAppear: (self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in }),
+            didSelectedCell: self.listTableView.rx.modelSelected(City.self).asObservable(),
+            searchBarInput: searchBarEvent,
+            searchBarText: text
+        )
+        
+        let output = self.viewModel?.transform(input: input)
+        
+        output?.initialCities.asDriver(onErrorJustReturn: [])
+            .drive(self.listTableView.rx.items(
+                cellIdentifier: String(describing: ListTableViewCell.self),
+                cellType: ListTableViewCell.self)
+            ) { index, item , cell in
+                cell.configureCell(city: item)
+            }.disposed(by: self.bag)
     }
 }
 

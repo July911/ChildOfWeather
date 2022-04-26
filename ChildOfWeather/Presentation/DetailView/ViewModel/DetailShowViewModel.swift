@@ -22,8 +22,7 @@ final class DetailShowViewModel {
     }
     
     struct Input {
-        let viewWillAppear: Observable<Void> //TODO: getCache
-        let didCaptureView: Observable<Void>
+        let viewWillAppear: Observable<Void>
         let capturedImage: Observable<ImageCacheData>
         let touchUpbackButton: Observable<Void>
     }
@@ -72,11 +71,7 @@ final class DetailShowViewModel {
             return nil 
         }
         
-        let combin = Observable.combineLatest(input.didCaptureView, input.capturedImage) { (event, image) -> ImageCacheData in
-            return image
-        }
-        
-             combin
+        input.capturedImage
             .withUnretained(self)
             .subscribe(onNext: { (self, image) in
                 self.imageCacheUseCase.setCache(object: image)

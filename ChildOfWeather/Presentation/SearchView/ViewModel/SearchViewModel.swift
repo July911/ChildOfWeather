@@ -39,10 +39,6 @@ final class SearchViewModel {
             self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
         }).disposed(by: self.bag)
         
-        input.viewWillAppear.subscribe(onNext: { _ in
-            
-        })
-        
         return Output(initialCities: cities)
     }
 }

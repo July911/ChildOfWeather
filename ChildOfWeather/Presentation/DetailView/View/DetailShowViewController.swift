@@ -111,15 +111,13 @@ final class DetailShowUIViewController: UIViewController {
             return
         }
         
-        let imagechache = snapshotButtonEvent.flatMap { (event) -> Observable<ImageCacheData> in
+        let imageCache = snapshotButtonEvent.flatMap { (event) -> Observable<ImageCacheData> in
                 self.webView.rx.takeSnapShot(city: city)
             }
     
-        
         let input = DetailShowViewModel.Input(
             viewWillAppear: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in },
-            didCaptureView: snapshotButtonEvent.asObservable(),
-            capturedImage: imagechache,
+            capturedImage: imageCache,
             touchUpbackButton: backButtonEvent.asObservable()
         )
         

@@ -105,11 +105,21 @@ final class DetailShowUIViewController: UIViewController {
         else {
             return
         }
-
+        
+        guard let city = viewModel?.extractCity()
+        else {
+            return
+        }
+        
+        let imagechache = snapshotButtonEvent.flatMap { (event) -> Observable<ImageCacheData> in
+                self.webView.rx.takeSnapShot(city: city)
+            }
+    
+        
         let input = DetailShowViewModel.Input(
             viewWillAppear: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in },
             didCaptureView: snapshotButtonEvent.asObservable(),
-            capturedImage: self.webviewSnapshot(),
+            capturedImage: imagechache,
             touchUpbackButton: backButtonEvent.asObservable()
         )
         
@@ -123,10 +133,11 @@ final class DetailShowUIViewController: UIViewController {
             .disposed(by: self.bag)
         
         output.cachedImage?.asDriver(onErrorJustReturn: ImageCacheData(key: "", value: UIImage()))
+            .filter { $0.value != UIImage() }
             .map { (imageCached) -> UIImage in
                 return imageCached.value
             }
-            .drive(self.imageView.rx.image)
+            .drive(self.imageView.rx.loadCacheView(webView: self.webView))
             .disposed(by: self.bag)
         
         output.selectedURLForMap
@@ -139,11 +150,39 @@ final class DetailShowUIViewController: UIViewController {
                 DetailviewController.webView.load(request)
             }).disposed(by: self.bag)
     }
-    
-    private func webviewSnapshot() -> Observable<ImageCacheData> {
+}
+
+extension Reactive where Base: WKWebView {
+    func takeSnapShot(city: City) -> Observable<ImageCacheData> {
         return Observable<ImageCacheData>.create { emitter in
-            self.viewModel.cac
-            emitter.onNext(<#T##element: ImageCacheData##ImageCacheData#>)
+            let configuration = WKSnapshotConfiguration()
+            base.takeSnapshot(with: configuration) { image, error in
+                guard error == nil
+                else {
+                    emitter.onError(APICallError.dataNotfetched)
+                    return
+                }
+                
+                guard let image = image
+                else {
+                    emitter.onError(APICallError.errorExist)
+                    return
+                }
+                let imageCacheData = ImageCacheData(key: city.name as NSString, value: image)
+                emitter.onNext(imageCacheData)
+                emitter.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
+}
+
+extension Reactive where Base: UIImageView {
+    func loadCacheView(webView: WKWebView) -> Binder<UIImage> {
+        return Binder(self.base) { ImageView, image in
+            webView.isHidden = true
+            base.isHidden = false
+            ImageView.image = image
         }
     }
 }

@@ -22,7 +22,7 @@ final class DetailShowViewModel {
     }
     
     struct Input {
-        let viewWillAppear: Observable<Void>
+        let viewWillAppear: Observable<Void> //TODO: getCache
         let didCaptureView: Observable<Void>
         let capturedImage: Observable<ImageCacheData>
         let touchUpbackButton: Observable<Void>
@@ -72,7 +72,11 @@ final class DetailShowViewModel {
             return nil 
         }
         
-        input.capturedImage.sample(input.didCaptureView)
+        let combin = Observable.combineLatest(input.didCaptureView, input.capturedImage) { (event, image) -> ImageCacheData in
+            return image
+        }
+        
+             combin
             .withUnretained(self)
             .subscribe(onNext: { (self, image) in
                 self.imageCacheUseCase.setCache(object: image)
@@ -102,8 +106,13 @@ final class DetailShowViewModel {
         return Output(selectedURLForMap: url, cachedImage: cache, weatehrDescription: weatherDescription)
     }
     
-    func extractCity() -> BehaviorSubject<City> {
-        return self.city
+    func extractCity() -> City? {
+        guard let city = try? self.city.value()
+        else {
+            return nil 
+        }
+        
+        return city
     }
 }
 

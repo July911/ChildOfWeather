@@ -59,6 +59,7 @@ class ListTableViewCell: UITableViewCell {
         self.nameLabel.text = city.name
         self.latLabel.text = "위도: \(city.coord.lat.toInt.description)"
         self.lonLabel.text = "경도: \(city.coord.lon.toInt.description)"
+        self.backgroundColor = .systemGray6
     }
     
     private func configureLayout() {

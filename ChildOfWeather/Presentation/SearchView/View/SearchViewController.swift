@@ -16,7 +16,6 @@ final class SearchViewController: UIViewController {
         tableview.estimatedRowHeight = 70
         tableview.rowHeight = 60
         tableview.translatesAutoresizingMaskIntoConstraints = false
-        
         return tableview
     }()
 
@@ -25,6 +24,12 @@ final class SearchViewController: UIViewController {
         self.configureLayout()
         self.configureSearchController()
         self.bindViewModel()
+        self.configureNavigationItem()
+    }
+    
+    private func configureNavigationItem() {
+        self.navigationItem.title = "전국의 날씨"
+        self.navigationController?.navigationBar.backgroundColor = .systemMint
     }
     
     private func configureLayout() {
@@ -44,6 +49,7 @@ final class SearchViewController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = true
         searchController.searchBar.placeholder = "please search the city that you want to get weather infomation"
         searchController.searchBar.tintColor = .white
+        searchController.searchBar.backgroundColor = .white
         searchController.isActive = true
         self.navigationItem.searchController = searchController
         self.navigationController?.navigationBar.backgroundColor = .white

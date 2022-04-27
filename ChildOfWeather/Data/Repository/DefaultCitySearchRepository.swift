@@ -1,6 +1,5 @@
 import UIKit
 import RxRelay
-import RxSwift
 
 final class DefaultCitySearchRepository: CitySearchRepository {
     

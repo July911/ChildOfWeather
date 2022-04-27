@@ -17,7 +17,7 @@ final class DefaultCitySearchRepository: CitySearchRepository {
             return
         }
         
-        let filteredCity = assetData.value.filter { $0.name == name }
+        let filteredCity = assetData.value.filter { $0.name.hasPrefix(name) }
         
         self.assetData.accept(filteredCity)
     }

@@ -51,16 +51,21 @@ final class SearchViewController: UIViewController {
     
     private func bindViewModel() {
         
-        guard let text = self.navigationItem.searchController?.searchBar.rx.text.asObservable(),
-              let searchBarEvent = self.navigationItem.searchController?.searchBar.rx.textDidBeginEditing.asObservable()
+        guard let text = self.navigationItem.searchController?.searchBar.rx.text.asObservable()
         else {
             return
         }
         
+        self.navigationItem.searchController?.searchBar.rx.text
+            .distinctUntilChanged()
+            .subscribe(onNext: { event in
+                self.listTableView.reloadData()
+                print("리로드")
+            }).disposed(by: self.bag)
+        
         let input = SearchViewModel.Input(
             viewWillAppear: (self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in }),
             didSelectedCell: self.listTableView.rx.modelSelected(City.self).asObservable(),
-            searchBarInput: searchBarEvent,
             searchBarText: text
         )
         

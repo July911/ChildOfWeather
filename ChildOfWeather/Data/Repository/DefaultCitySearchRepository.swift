@@ -10,8 +10,8 @@ final class DefaultCitySearchRepository: CitySearchRepository {
         self.fetchCityList()
     }
     
-    func search(name: String? = nil) {
-        guard name == nil
+    func search(name: String?) {
+        guard let name = name, name != ""
         else {
             self.fetchCityList()
             return

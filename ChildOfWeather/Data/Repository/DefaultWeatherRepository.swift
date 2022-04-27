@@ -3,7 +3,7 @@ import RxSwift
 
 final class DefaultWeatherRepository: WeatherRepository {
     
-    let service: URLSessionNetworkService
+    private let service: URLSessionNetworkService
     private let bag = DisposeBag()
     
     init(service: URLSessionNetworkService) {
@@ -22,7 +22,7 @@ final class DefaultWeatherRepository: WeatherRepository {
                 case .success(let weatherInformation):
                     emitter.onNext(weatherInformation.toDomain())
                 case .failure(let error):
-                    print(error)
+                    emitter.onError(error)
                 }
             }.disposed(by: self.bag)
             

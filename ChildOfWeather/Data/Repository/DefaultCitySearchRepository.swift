@@ -1,5 +1,6 @@
 import UIKit
 import RxRelay
+import RxSwift
 
 final class DefaultCitySearchRepository: CitySearchRepository {
     
@@ -9,16 +10,16 @@ final class DefaultCitySearchRepository: CitySearchRepository {
         self.fetchCityList()
     }
     
-    func search(name: String?) {
+    func search(name: String?) -> Observable<[City]> {
+        
         guard let name = name, name != ""
         else {
             self.fetchCityList()
-            return
+            return self.assetData.asObservable()
         }
-        
         let filteredCity = assetData.value.filter { $0.name.hasPrefix(name) }
         
-        self.assetData.accept(filteredCity)
+        return Observable<[City]>.just(filteredCity)
     }
     
     func extractCities(by country: Country = .kr) -> BehaviorRelay<[City]> {

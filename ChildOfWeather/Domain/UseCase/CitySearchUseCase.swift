@@ -1,5 +1,6 @@
 import Foundation
 import RxRelay
+import RxSwift
 
 final class CitySearchUseCase {
     
@@ -9,7 +10,7 @@ final class CitySearchUseCase {
         self.searchRepository = searchRepository
     }
     
-    func search(_ string: String) {
+    func search(_ string: String) -> Observable<[City]> {
         self.searchRepository.search(name: string)
     }
     

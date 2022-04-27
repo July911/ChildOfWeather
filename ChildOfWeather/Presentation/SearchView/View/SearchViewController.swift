@@ -66,7 +66,6 @@ final class SearchViewController: UIViewController {
             .distinctUntilChanged()
             .subscribe(onNext: { event in
                 self.listTableView.reloadData()
-                print("리로드")
             }).disposed(by: self.bag)
         
         let input = SearchViewModel.Input(

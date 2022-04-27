@@ -22,22 +22,26 @@ final class SearchViewModel {
     
     struct Output {
         let initialCities: Driver<[City]>
-//        let filteredCities: Observable<[City]>
     }
     
     func transform(input: Input) -> Output {
-        let cities = self.searchUseCase.extractCities().asDriver()
+        let entireCities = self.searchUseCase.extractCities().asObservable()
+        let filteredCities = input.searchBarText.distinctUntilChanged()
+            .flatMap { (text) -> Observable<[City]> in
+            return self.searchUseCase.search(text ?? "")
+        }
 
-        input.searchBarText.distinctUntilChanged()
-            .subscribe(onNext: { text in
-                self.searchUseCase.search(text ?? "")
-            }).disposed(by: self.bag)
+        let combined = Observable.combineLatest(entireCities, filteredCities) { (city, fil) -> [City] in
+            return fil.isEmpty ? city : fil
+        }.asDriver(onErrorJustReturn: [])
+        
+     
      
         input.didSelectedCell.subscribe(onNext: { (city) in
             self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
         }).disposed(by: self.bag)
         
-        return Output(initialCities: cities)
+        return Output(initialCities: combined)
     }
 }
 

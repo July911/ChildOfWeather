@@ -2,7 +2,7 @@ import Foundation
 
 final class DefaultImageProvideRepository: ImageProvideRepository {
     
-    let service = CacheService()
+    private let service = CacheService()
     
     func setCache(object: ImageCacheData) {
         let key = object.key

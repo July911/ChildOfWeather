@@ -68,6 +68,13 @@ final class SearchViewController: UIViewController {
                 self.listTableView.reloadData()
             }).disposed(by: self.bag)
         
+        self.listTableView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe(onNext: { (self,index) in
+            self.listTableView.deselectRow(at: index, animated: true)
+            }).disposed(by: self.bag)
+        
+        
         let input = SearchViewModel.Input(
             viewWillAppear: (self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in }),
             didSelectedCell: self.listTableView.rx.modelSelected(City.self).asObservable(),
@@ -85,6 +92,9 @@ final class SearchViewController: UIViewController {
             }.disposed(by: self.bag)
     }
 }
+
+
+
 
 
     

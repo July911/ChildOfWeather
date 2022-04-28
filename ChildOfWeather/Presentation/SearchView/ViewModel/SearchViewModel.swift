@@ -1,7 +1,6 @@
 import Foundation
 import RxSwift
 import RxRelay
-import RxCocoa
 
 final class SearchViewModel {
     // MARK: - Property 
@@ -21,7 +20,7 @@ final class SearchViewModel {
     }
     
     struct Output {
-        let initialCities: Driver<[City]>
+        let initialCities: Observable<[City]>
     }
     // MARK: - Open Method
     func transform(input: Input) -> Output {
@@ -33,7 +32,7 @@ final class SearchViewModel {
 
         let combined = Observable.combineLatest(entireCities, filteredCities) { (city, fil) -> [City] in
             return fil.isEmpty ? city : fil
-        }.asDriver(onErrorJustReturn: [])
+        }
         
      
      

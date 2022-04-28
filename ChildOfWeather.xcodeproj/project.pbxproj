@@ -41,6 +41,7 @@
 		18D7B1F127FFC9590077119A /* ImageProvideRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7B1F027FFC9590077119A /* ImageProvideRepository.swift */; };
 		18D7B1F327FFC9830077119A /* DefaultImageProvideRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7B1F227FFC9830077119A /* DefaultImageProvideRepository.swift */; };
 		18DDE2F62807E553000775FB /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DDE2F52807E553000775FB /* DateFormatter.swift */; };
+		18DEE319281A6099006A82E8 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DEE318281A6099006A82E8 /* String + Extension.swift */; };
 		18E00263280E77BD00C63E71 /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E00262280E77BD00C63E71 /* MockAPIService.swift */; };
 		18E00265280E7D8400C63E71 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E00264280E7D8400C63E71 /* LocationManager.swift */; };
 		18E30DA928105422005AEF96 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 18E30DA828105422005AEF96 /* RxCocoa */; };
@@ -95,6 +96,7 @@
 		18D7B1F027FFC9590077119A /* ImageProvideRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProvideRepository.swift; sourceTree = "<group>"; };
 		18D7B1F227FFC9830077119A /* DefaultImageProvideRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageProvideRepository.swift; sourceTree = "<group>"; };
 		18DDE2F52807E553000775FB /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		18DEE318281A6099006A82E8 /* String + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extension.swift"; sourceTree = "<group>"; };
 		18E00262280E77BD00C63E71 /* MockAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
 		18E00264280E7D8400C63E71 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		18E07781280B086B00CC17F2 /* ChildOfWeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChildOfWeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -221,6 +223,7 @@
 		18D4DD1927FBC34300697F43 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				18DEE317281A6083006A82E8 /* Extension */,
 				18D4DD4027FBF9B400697F43 /* Coordinator */,
 				18D4DD2227FBD00800697F43 /* SearchView */,
 				18D4DD4927FC0BFC00697F43 /* DetailView */,
@@ -374,6 +377,14 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		18DEE317281A6083006A82E8 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				18DEE318281A6099006A82E8 /* String + Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		18E07782280B086B00CC17F2 /* ChildOfWeatherTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,6 +511,7 @@
 			files = (
 				18DDE2F62807E553000775FB /* DateFormatter.swift in Sources */,
 				18D7B1F127FFC9590077119A /* ImageProvideRepository.swift in Sources */,
+				18DEE319281A6099006A82E8 /* String + Extension.swift in Sources */,
 				18D4DD3F27FBF91900697F43 /* Coordinator.swift in Sources */,
 				18D4DD2E27FBDFD400697F43 /* DefaultWeatherRepository.swift in Sources */,
 				18D4DD2427FBD39B00697F43 /* Constant.swift in Sources */,

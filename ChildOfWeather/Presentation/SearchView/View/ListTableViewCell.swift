@@ -56,9 +56,7 @@ class ListTableViewCell: UITableViewCell {
     }
     // MARK: - Open Method
     func configureCell(city: City) {
-        self.nameLabel.text = city.name
-        self.latLabel.text = "위도: \(city.coord.lat.toInt.description)"
-        self.lonLabel.text = "경도: \(city.coord.lon.toInt.description)"
+        self.nameLabel.attributedText = city.name.toBoldFont
         self.backgroundColor = .systemGray6
     }
     // MARK: - Private Method

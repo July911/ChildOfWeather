@@ -48,6 +48,7 @@ final class DetailShowUIViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureNavigationItem()
+        self.configureNavigationBarColor()
         self.configureLayout()
         self.bindViewModel()
     }
@@ -58,13 +59,19 @@ final class DetailShowUIViewController: UIViewController {
             target: self, action: nil
         )
         self.backButtonItem = self.navigationItem.leftBarButtonItem
+        self.backButtonItem?.tintColor = .white
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .camera,
             target: self, action: nil
         )
         self.snapshotButtonItem = self.navigationItem.rightBarButtonItem
+        self.snapshotButtonItem?.tintColor = .white 
         self.navigationItem.title = "지도와 날씨"
+    }
+    
+    private func configureNavigationBarColor() {
+        self.navigationController?.navigationBar.backgroundColor = .systemMint
     }
     
     private func configureLayout() {
@@ -127,7 +134,8 @@ final class DetailShowUIViewController: UIViewController {
         }
     
         output.weatehrDescription.asDriver(onErrorJustReturn: "")
-            .drive(self.weatherTextView.rx.text)
+            .map { $0.toBoldFont }
+            .drive(self.weatherTextView.rx.attributedText)
             .disposed(by: self.bag)
         
         output.cachedImage?.asDriver(onErrorJustReturn: ImageCacheData(key: "", value: UIImage()))

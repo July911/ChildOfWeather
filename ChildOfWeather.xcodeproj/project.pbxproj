@@ -43,7 +43,6 @@
 		18DDE2F62807E553000775FB /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DDE2F52807E553000775FB /* DateFormatter.swift */; };
 		18DEE319281A6099006A82E8 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DEE318281A6099006A82E8 /* String + Extension.swift */; };
 		18DEE31D281A6C01006A82E8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18DEE31F281A6C01006A82E8 /* Localizable.strings */; };
-		18DEE342281A762F006A82E8 /* String + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DEE341281A762F006A82E8 /* String + Extensions.swift */; };
 		18E00263280E77BD00C63E71 /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E00262280E77BD00C63E71 /* MockAPIService.swift */; };
 		18E00265280E7D8400C63E71 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E00264280E7D8400C63E71 /* LocationManager.swift */; };
 		18E30DA928105422005AEF96 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 18E30DA828105422005AEF96 /* RxCocoa */; };
@@ -101,7 +100,6 @@
 		18DEE318281A6099006A82E8 /* String + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extension.swift"; sourceTree = "<group>"; };
 		18DEE31E281A6C01006A82E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		18DEE320281A6C2C006A82E8 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
-		18DEE341281A762F006A82E8 /* String + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String + Extensions.swift"; path = "../../Localization/String + Extensions.swift"; sourceTree = "<group>"; };
 		18E00262280E77BD00C63E71 /* MockAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
 		18E00264280E7D8400C63E71 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		18E07781280B086B00CC17F2 /* ChildOfWeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChildOfWeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -386,7 +384,6 @@
 		18DEE317281A6083006A82E8 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				18DEE341281A762F006A82E8 /* String + Extensions.swift */,
 				18DEE318281A6099006A82E8 /* String + Extension.swift */,
 			);
 			path = Extension;
@@ -544,7 +541,6 @@
 				18D4DD3327FBE1EE00697F43 /* CitySearchRepository.swift in Sources */,
 				18D4DD2827FBDE7500697F43 /* URLSessionNetworkService.swift in Sources */,
 				18E00265280E7D8400C63E71 /* LocationManager.swift in Sources */,
-				18DEE342281A762F006A82E8 /* String + Extensions.swift in Sources */,
 				18D4DD2127FBCE6900697F43 /* RequestType.swift in Sources */,
 				18D4DD4F27FC0C7500697F43 /* DetailShowViewModel.swift in Sources */,
 				18D4DD4D27FC0C5A00697F43 /* DetailShowViewController.swift in Sources */,

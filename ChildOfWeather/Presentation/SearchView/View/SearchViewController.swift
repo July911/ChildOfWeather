@@ -13,8 +13,8 @@ final class SearchViewController: UIViewController {
             ListTableViewCell.self,
             forCellReuseIdentifier: String(describing: ListTableViewCell.self)
         )
-        tableview.estimatedRowHeight = 70
-        tableview.rowHeight = 60
+        tableview.estimatedRowHeight = 60
+        tableview.rowHeight = 50
         tableview.translatesAutoresizingMaskIntoConstraints = false
         return tableview
     }()
@@ -25,11 +25,23 @@ final class SearchViewController: UIViewController {
         self.configureSearchController()
         self.bindViewModel()
         self.configureNavigationItem()
+        self.addGradientToNavigationController()
     }
     // MARK: - Private Method
     private func configureNavigationItem() {
         self.navigationItem.title = "전국의 날씨"
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.backgroundColor = .systemMint
+    }
+    
+    private func addGradientToNavigationController() {
+        let gradient = CAGradientLayer()
+        gradient.colors = [
+            UIColor.clear.cgColor,
+            UIColor.systemBackground.cgColor
+        ]
+        gradient.frame = self.navigationController?.navigationBar.frame ?? CGRect(x: 0, y: 0, width: self.view.safeAreaLayoutGuide.layoutFrame.width, height: self.view.safeAreaLayoutGuide.layoutFrame.height)
+        self.view.layer.addSublayer(gradient)
     }
     
     private func configureLayout() {

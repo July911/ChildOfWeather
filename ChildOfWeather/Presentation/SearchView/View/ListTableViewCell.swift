@@ -56,7 +56,7 @@ class ListTableViewCell: UITableViewCell {
     }
     // MARK: - Open Method
     func configureCell(city: City) {
-        self.nameLabel.attributedText = city.name.localized.toBoldFont
+        self.nameLabel.attributedText = city.name.localized.toBoldFontForTitle
         self.backgroundColor = .systemGray6
     }
     // MARK: - Private Method
@@ -69,9 +69,9 @@ class ListTableViewCell: UITableViewCell {
         self.entireStackView.addArrangedSubview(locationStackView)
         
         let entireStackViewLayout: [NSLayoutConstraint] = [
-            entireStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            entireStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20),
             entireStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            entireStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            entireStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15),
             entireStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ]
         NSLayoutConstraint.activate(entireStackViewLayout)

@@ -47,12 +47,17 @@ final class DetailShowUIViewController: UIViewController {
     // MARK: - View Life Cycle 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureSuperView()
         self.configureNavigationItem()
         self.configureNavigationBarColor()
         self.configureLayout()
         self.bindViewModel()
     }
     // MARK: - Private Method
+    private func configureSuperView() {
+        self.view.backgroundColor = .white
+    }
+    
     private func configureNavigationItem() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
@@ -72,6 +77,7 @@ final class DetailShowUIViewController: UIViewController {
     
     private func configureNavigationBarColor() {
         self.navigationController?.navigationBar.backgroundColor = .systemMint
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
     private func configureLayout() {
@@ -88,7 +94,7 @@ final class DetailShowUIViewController: UIViewController {
         
         let entireStackViewLayout: [NSLayoutConstraint] = [
             self.weatherTextView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.4),
-            self.weatherTextView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.weatherTextView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
             self.weatherTextView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.weatherTextView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ]
@@ -134,7 +140,7 @@ final class DetailShowUIViewController: UIViewController {
         }
     
         output.weatehrDescription.asDriver(onErrorJustReturn: "")
-            .map { $0.toBoldFont }
+            .map { $0.toBoldFontForText }
             .drive(self.weatherTextView.rx.attributedText)
             .disposed(by: self.bag)
         

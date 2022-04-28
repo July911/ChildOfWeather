@@ -34,8 +34,6 @@ final class SearchViewModel {
             return fil.isEmpty ? city : fil
         }
         
-     
-     
         input.didSelectedCell.subscribe(onNext: { (city) in
             self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
         }).disposed(by: self.bag)
@@ -43,6 +41,7 @@ final class SearchViewModel {
         return Output(initialCities: combined)
     }
 }
+
 
 
 

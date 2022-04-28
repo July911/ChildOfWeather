@@ -17,7 +17,7 @@ final class DefaultCitySearchRepository: CitySearchRepository {
             self.fetchCityList()
             return self.assetData.asObservable()
         }
-        let filteredCity = assetData.value.filter { $0.name.hasPrefix(name) }
+        let filteredCity = assetData.value.filter { $0.name.localized.hasPrefix(name) }
         
         return Observable<[City]>.just(filteredCity)
     }

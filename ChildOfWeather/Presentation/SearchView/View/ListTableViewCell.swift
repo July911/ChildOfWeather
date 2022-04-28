@@ -56,7 +56,7 @@ class ListTableViewCell: UITableViewCell {
     }
     // MARK: - Open Method
     func configureCell(city: City) {
-        self.nameLabel.attributedText = city.name.toBoldFont
+        self.nameLabel.attributedText = city.name.localized.toBoldFont
         self.backgroundColor = .systemGray6
     }
     // MARK: - Private Method

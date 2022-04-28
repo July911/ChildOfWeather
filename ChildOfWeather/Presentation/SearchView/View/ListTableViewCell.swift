@@ -1,7 +1,7 @@
 import UIKit
 
 class ListTableViewCell: UITableViewCell {
-    
+    // MARK: - UI Components
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title1)
@@ -45,7 +45,7 @@ class ListTableViewCell: UITableViewCell {
         
         return stackView
     }()
-
+    // MARK: - Initializer
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.configureLayout()
@@ -54,14 +54,14 @@ class ListTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+    // MARK: - Open Method
     func configureCell(city: City) {
         self.nameLabel.text = city.name
         self.latLabel.text = "위도: \(city.coord.lat.toInt.description)"
         self.lonLabel.text = "경도: \(city.coord.lon.toInt.description)"
         self.backgroundColor = .systemGray6
     }
-    
+    // MARK: - Private Method
     private func configureLayout() {
         self.locationStackView.addArrangedSubview(lonLabel)
         self.locationStackView.addArrangedSubview(latLabel)
@@ -79,7 +79,7 @@ class ListTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate(entireStackViewLayout)
     }
 }
-
+// MARK: - Extension 
 private extension Double {
     
     var toInt: Int {

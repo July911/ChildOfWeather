@@ -4,16 +4,16 @@ import RxRelay
 import RxCocoa
 
 final class SearchViewModel {
-    
+    // MARK: - Property 
     private let coordinator: MainCoordinator
     private let searchUseCase: CitySearchUseCase
     private let bag = DisposeBag()
-    
+    // MARK: - Initializer
     init(searchUseCase: CitySearchUseCase, coodinator: MainCoordinator) {
         self.searchUseCase = searchUseCase
         self.coordinator = coodinator
     }
-  
+   // MARK: - Nested Type
     struct Input {
         let viewWillAppear: Observable<Void>
         let didSelectedCell: Observable<City>
@@ -23,7 +23,7 @@ final class SearchViewModel {
     struct Output {
         let initialCities: Driver<[City]>
     }
-    
+    // MARK: - Open Method
     func transform(input: Input) -> Output {
         let entireCities = self.searchUseCase.extractCities().asObservable()
         let filteredCities = input.searchBarText.distinctUntilChanged()

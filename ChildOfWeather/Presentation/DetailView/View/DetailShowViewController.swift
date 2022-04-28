@@ -4,12 +4,12 @@ import RxSwift
 import RxCocoa
 
 final class DetailShowUIViewController: UIViewController {
-    
+    // MARK: - Property
     var viewModel: DetailShowViewModel?
     private var backButtonItem: UIBarButtonItem?
     private var snapshotButtonItem: UIBarButtonItem?
     private let bag = DisposeBag()
-    
+    // MARK: - UI Components
     private let webView: WKWebView = {
         let preferences = WKWebpagePreferences()
         preferences.allowsContentJavaScript = true
@@ -44,14 +44,14 @@ final class DetailShowUIViewController: UIViewController {
         
         return imageView
     }()
-    
+    // MARK: - View Life Cycle 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureNavigationItem()
         self.configureLayout()
         self.bindViewModel()
     }
-    
+    // MARK: - Private Method
     private func configureNavigationItem() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
@@ -149,8 +149,8 @@ final class DetailShowUIViewController: UIViewController {
             }).disposed(by: self.bag)
     }
 }
-
-extension Reactive where Base: WKWebView {
+// MARK: - Reactive Extension 
+private extension Reactive where Base: WKWebView {
     func takeSnapShot(city: City) -> Observable<ImageCacheData> {
         return Observable<ImageCacheData>.create { emitter in
             let configuration = WKSnapshotConfiguration()
@@ -175,7 +175,7 @@ extension Reactive where Base: WKWebView {
     }
 }
 
-extension Reactive where Base: UIImageView {
+private extension Reactive where Base: UIImageView {
     func loadCacheView(webView: WKWebView) -> Binder<UIImage> {
         return Binder(self.base) { ImageView, image in
             webView.isHidden = true

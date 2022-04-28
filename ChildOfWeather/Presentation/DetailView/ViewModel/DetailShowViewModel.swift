@@ -2,13 +2,13 @@ import Foundation
 import RxSwift
 
 final class DetailShowViewModel {
-    
+    // MARK: - Private Property
     private let city: BehaviorSubject<City>
     private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
     private let imageCacheUseCase: ImageCacheUseCase
     private let bag = DisposeBag()
-    
+    // MARK: - Initializer
     init(
         detailShowUseCase: DetailShowUseCase,
         imageCacheUseCase: ImageCacheUseCase,
@@ -20,7 +20,7 @@ final class DetailShowViewModel {
         self.coordinator = coodinator
         self.city = city
     }
-    
+    // MARK: - Nested Type
     struct Input {
         let viewWillAppear: Observable<Void>
         let capturedImage: Observable<ImageCacheData>
@@ -32,12 +32,43 @@ final class DetailShowViewModel {
         let cachedImage: Observable<ImageCacheData>?
         let weatehrDescription: Observable<String>
     }
+    // MARK: - Open Method
+    func transform(input: Input) -> Output? {
+        guard let output = self.configureOutput()
+        else {
+            return nil
+        }
+        
+        input.capturedImage
+            .withUnretained(self)
+            .subscribe(onNext: { (self, image) in
+                self.imageCacheUseCase.setCache(object: image)
+            }).disposed(by: self.bag)
+        
+        input.touchUpbackButton
+            .withUnretained(self)
+            .observe(on: MainScheduler.instance)
+            .subscribe( onNext: { _ in
+                self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
+            }).disposed(by: self.bag)
+        
+        return output
+    }
     
-    func cache(object: ImageCacheData) {
+    func extractCity() -> City? {
+        guard let city = try? self.city.value()
+        else {
+            return nil
+        }
+        
+        return city
+    }
+    // MARK: - Private Method 
+    private func cache(object: ImageCacheData) {
         self.imageCacheUseCase.setCache(object: object)
     }
     
-    func extractCache(key: String) -> ImageCacheData? {
+    private func extractCache(key: String) -> ImageCacheData? {
         self.imageCacheUseCase.fetchImage(cityName: key)
     }
     
@@ -64,28 +95,6 @@ final class DetailShowViewModel {
         
         return Observable.just(image)
     }
-
-    func transform(input: Input) -> Output? {
-        guard let output = self.configureOutput()
-        else {
-            return nil 
-        }
-        
-        input.capturedImage
-            .withUnretained(self)
-            .subscribe(onNext: { (self, image) in
-                self.imageCacheUseCase.setCache(object: image)
-            }).disposed(by: self.bag)
-        
-        input.touchUpbackButton
-            .withUnretained(self)
-            .observe(on: MainScheduler.instance)
-            .subscribe( onNext: { _ in
-                self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
-            }).disposed(by: self.bag)
-        
-        return output
-    }
     
     private func configureOutput() -> Output? {
         let url = self.city
@@ -100,17 +109,8 @@ final class DetailShowViewModel {
         let weatherDescription = self.extractWeatherDescription(city: city)
         return Output(selectedURLForMap: url, cachedImage: cache, weatehrDescription: weatherDescription)
     }
-    
-    func extractCity() -> City? {
-        guard let city = try? self.city.value()
-        else {
-            return nil 
-        }
-        
-        return city
-    }
 }
-
+// MARK: - Extension
 fileprivate extension Double {
     
     var toCelsius: Double {

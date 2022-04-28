@@ -3,10 +3,10 @@ import RxSwift
 import RxCocoa
 
 final class SearchViewController: UIViewController {
-    
+    // MARK: - Properties
     var viewModel: SearchViewModel?
     private let bag = DisposeBag()
-    
+    // MARK: - UI Components
     private let listTableView: UITableView = {
         let tableview = UITableView(frame: .zero)
         tableview.register(
@@ -18,7 +18,7 @@ final class SearchViewController: UIViewController {
         tableview.translatesAutoresizingMaskIntoConstraints = false
         return tableview
     }()
-
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureLayout()
@@ -26,7 +26,7 @@ final class SearchViewController: UIViewController {
         self.bindViewModel()
         self.configureNavigationItem()
     }
-    
+    // MARK: - Private Method
     private func configureNavigationItem() {
         self.navigationItem.title = "전국의 날씨"
         self.navigationController?.navigationBar.backgroundColor = .systemMint

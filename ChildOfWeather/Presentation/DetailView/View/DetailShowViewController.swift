@@ -7,7 +7,6 @@ final class DetailShowUIViewController: UIViewController {
     // MARK: - Property
     var viewModel: DetailShowViewModel?
     private var backButtonItem: UIBarButtonItem?
-    private var snapshotButtonItem: UIBarButtonItem?
     private let bag = DisposeBag()
     // MARK: - UI Components
     private let webView: WKWebView = {
@@ -66,12 +65,6 @@ final class DetailShowUIViewController: UIViewController {
         self.backButtonItem = self.navigationItem.leftBarButtonItem
         self.backButtonItem?.tintColor = .white
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .camera,
-            target: self, action: nil
-        )
-        self.snapshotButtonItem = self.navigationItem.rightBarButtonItem
-        self.snapshotButtonItem?.tintColor = .white 
         self.navigationItem.title = "지도와 날씨"
     }
     
@@ -113,8 +106,7 @@ final class DetailShowUIViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        guard let snapshotButtonEvent = self.snapshotButtonItem?.rx.tap,
-              let backButtonEvent = self.backButtonItem?.rx.tap
+        guard let backButtonEvent = self.backButtonItem?.rx.tap
         else {
             return
         }
@@ -124,12 +116,12 @@ final class DetailShowUIViewController: UIViewController {
             return
         }
         
-        let imageCache = snapshotButtonEvent.flatMap { (event) -> Observable<ImageCacheData> in
+        let imageCache = self.rx.methodInvoked(#selector(UIViewController.viewWillDisappear(_:))).map { _ in }
+                .flatMap { (event) -> Observable<ImageCacheData> in
                 self.webView.rx.takeSnapShot(city: city)
             }
     
         let input = DetailShowViewModel.Input(
-            viewWillAppear: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in },
             capturedImage: imageCache,
             touchUpbackButton: backButtonEvent.asObservable()
         )
@@ -156,9 +148,15 @@ final class DetailShowUIViewController: UIViewController {
             .withUnretained(self)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { (DetailviewController ,string) in
-                let k = string.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                let url = URL(string: k!)
-                let request = URLRequest(url: url!)
+                guard let quaryAllowed = string.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                else {
+                    return
+                }
+                guard let url = URL(string: quaryAllowed)
+                else {
+                    return
+                }
+                let request = URLRequest(url: url)
                 DetailviewController.webView.load(request)
             }).disposed(by: self.bag)
     }

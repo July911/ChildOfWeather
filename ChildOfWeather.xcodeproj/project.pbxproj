@@ -189,7 +189,6 @@
 		18D4DD0127FBC15100697F43 /* ChildOfWeather */ = {
 			isa = PBXGroup;
 			children = (
-				18DEE31A281A6BCA006A82E8 /* Localization */,
 				18D4DD1727FBC32E00697F43 /* Core */,
 				18D4DD1F27FBCE4D00697F43 /* NetWork */,
 				180650FE2805B7A0005E9F0E /* Cache */,
@@ -197,6 +196,7 @@
 				18D4DD1827FBC33500697F43 /* Domain */,
 				18D4DD1927FBC34300697F43 /* Presentation */,
 				180650F6280599AF005E9F0E /* Utils */,
+				18DEE31A281A6BCA006A82E8 /* Localization */,
 				18D4DD0B27FBC15400697F43 /* Assets.xcassets */,
 				18D4DD0D27FBC15400697F43 /* LaunchScreen.storyboard */,
 				18D4DD1027FBC15400697F43 /* Info.plist */,

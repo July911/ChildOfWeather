@@ -27,7 +27,7 @@ class ImageCacheUseCaseTests: XCTestCase {
     }
     
     func test_ImageCache를_하지않은_상태에서_check를하면_false가_나온다() {
-        let isCached = sut?.checkCacheExist(cityName: "imae")
+        let isCached = sut?.hasCacheExist(cityName: "imae")
         
         XCTAssertEqual(false, isCached)
     }

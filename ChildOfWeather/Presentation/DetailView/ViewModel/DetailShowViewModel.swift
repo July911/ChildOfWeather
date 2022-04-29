@@ -22,7 +22,6 @@ final class DetailShowViewModel {
     }
     // MARK: - Nested Type
     struct Input {
-        let viewWillAppear: Observable<Void>
         let capturedImage: Observable<ImageCacheData>
         let touchUpbackButton: Observable<Void>
     }
@@ -41,6 +40,7 @@ final class DetailShowViewModel {
         
         input.capturedImage
             .withUnretained(self)
+            .filter { _ in self.imageCacheUseCase.hasCacheExist(cityName: self.extractCity().name) == false }
             .subscribe(onNext: { (self, image) in
                 self.imageCacheUseCase.setCache(object: image)
             }).disposed(by: self.bag)
@@ -55,10 +55,10 @@ final class DetailShowViewModel {
         return output
     }
     
-    func extractCity() -> City? {
+    func extractCity() -> City {
         guard let city = try? self.city.value()
         else {
-            return nil
+            return City.EMPTY
         }
         
         return city
@@ -84,7 +84,7 @@ final class DetailShowViewModel {
     }
     
     private func loadCacheImage(city: City) -> Observable<ImageCacheData>? {
-        guard self.imageCacheUseCase.checkCacheExist(cityName: city.name)
+        guard self.imageCacheUseCase.hasCacheExist(cityName: city.name)
         else {
             return nil
         }
@@ -100,6 +100,7 @@ final class DetailShowViewModel {
         let url = self.city
             .flatMap { LocationManager.shared.searchLocation(latitude: $0.coord.lat, longitude: $0.coord.lon) }
             .map { self.detailShowUseCase.fetchURL(from: $0) }
+            .take(1)
         
         guard let city = try? self.city.value()
         else {

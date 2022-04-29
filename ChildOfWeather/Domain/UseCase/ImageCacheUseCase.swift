@@ -16,7 +16,7 @@ final class ImageCacheUseCase {
         self.imageProvideRepository.fetchCache(key: cityName)
     }
     
-    func checkCacheExist(cityName: String) -> Bool {
+    func hasCacheExist(cityName: String) -> Bool {
         self.imageProvideRepository.fetchCache(key: cityName) == nil ? false : true
     }
 }

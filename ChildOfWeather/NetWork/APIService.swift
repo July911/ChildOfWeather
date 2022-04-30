@@ -34,25 +34,25 @@ final class APIService: URLSessionNetworkService {
                 
                 guard let data = data
                 else {
-                    single(.failure(APICallError.errorExist))
+                    single(.failure(APICallError.dataNotfetched))
                     return
                 }
                 
                 guard let response = URLResponse as? HTTPURLResponse
                 else {
-                    single(.failure(APICallError.errorExist))
+                    single(.failure(APICallError.invalidResponse))
                     return
                 }
                 
                 guard (200...299) ~= response.statusCode
                 else {
-                    single(.failure(APICallError.errorExist))
+                    single(.failure(APICallError.notProperStatusCode))
                     return
                 }
                 
                 guard let decodedObject = try? JSONDecoder().decode(T.self, from: data)
                 else {
-                    single(.failure(APICallError.errorExist))
+                    single(.failure(APICallError.failureDecoding))
                     return
                 }
                 

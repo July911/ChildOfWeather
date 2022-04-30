@@ -122,11 +122,12 @@ final class DetailShowUIViewController: UIViewController {
             }
     
         let input = DetailShowViewModel.Input(
+            viewWillAppear: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in },
             capturedImage: imageCache,
             touchUpbackButton: backButtonEvent.asObservable()
         )
         
-        guard let output = self.viewModel?.transform(input: input)
+        guard let output = self.viewModel?.transform(input: input, disposeBag: self.bag)
         else {
             return
         }

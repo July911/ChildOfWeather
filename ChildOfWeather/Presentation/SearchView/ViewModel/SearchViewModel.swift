@@ -23,23 +23,22 @@ final class SearchViewModel {
         let initialCities: Observable<[City]>
     }
     // MARK: - Open Method
-    func transform(input: Input) -> Output {
+    func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let cities = self.searchUseCase.extractCities()
-        let entireCities = Observable.of(cities)
         let filteredCities = input.searchBarText.distinctUntilChanged()
             .flatMap { (text) -> Observable<[City]> in
             return self.searchUseCase.search(text ?? "")
         }
-
         let combined = filteredCities.flatMap {
-            $0.isEmpty ? entireCities : Observable.of($0)
+            $0.isEmpty ? Observable.of(cities) : Observable.of($0)
         }
-        
+        let citiesCombinedInputEvent = combined.sample(input.viewWillAppear)
+
         input.didSelectedCell.subscribe(onNext: { (city) in
             self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
-        }).disposed(by: self.bag)
+        }).disposed(by: disposeBag)
         
-        return Output(initialCities: combined)
+        return Output(initialCities: citiesCombinedInputEvent)
     }
 }
 

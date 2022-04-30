@@ -3,7 +3,7 @@ import RxSwift
 
 final class DetailShowViewModel {
     // MARK: - Private Property
-    private let city: BehaviorSubject<City>
+    private let city: City
     private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
     private let imageCacheUseCase: ImageCacheUseCase
@@ -13,7 +13,7 @@ final class DetailShowViewModel {
         detailShowUseCase: DetailShowUseCase,
         imageCacheUseCase: ImageCacheUseCase,
         coodinator: MainCoordinator,
-        city: BehaviorSubject<City>
+        city: City
     ) {
         self.detailShowUseCase = detailShowUseCase
         self.imageCacheUseCase = imageCacheUseCase
@@ -33,7 +33,7 @@ final class DetailShowViewModel {
         let weatehrDescription: Observable<String>
     }
     // MARK: - Open Method
-    func transform(input: Input) -> Output? {
+    func transform(input: Input, disposeBag: DisposeBag) -> Output? {
         guard let output = self.configureOutput()
         else {
             return nil
@@ -44,25 +44,20 @@ final class DetailShowViewModel {
             .filter { _ in self.imageCacheUseCase.hasCacheExist(cityName: self.extractCity().name) == false }
             .subscribe(onNext: { (self, image) in
                 self.imageCacheUseCase.setCache(object: image)
-            }).disposed(by: self.bag)
+            }).disposed(by: disposeBag)
         
         input.touchUpbackButton
             .withUnretained(self)
             .observe(on: MainScheduler.instance)
             .subscribe( onNext: { _ in
                 self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
-            }).disposed(by: self.bag)
+            }).disposed(by: disposeBag)
         
         return output
     }
     
     func extractCity() -> City {
-        guard let city = try? self.city.value()
-        else {
-            return City.EMPTY
-        }
-        
-        return city
+        return self.city
     }
     // MARK: - Private Method 
     private func cache(object: ImageCacheData) {
@@ -100,16 +95,10 @@ final class DetailShowViewModel {
     }
     
     private func configureOutput() -> Output? {
-        let url = self.city
-            .flatMap { LocationManager.shared.searchLocation(latitude: $0.coord.lat, longitude: $0.coord.lon) }
+         let url = LocationManager.shared.searchLocation(latitude: self.city.coord.lat, longitude: self.city.coord.lon)
             .map { self.detailShowUseCase.fetchURL(from: $0) }
-            .take(1)
         
-        guard let city = try? self.city.value()
-        else {
-            return nil
-        }
-        let cache = self.loadCacheImage(city: city)
+        let cache = self.loadCacheImage(city: self.city)
         let weatherDescription = self.extractWeatherDescription(city: city)
         return Output(selectedURLForMap: url, cachedImage: cache, weatehrDescription: weatherDescription)
     }

@@ -93,7 +93,7 @@ final class SearchViewController: UIViewController {
             searchBarText: text
         )
         
-        let output = self.viewModel?.transform(input: input)
+        let output = self.viewModel?.transform(input: input, disposeBag: self.bag)
         
         output?.initialCities.asDriver(onErrorJustReturn: [])
             .drive(self.listTableView.rx.items(

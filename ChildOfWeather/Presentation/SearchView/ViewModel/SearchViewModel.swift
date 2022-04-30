@@ -30,8 +30,8 @@ final class SearchViewModel {
             return self.searchUseCase.search(text ?? "")
         }
 
-        let combined = Observable.combineLatest(entireCities, filteredCities) { (city, fil) -> [City] in
-            return fil.isEmpty ? city : fil
+        let combined = filteredCities.flatMap {
+            $0.isEmpty ? entireCities : Observable.of($0)
         }
         
         input.didSelectedCell.subscribe(onNext: { (city) in

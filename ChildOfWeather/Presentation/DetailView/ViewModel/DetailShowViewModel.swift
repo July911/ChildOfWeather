@@ -22,6 +22,7 @@ final class DetailShowViewModel {
     }
     // MARK: - Nested Type
     struct Input {
+        let viewWillAppear: Observable<Void>
         let capturedImage: Observable<ImageCacheData>
         let touchUpbackButton: Observable<Void>
     }

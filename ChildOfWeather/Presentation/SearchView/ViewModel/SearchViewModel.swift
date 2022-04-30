@@ -24,7 +24,8 @@ final class SearchViewModel {
     }
     // MARK: - Open Method
     func transform(input: Input) -> Output {
-        let entireCities = self.searchUseCase.extractCities().asObservable()
+        let cities = self.searchUseCase.extractCities()
+        let entireCities = Observable.of(cities)
         let filteredCities = input.searchBarText.distinctUntilChanged()
             .flatMap { (text) -> Observable<[City]> in
             return self.searchUseCase.search(text ?? "")

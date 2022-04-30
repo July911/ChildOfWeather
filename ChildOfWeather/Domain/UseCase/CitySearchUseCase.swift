@@ -14,7 +14,7 @@ final class CitySearchUseCase {
         self.searchRepository.search(name: string)
     }
     
-    func extractCities() -> BehaviorRelay<[City]> {
+    func extractCities() -> [City] {
         self.searchRepository.extractCities(by: .kr)
     }
 }

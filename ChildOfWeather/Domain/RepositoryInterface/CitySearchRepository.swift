@@ -6,5 +6,5 @@ protocol CitySearchRepository {
         
     func search(name: String?) -> Observable<[City]>
     
-    func extractCities(by country: Country) -> BehaviorRelay<[City]>
+    func extractCities(by country: Country) -> [City]
 }

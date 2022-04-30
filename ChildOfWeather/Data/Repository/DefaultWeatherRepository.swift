@@ -4,7 +4,6 @@ import RxSwift
 final class DefaultWeatherRepository: WeatherRepository {
     
     private let service: URLSessionNetworkService
-    private let bag = DisposeBag()
     
     init(service: URLSessionNetworkService) {
         self.service = service

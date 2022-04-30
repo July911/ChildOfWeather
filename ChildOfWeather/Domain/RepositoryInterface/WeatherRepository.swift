@@ -4,7 +4,7 @@ import RxSwift
 protocol WeatherRepository {
     
     func fetchWeatherInformation(
-        cityName text: String) -> Observable<TodayWeather>
+        cityName text: String) -> Single<TodayWeather> 
     
     func fetchURLFromLocation(locationAddress address: String) -> String
 }

@@ -73,16 +73,18 @@ final class DetailShowViewModel {
     }
     
     private func extractWeatherDescription(city: City) -> Observable<String> {
-        return self.detailShowUseCase.extractTodayWeather(cityName: city.name).flatMap { (weather) -> Observable<String> in
+        return self.detailShowUseCase.extractTodayWeather(cityName: city.name)
+            .asObservable()
+            .map { (weather) -> String in
             let sunrise = weather.sunrise.toKoreanTime
             let sunset = weather.sunset.toKoreanTime
             let maxTemp = weather.maxTemperature.toCelsius
             let minTemp = weather.minTemperature.toCelsius
             let weatherDescription = "일출은 오전\(sunrise)\n일몰은 오후\(sunset)\n최고 기온은  섭씨\(maxTemp)도\n최저 기온은 섭씨\(minTemp)도입니다."
-            return Observable.just(weatherDescription)
+            return weatherDescription
         }
     }
-    
+        
     private func loadCacheImage(city: City) -> Observable<ImageCacheData>? {
         guard self.imageCacheUseCase.hasCacheExist(cityName: city.name)
         else {

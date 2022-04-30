@@ -29,6 +29,7 @@ final class APIService: URLSessionNetworkService {
                 
                 guard error == nil
                 else {
+                    single(.failure(APICallError.errorExist))
                     return
                 }
                 

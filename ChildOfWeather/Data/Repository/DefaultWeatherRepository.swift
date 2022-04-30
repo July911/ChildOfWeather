@@ -11,23 +11,12 @@ final class DefaultWeatherRepository: WeatherRepository {
     }
     
     func fetchWeatherInformation(
-        cityName text: String) -> Observable<TodayWeather> 
+        cityName text: String) -> Single<TodayWeather> 
     {
         let request: RequestType = .getWeatherFromCityName(city: text)
         
-        return Observable<TodayWeather>.create { emitter in
-            self.service.request(decodedType: WeatherInformation.self, requestType: request)
-                .subscribe { (result) in
-                switch result {
-                case .success(let weatherInformation):
-                    emitter.onNext(weatherInformation.toDomain())
-                case .failure(let error):
-                    emitter.onError(error)
-                }
-            }.disposed(by: self.bag)
-            
-            return Disposables.create()
-        }
+        return self.service.request(decodedType: WeatherInformation.self, requestType: request)
+            .map { $0.toDomain() }
     }
     
     func fetchURLFromLocation(locationAddress address: String) -> String {

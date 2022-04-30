@@ -11,7 +11,7 @@ final class DetailShowUseCase {
     
     func extractTodayWeather(
         cityName: String
-    ) -> Observable<TodayWeather> {
+    ) -> Single<TodayWeather> {
         return self.weatherRepository.fetchWeatherInformation(cityName: cityName)
     }
     

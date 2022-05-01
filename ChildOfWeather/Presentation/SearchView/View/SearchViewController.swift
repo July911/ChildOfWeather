@@ -73,7 +73,7 @@ final class SearchViewController: UIViewController {
         else {
             return
         }
-        
+
         self.listTableView.rx.itemSelected
             .withUnretained(self)
             .subscribe(onNext: { (self,index) in
@@ -83,7 +83,8 @@ final class SearchViewController: UIViewController {
         let input = SearchViewModel.Input(
             viewWillAppear: (self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in }),
             didSelectedCell: self.listTableView.rx.modelSelected(City.self).asObservable(),
-            searchBarText: text
+            searchBarText: text,
+            viewWillDismiss: self.rx.methodInvoked(#selector(UIViewController.viewWillDisappear(_:))).map { _ in }
         )
         
         let output = self.viewModel?.transform(input: input, disposeBag: self.bag)
@@ -101,6 +102,7 @@ final class SearchViewController: UIViewController {
             .disposed(by: self.bag)
     }
 }
+
 
 
 

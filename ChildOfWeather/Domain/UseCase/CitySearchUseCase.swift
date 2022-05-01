@@ -10,7 +10,7 @@ final class CitySearchUseCase {
         self.searchRepository = searchRepository
     }
     
-    func search(_ string: String) -> Observable<[City]> {
+    func search(_ string: String) -> [City]? {
         self.searchRepository.search(name: string)
     }
     

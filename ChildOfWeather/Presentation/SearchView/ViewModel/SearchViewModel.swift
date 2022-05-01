@@ -16,6 +16,7 @@ final class SearchViewModel {
         let viewWillAppear: Observable<Void>
         let didSelectedCell: Observable<City>
         let searchBarText: Observable<String?>
+        let viewWillDismiss: Observable<Void>
     }
     
     struct Output {
@@ -24,21 +25,24 @@ final class SearchViewModel {
     }
     // MARK: - Open Method
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
+        let dismiss = input.viewWillDismiss.map { _ in
+            self.searchUseCase.search("") ?? []
+        }
         let cities = self.searchUseCase.extractCities()
-        let filteredCities = input.searchBarText.distinctUntilChanged()
-            .flatMap { (text) -> Observable<[City]> in
-            return self.searchUseCase.search(text ?? "")
+        let filteredCities = input.searchBarText
+            .map { (text) -> [City] in
+                return self.searchUseCase.search(text ?? "") ?? []
         }
         let combined = filteredCities.flatMap {
             $0.isEmpty ? Observable.of(cities) : Observable.of($0)
         }
-        let citiesCombinedInputEvent = combined.sample(input.viewWillAppear)
-
+        let merge = Observable.merge(dismiss, combined)
+        
         let presentDetailView = input.didSelectedCell.do(onNext: { city in
             self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
         }).map { _ in }
-            
-        return Output(initialCities: citiesCombinedInputEvent, presentDetailView: presentDetailView)
+
+        return Output(initialCities: merge, presentDetailView: presentDetailView)
     }
 }
 

@@ -10,21 +10,21 @@ final class DefaultCitySearchRepository: CitySearchRepository {
         self.assetData = self.fetchCityList()
     }
     
-    func search(name: String?) -> Observable<[City]> {
+    func search(name: String?) -> [City]? {
         
         guard let cities = self.assetData
         else {
-            return Observable.of([])
+            return nil
         }
         
         guard let name = name, name != ""
         else {
-            return Observable.of(cities)
+            return self.assetData
         }
         
         let filteredCity = cities.filter { $0.name.localized.hasPrefix(name) }
         
-        return Observable<[City]>.just(filteredCity)
+        return filteredCity
     }
     
     func extractCities(by country: Country = .kr) -> [City] {

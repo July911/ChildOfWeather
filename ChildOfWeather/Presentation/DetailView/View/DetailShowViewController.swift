@@ -148,17 +148,12 @@ final class DetailShowUIViewController: UIViewController {
         output.selectedURLForMap
             .withUnretained(self)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { (DetailviewController ,string) in
-                guard let quaryAllowed = string.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            .subscribe(onNext: { (DetailviewController ,urlRequest) in
+                guard let urlRequest = urlRequest
                 else {
                     return
                 }
-                guard let url = URL(string: quaryAllowed)
-                else {
-                    return
-                }
-                let request = URLRequest(url: url)
-                DetailviewController.webView.load(request)
+                DetailviewController.webView.load(urlRequest)
             }).disposed(by: self.bag)
         
         output.capturedSuccess.asDriver(onErrorJustReturn: ())

@@ -27,7 +27,7 @@ final class DetailShowViewModel {
     }
     
     struct Output {
-        let selectedURLForMap: Observable<String>
+        let selectedURLForMap: Observable<URLRequest?>
         let cachedImage: Observable<ImageCacheData>?
         let weatehrDescription: Observable<String>
         let capturedSuccess: Observable<Void>
@@ -35,8 +35,19 @@ final class DetailShowViewModel {
     }
     // MARK: - Open Method
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        let url = LocationManager.shared.searchLocation(latitude: self.city.coord.lat, longitude: self.city.coord.lon)
+        let urlRequest = LocationManager.shared.searchLocation(latitude: self.city.coord.lat, longitude: self.city.coord.lon)
            .map { self.detailShowUseCase.fetchURL(from: $0) }
+           .map { (urlString) -> URLRequest? in
+               guard let quaryAllowed = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+               else {
+                   return nil
+               }
+               guard let url = URL(string: quaryAllowed)
+               else {
+                   return nil
+               }
+              return URLRequest(url: url)
+           }
        
         let cache = self.loadCacheImage(city: self.city)?.sample(input.viewWillAppear)
         let weatherDescription = self.extractWeatherDescription(city: city)
@@ -56,7 +67,7 @@ final class DetailShowViewModel {
                 self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
             }).map { _ in }
         
-        return Output(selectedURLForMap: url, cachedImage: cache, weatehrDescription: weatherDescription, capturedSuccess: capturedSuccess, dismiss: dismiss)
+        return Output(selectedURLForMap: urlRequest, cachedImage: cache, weatehrDescription: weatherDescription, capturedSuccess: capturedSuccess, dismiss: dismiss)
     }
     
     func extractCity() -> City {

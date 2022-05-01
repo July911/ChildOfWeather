@@ -160,6 +160,14 @@ final class DetailShowUIViewController: UIViewController {
                 let request = URLRequest(url: url)
                 DetailviewController.webView.load(request)
             }).disposed(by: self.bag)
+        
+        output.capturedSuccess.asDriver(onErrorJustReturn: ())
+            .drive()
+            .disposed(by: self.bag)
+        
+        output.dismiss.asDriver(onErrorJustReturn: ())
+            .drive()
+            .disposed(by: self.bag)
     }
 }
 // MARK: - Reactive Extension 

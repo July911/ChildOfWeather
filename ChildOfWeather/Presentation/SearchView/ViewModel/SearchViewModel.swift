@@ -6,7 +6,6 @@ final class SearchViewModel {
     // MARK: - Property 
     private let coordinator: MainCoordinator
     private let searchUseCase: CitySearchUseCase
-    private let bag = DisposeBag()
     // MARK: - Initializer
     init(searchUseCase: CitySearchUseCase, coodinator: MainCoordinator) {
         self.searchUseCase = searchUseCase
@@ -21,6 +20,7 @@ final class SearchViewModel {
     
     struct Output {
         let initialCities: Observable<[City]>
+        let presentDetailView: Observable<Void>
     }
     // MARK: - Open Method
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -34,11 +34,11 @@ final class SearchViewModel {
         }
         let citiesCombinedInputEvent = combined.sample(input.viewWillAppear)
 
-        input.didSelectedCell.subscribe(onNext: { (city) in
+        let presentDetailView = input.didSelectedCell.do(onNext: { city in
             self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(cityName: city))
-        }).disposed(by: disposeBag)
-        
-        return Output(initialCities: citiesCombinedInputEvent)
+        }).map { _ in }
+            
+        return Output(initialCities: citiesCombinedInputEvent, presentDetailView: presentDetailView)
     }
 }
 

@@ -74,11 +74,10 @@ final class SearchViewController: UIViewController {
             return
         }
         
-        self.navigationItem.searchController?.searchBar.rx.text
-            .distinctUntilChanged()
-            .subscribe(onNext: { event in
-                self.listTableView.reloadData()
-            }).disposed(by: self.bag)
+//        self.navigationItem.searchController?.searchBar.rx.text
+//            .distinctUntilChanged()
+//            .subscribe(onNext: { event in
+//            }).disposed(by: self.bag)
         
         self.listTableView.rx.itemSelected
             .withUnretained(self)
@@ -102,6 +101,10 @@ final class SearchViewController: UIViewController {
             ) { index, item , cell in
                 cell.configureCell(city: item)
             }.disposed(by: self.bag)
+        
+        output?.presentDetailView.asDriver(onErrorJustReturn: ())
+            .drive()
+            .disposed(by: self.bag)
     }
 }
 

@@ -7,7 +7,6 @@ final class DetailShowViewModel {
     private let coordinator: MainCoordinator
     private let detailShowUseCase: DetailShowUseCase
     private let imageCacheUseCase: ImageCacheUseCase
-    private let bag = DisposeBag()
     // MARK: - Initializer
     init(
         detailShowUseCase: DetailShowUseCase,
@@ -31,29 +30,33 @@ final class DetailShowViewModel {
         let selectedURLForMap: Observable<String>
         let cachedImage: Observable<ImageCacheData>?
         let weatehrDescription: Observable<String>
+        let capturedSuccess: Observable<Void>
+        let dismiss: Observable<Void>
     }
     // MARK: - Open Method
-    func transform(input: Input, disposeBag: DisposeBag) -> Output? {
-        guard let output = self.configureOutput()
-        else {
-            return nil
-        }
+    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+        let url = LocationManager.shared.searchLocation(latitude: self.city.coord.lat, longitude: self.city.coord.lon)
+           .map { self.detailShowUseCase.fetchURL(from: $0) }
+       
+        let cache = self.loadCacheImage(city: self.city)?.sample(input.viewWillAppear)
+        let weatherDescription = self.extractWeatherDescription(city: city)
         
-        input.capturedImage
+        let capturedSuccess = input.capturedImage
             .withUnretained(self)
-            .filter { _ in self.imageCacheUseCase.hasCacheExist(cityName: self.extractCity().name) == false }
-            .subscribe(onNext: { (self, image) in
+            .filter { _ in
+                self.imageCacheUseCase.hasCacheExist(cityName: self.extractCity().name) == false }
+            .do(onNext: { (self, image) in
                 self.imageCacheUseCase.setCache(object: image)
-            }).disposed(by: disposeBag)
+            }).map { _ in }
         
-        input.touchUpbackButton
+        let dismiss = input.touchUpbackButton
             .withUnretained(self)
             .observe(on: MainScheduler.instance)
-            .subscribe( onNext: { _ in
+            .do(onNext: { _ in
                 self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
-            }).disposed(by: disposeBag)
+            }).map { _ in }
         
-        return output
+        return Output(selectedURLForMap: url, cachedImage: cache, weatehrDescription: weatherDescription, capturedSuccess: capturedSuccess, dismiss: dismiss)
     }
     
     func extractCity() -> City {
@@ -92,15 +95,6 @@ final class DetailShowViewModel {
         }
         
         return Observable.just(image)
-    }
-    
-    private func configureOutput() -> Output? {
-         let url = LocationManager.shared.searchLocation(latitude: self.city.coord.lat, longitude: self.city.coord.lon)
-            .map { self.detailShowUseCase.fetchURL(from: $0) }
-        
-        let cache = self.loadCacheImage(city: self.city)
-        let weatherDescription = self.extractWeatherDescription(city: city)
-        return Output(selectedURLForMap: url, cachedImage: cache, weatehrDescription: weatherDescription)
     }
 }
 // MARK: - Extension

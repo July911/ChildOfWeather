@@ -36,18 +36,18 @@ final class DetailShowViewModel {
     // MARK: - Open Method
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let urlRequest = LocationManager.shared.searchLocation(latitude: self.city.coord.lat, longitude: self.city.coord.lon)
-           .map { self.detailShowUseCase.fetchURL(from: $0) }
-           .map { (urlString) -> URLRequest? in
-               guard let quaryAllowed = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-               else {
-                   return nil
-               }
-               guard let url = URL(string: quaryAllowed)
-               else {
-                   return nil
-               }
-              return URLRequest(url: url)
-           }
+            .map { LocationManager.shared.fetchURLFromLocation(locationAddress: $0) }
+            .map { (urlString) -> URLRequest? in
+                guard let quaryAllowed = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                else {
+                    return nil
+                }
+                guard let url = URL(string: quaryAllowed)
+                else {
+                    return nil
+                }
+                return URLRequest(url: url)
+            }
        
         let cache = self.loadCacheImage(city: self.city)?.sample(input.viewWillAppear)
         let weatherDescription = self.extractWeatherDescription(city: city)

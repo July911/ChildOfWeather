@@ -35,4 +35,10 @@ final class LocationManager {
             return Disposables.create ()
         }
     }
+    
+    func fetchURLFromLocation(locationAddress address: String) -> String {
+        let type: RequestType = .getMapfromLocationInformation(location: address)
+        
+        return type.fullURL
+    }
 }

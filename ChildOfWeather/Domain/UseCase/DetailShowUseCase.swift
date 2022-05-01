@@ -14,10 +14,6 @@ final class DetailShowUseCase {
     ) -> Single<TodayWeather> {
         return self.weatherRepository.fetchWeatherInformation(cityName: cityName)
     }
-    
-    func fetchURL(from cityAddress: String) -> String {
-        self.weatherRepository.fetchURLFromLocation(locationAddress: cityAddress)
-    }
 }
 
 enum DataError: Error {

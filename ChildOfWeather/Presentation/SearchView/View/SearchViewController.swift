@@ -74,17 +74,11 @@ final class SearchViewController: UIViewController {
             return
         }
         
-//        self.navigationItem.searchController?.searchBar.rx.text
-//            .distinctUntilChanged()
-//            .subscribe(onNext: { event in
-//            }).disposed(by: self.bag)
-        
         self.listTableView.rx.itemSelected
             .withUnretained(self)
             .subscribe(onNext: { (self,index) in
             self.listTableView.deselectRow(at: index, animated: true)
             }).disposed(by: self.bag)
-        
         
         let input = SearchViewModel.Input(
             viewWillAppear: (self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in }),

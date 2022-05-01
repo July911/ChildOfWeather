@@ -106,6 +106,7 @@ final class DetailShowUIViewController: UIViewController {
     }
     
     private func bindViewModel() {
+        
         guard let backButtonEvent = self.backButtonItem?.rx.tap
         else {
             return

@@ -13,7 +13,11 @@ final class ImageCacheUseCase {
     }
     
     func fetchImage(cityName: String) -> ImageCacheData? {
-        self.imageProvideRepository.fetchCache(key: cityName)
+        guard hasCacheExist(cityName: cityName)
+        else {
+            return nil
+        }
+        return self.imageProvideRepository.fetchCache(key: cityName)
     }
     
     func hasCacheExist(cityName: String) -> Bool {

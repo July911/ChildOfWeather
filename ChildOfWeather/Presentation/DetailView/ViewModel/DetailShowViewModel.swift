@@ -96,10 +96,6 @@ final class DetailShowViewModel {
     }
         
     private func loadCacheImage(city: City) -> Observable<ImageCacheData>? {
-        guard self.imageCacheUseCase.hasCacheExist(cityName: city.name)
-        else {
-            return nil
-        }
         guard let image = self.imageCacheUseCase.fetchImage(cityName: city.name)
         else {
             return nil

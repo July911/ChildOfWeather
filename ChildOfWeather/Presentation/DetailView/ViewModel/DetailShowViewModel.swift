@@ -4,14 +4,14 @@ import RxSwift
 final class DetailShowViewModel {
     // MARK: - Private Property
     private let city: City
-    private let coordinator: MainCoordinator
+    private let coordinator: SearchViewCoordinator
     private let detailShowUseCase: DetailShowUseCase
     private let imageCacheUseCase: ImageCacheUseCase
     // MARK: - Initializer
     init(
         detailShowUseCase: DetailShowUseCase,
         imageCacheUseCase: ImageCacheUseCase,
-        coodinator: MainCoordinator,
+        coodinator: SearchViewCoordinator,
         city: City
     ) {
         self.detailShowUseCase = detailShowUseCase

@@ -2,8 +2,9 @@ import UIKit
 import CoreLocation
 import RxSwift
 
-final class MainCoordinator {
-
+final class SearchViewCoordinator: Coordinator {
+    
+    weak var parentCoordinator: Coordinator?
     private let navigationController: UINavigationController
     private let imageCacheUseCase = ImageCacheUseCase(
         imageProvideRepository: DefaultImageProvideRepository()

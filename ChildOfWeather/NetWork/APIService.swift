@@ -1,14 +1,6 @@
 import Foundation
 import RxSwift
 
-enum APICallError: Error {
-    case invalidResponse
-    case errorExist
-    case failureDecoding
-    case notProperStatusCode
-    case dataNotfetched
-}
-
 final class APIService: URLSessionNetworkService {
     
     func request<T: Decodable>(
@@ -67,4 +59,14 @@ final class APIService: URLSessionNetworkService {
         }
     }
 }
+
+enum APICallError: Error {
+    
+    case invalidResponse
+    case errorExist
+    case failureDecoding
+    case notProperStatusCode
+    case dataNotfetched
+}
+
 

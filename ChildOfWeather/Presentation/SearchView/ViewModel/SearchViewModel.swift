@@ -4,10 +4,10 @@ import RxRelay
 
 final class SearchViewModel {
     // MARK: - Property 
-    private let coordinator: MainCoordinator
+    private let coordinator: SearchViewCoordinator
     private let searchUseCase: CitySearchUseCase
     // MARK: - Initializer
-    init(searchUseCase: CitySearchUseCase, coodinator: MainCoordinator) {
+    init(searchUseCase: CitySearchUseCase, coodinator: SearchViewCoordinator) {
         self.searchUseCase = searchUseCase
         self.coordinator = coodinator
     }

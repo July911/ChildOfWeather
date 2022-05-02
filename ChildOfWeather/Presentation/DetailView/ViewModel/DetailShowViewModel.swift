@@ -34,7 +34,7 @@ final class DetailShowViewModel {
         let dismiss: Observable<Void>
     }
     // MARK: - Open Method
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(input: Input) -> Output {
         let urlRequest = LocationManager.shared.searchLocation(latitude: self.city.coord.lat, longitude: self.city.coord.lon)
             .map { LocationManager.shared.fetchURLFromLocation(locationAddress: $0) }
             .map { (urlString) -> URLRequest? in

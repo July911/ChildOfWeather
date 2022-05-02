@@ -24,7 +24,7 @@ final class SearchViewModel {
         let presentDetailView: Observable<Void>
     }
     // MARK: - Open Method
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(input: Input) -> Output {
         let dismiss = input.viewWillDismiss.map { _ in
             self.searchUseCase.search("") ?? []
         }

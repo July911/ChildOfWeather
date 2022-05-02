@@ -24,4 +24,3 @@ final class ImageCacheUseCase {
         self.imageProvideRepository.fetchCache(key: cityName) == nil ? false : true
     }
 }
-

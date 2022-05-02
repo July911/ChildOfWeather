@@ -87,7 +87,7 @@ final class SearchViewController: UIViewController {
             viewWillDismiss: self.rx.methodInvoked(#selector(UIViewController.viewWillDisappear(_:))).map { _ in }
         )
         
-        let output = self.viewModel?.transform(input: input, disposeBag: self.bag)
+        let output = self.viewModel?.transform(input: input)
         
         output?.initialCities.asDriver(onErrorJustReturn: [])
             .drive(self.listTableView.rx.items(

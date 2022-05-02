@@ -128,7 +128,7 @@ final class DetailShowUIViewController: UIViewController {
             touchUpbackButton: backButtonEvent.asObservable()
         )
         
-        guard let output = self.viewModel?.transform(input: input, disposeBag: self.bag)
+        guard let output = self.viewModel?.transform(input: input)
         else {
             return
         }

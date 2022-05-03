@@ -4,10 +4,8 @@ final class AppCoordinator: Coordinator {
     
     private var childCoordinator: [Coordinator]
     private let window: UIWindow?
-    private let navigationController: UINavigationController
     
-    init(_ window: UIWindow?, navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init(_ window: UIWindow?) {
         self.window = window
         self.childCoordinator = .init()
         window?.makeKeyAndVisible()

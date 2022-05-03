@@ -20,7 +20,7 @@ final class CurrentLocationViewModel {
     struct Input {
         let viewWillAppear: Observable<Void>
         let cachedImage: Observable<ImageCacheData>?
-        let locationChange: Observable<Bool>
+        let locationChange: Observable<Void>
         let dismiss: Observable<Void>
     }
     

@@ -6,6 +6,7 @@ import WebKit
 final class CurrentLocationViewController: UIViewController {
 // MARK: - Properties 
     var viewModel: CurrentLocationViewModel?
+    private var refreshNavigationButton: UIBarButtonItem?
 // MARK: - UI Components
     private let cityNameLabel: UILabel = {
         let label = UILabel()
@@ -42,14 +43,6 @@ final class CurrentLocationViewController: UIViewController {
         return textView
     }()
     
-    private let refreshButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("위치 새로고침", for: .focused)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        return button
-    }()
-    
     private let entireStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -65,14 +58,19 @@ final class CurrentLocationViewController: UIViewController {
         super.viewDidLoad()
         self.bindViewModel()
         self.configureLayout()
+        self.configureNavigationItem()
     }
 // MARK: - Private Method
     private func bindViewModel() {
+        guard let leftBarButtonEvent = self.refreshNavigationButton?.rx.tap.asObservable()
+        else {
+            return
+        }
         let input = CurrentLocationViewModel.Input(
             viewWillAppear: self.rx.viewWillAppear.asObservable(),
-            cachedImage: <#T##Observable<ImageCacheData>?#>,
-            locationChange: <#T##Observable<Bool>#>,
-            dismiss: <#T##Observable<Void>#>
+            cachedImage: nil,
+            locationChange: leftBarButtonEvent,
+            dismiss: self.rx.viewWillDisappear.asObservable()
         )
         
         let output = self.viewModel?.transform(input: input)
@@ -93,6 +91,11 @@ final class CurrentLocationViewController: UIViewController {
         self.entireStackView.addArrangedSubview(cityNameLabel)
         self.entireStackView.addArrangedSubview(webView)
         self.entireStackView.addArrangedSubview(weatherDescriptionTextView)
-        self.entireStackView.addArrangedSubview(refreshButton)
+    }
+    
+    private func configureNavigationItem() {
+        self.navigationController?.navigationItem.title = "현재 위치"
+        self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
+        self.refreshNavigationButton = self.navigationController?.navigationItem.leftBarButtonItem
     }
 }

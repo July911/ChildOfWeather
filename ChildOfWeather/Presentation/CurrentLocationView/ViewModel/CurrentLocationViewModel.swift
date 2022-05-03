@@ -2,11 +2,11 @@ import Foundation
 import RxSwift
 
 final class CurrentLocationViewModel {
-    
+    // MARK: - Properties
     private let detailShowUseCase: DetailShowUseCase
     private let imageCacheUseCase: ImageCacheUseCase
     private let coordinator: Coordinator
-    
+    // MARK: - Initailizer
     init(
         detailShowUseCase: DetailShowUseCase,
         imageCacheUseCase: ImageCacheUseCase,
@@ -16,7 +16,7 @@ final class CurrentLocationViewModel {
         self.imageCacheUseCase = imageCacheUseCase
         self.coordinator = coordinator
     }
-    
+    // MARK: - Nested Type
     struct Input {
         let viewWillAppear: Observable<Void>
         let cachedImage: Observable<ImageCacheData>?
@@ -28,7 +28,7 @@ final class CurrentLocationViewModel {
         let currentImage: Observable<ImageCacheData>
         let weatherDescription: Observable<String>
     }
-    
+    // MARK: - Method 
     func transform(input: Input) -> Output {
         
         

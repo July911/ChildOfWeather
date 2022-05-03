@@ -5,10 +5,16 @@ final class CurrentLocationViewModel {
     
     private let detailShowUseCase: DetailShowUseCase
     private let imageCacheUseCase: ImageCacheUseCase
+    private let coordinator: Coordinator
     
-    init(detailShowUseCase: DetailShowUseCase, imageCacheUseCase: ImageCacheUseCase) {
+    init(
+        detailShowUseCase: DetailShowUseCase,
+        imageCacheUseCase: ImageCacheUseCase,
+        coordinator: Coordinator
+    ) {
         self.detailShowUseCase = detailShowUseCase
         self.imageCacheUseCase = imageCacheUseCase
+        self.coordinator = coordinator
     }
     
     struct Input {

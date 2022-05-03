@@ -3,8 +3,8 @@ import UIKit
 
 final class AppCoordinator: Coordinator {
     
-    var childCoordinator: [Coordinator]
-    let window: UIWindow?
+    private var childCoordinator: [Coordinator]
+    private let window: UIWindow?
     
     init(_ window: UIWindow?) {
         self.window = window
@@ -13,7 +13,7 @@ final class AppCoordinator: Coordinator {
     }
     
     func start() {
-        let tabBarController = setTapBarController()
+        let tabBarController = self.setTapBarController()
         self.window?.rootViewController = tabBarController
     }
     

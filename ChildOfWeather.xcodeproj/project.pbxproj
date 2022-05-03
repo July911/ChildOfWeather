@@ -12,6 +12,9 @@
 		180650F5280515E2005E9F0E /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180650F4280515E2005E9F0E /* Country.swift */; };
 		180650FB2805AA23005E9F0E /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180650FA2805AA23005E9F0E /* CacheService.swift */; };
 		180650FD2805B0F9005E9F0E /* ImageCacheData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180650FC2805B0F9005E9F0E /* ImageCacheData.swift */; };
+		18C9297B2821410400350B96 /* CurrentLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C9297A2821410400350B96 /* CurrentLocationViewController.swift */; };
+		18C9297D2821412400350B96 /* CurrentLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C9297C2821412400350B96 /* CurrentLocationViewModel.swift */; };
+		18C9297F2821413800350B96 /* CurrentLocationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C9297E2821413800350B96 /* CurrentLocationCoordinator.swift */; };
 		18D4DD0327FBC15100697F43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD0227FBC15100697F43 /* AppDelegate.swift */; };
 		18D4DD0527FBC15100697F43 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD0427FBC15100697F43 /* SceneDelegate.swift */; };
 		18D4DD0727FBC15100697F43 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD0627FBC15100697F43 /* SearchViewController.swift */; };
@@ -68,6 +71,9 @@
 		180650F4280515E2005E9F0E /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		180650FA2805AA23005E9F0E /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		180650FC2805B0F9005E9F0E /* ImageCacheData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheData.swift; sourceTree = "<group>"; };
+		18C9297A2821410400350B96 /* CurrentLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationViewController.swift; sourceTree = "<group>"; };
+		18C9297C2821412400350B96 /* CurrentLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationViewModel.swift; sourceTree = "<group>"; };
+		18C9297E2821413800350B96 /* CurrentLocationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationCoordinator.swift; sourceTree = "<group>"; };
 		18D4DCFF27FBC15100697F43 /* ChildOfWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChildOfWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D4DD0227FBC15100697F43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18D4DD0427FBC15100697F43 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +169,40 @@
 			path = Cache;
 			sourceTree = "<group>";
 		};
+		18C929742821409F00350B96 /* CurrentLocationView */ = {
+			isa = PBXGroup;
+			children = (
+				18C92977282140D000350B96 /* Coordinator */,
+				18C92976282140CB00350B96 /* ViewController */,
+				18C92975282140C300350B96 /* ViewModel */,
+			);
+			path = CurrentLocationView;
+			sourceTree = "<group>";
+		};
+		18C92975282140C300350B96 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				18C9297C2821412400350B96 /* CurrentLocationViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		18C92976282140CB00350B96 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				18C9297A2821410400350B96 /* CurrentLocationViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		18C92977282140D000350B96 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				18C9297E2821413800350B96 /* CurrentLocationCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		18D11CD6280C0D24006D8701 /* TestDouble */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +271,7 @@
 		18D4DD1927FBC34300697F43 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				18C929742821409F00350B96 /* CurrentLocationView */,
 				18D4DD4027FBF9B400697F43 /* Coordinator */,
 				18D4DD2227FBD00800697F43 /* SearchView */,
 				18D4DD4927FC0BFC00697F43 /* DetailView */,
@@ -544,12 +585,14 @@
 				18DF78FE282040810073F83B /* AppCoordinator.swift in Sources */,
 				18D4DD2E27FBDFD400697F43 /* DefaultWeatherRepository.swift in Sources */,
 				18D4DD2427FBD39B00697F43 /* Constant.swift in Sources */,
+				18C9297D2821412400350B96 /* CurrentLocationViewModel.swift in Sources */,
 				180650F5280515E2005E9F0E /* Country.swift in Sources */,
 				18D4DD3B27FBF84B00697F43 /* SearchViewModel.swift in Sources */,
 				180650EE28050B02005E9F0E /* WeatherInformation + Mapping.swift in Sources */,
 				180650FD2805B0F9005E9F0E /* ImageCacheData.swift in Sources */,
 				18DF7900282040FA0073F83B /* Protocol Coordinator.swift in Sources */,
 				18D4DD3127FBE03000697F43 /* WeatherRepository.swift in Sources */,
+				18C9297F2821413800350B96 /* CurrentLocationCoordinator.swift in Sources */,
 				18D4DD0727FBC15100697F43 /* SearchViewController.swift in Sources */,
 				18D4DD3527FBE20F00697F43 /* DefaultCitySearchRepository.swift in Sources */,
 				18D4DD4627FBFBD300697F43 /* ListTableViewCell.swift in Sources */,
@@ -562,6 +605,7 @@
 				18D4DD4D27FC0C5A00697F43 /* DetailShowViewController.swift in Sources */,
 				18D7B1EF27FFC9330077119A /* ImageCacheUseCase.swift in Sources */,
 				180650EC2803BFDB005E9F0E /* TodayWeather.swift in Sources */,
+				18C9297B2821410400350B96 /* CurrentLocationViewController.swift in Sources */,
 				18D4DD1E27FBCBEB00697F43 /* APIService.swift in Sources */,
 				180650FB2805AA23005E9F0E /* CacheService.swift in Sources */,
 				18D4DD3D27FBF87E00697F43 /* CitySearchUseCase.swift in Sources */,

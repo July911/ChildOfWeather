@@ -8,6 +8,7 @@ final class AppCoordinator: Coordinator {
     
     init(_ window: UIWindow?) {
         self.window = window
+        self.childCoordinator = .init()
         window?.makeKeyAndVisible()
     }
     
@@ -28,8 +29,14 @@ final class AppCoordinator: Coordinator {
         let searchViewController = SearchViewController()
         searchViewController.tabBarItem = firstItem
         
+        let currentLocationCoordinator = CurrentLocationCoordinator(navigationController: .init())
+        currentLocationCoordinator.parentCoordinator = self
+        self.childCoordinator.append(currentLocationCoordinator)
+        let currentLocationViewController = CurrentLocationViewController()
+        currentLocationViewController.tabBarItem = secondItem
         
+        tabBarController.viewControllers = [searchViewController, currentLocationViewController]
         
-        tabBarController.viewControllers = [firstItem, secondItem]
+        return tabBarController
     }
 }

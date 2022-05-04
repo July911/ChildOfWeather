@@ -26,13 +26,44 @@ final class CurrentLocationViewModel {
     
     struct Output {
         let currentImage: Observable<ImageCacheData>
+        let currentAddressDescription: Observable<String>
         let weatherDescription: Observable<String>
+        let currentAddressWebViewURL: Observable<URLRequest?>
     }
     // MARK: - Method 
     func transform(input: Input) -> Output {
         
+        let locationCoodinate = input.viewWillAppear.map {
+            LocationManager.shared.extractCurrentLocation()
+        }.share(replay: 1)
         
+        let currentAddress = locationCoodinate.flatMap { (coordinate) -> Observable<String> in
+            let latitude = coordinate.latitude
+            let longitude = coordinate.longitude
+            return LocationManager.shared.searchLocation(latitude: latitude, longitude: longitude)
+        }
         
-        return Output(currentImage: <#T##Observable<ImageCacheData>#>, weatherDescription: <#T##Observable<String>#>)
+        let weatherDescription = locationCoodinate.flatMap { (coodinate) -> Observable<String> in
+            
+            //TODO: detailUseCase에 lat, lon 으로 날씨정보 받아올 수 있게 구현
+        }
+        
+        let currentAddressWebViewURL = currentAddress.map { (address) -> URLRequest? in
+            let urlString = LocationManager.shared.fetchURLFromLocation(locationAddress: address)
+            
+            guard let encodedAddress = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            else {
+                return nil
+            }
+            
+            guard let url = URL(string: encodedAddress)
+            else {
+                return nil
+            }
+            
+            return URLRequest(url: url)
+        }
+        
+        return Output(currentImage: <#T##Observable<ImageCacheData>#>, currentAddressDescription: currentAddress, weatherDescription: <#T##Observable<String>#>, currentAddressWebViewURL: currentAddressWebViewURL)
     }
 }

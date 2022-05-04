@@ -36,6 +36,13 @@ final class LocationManager {
         }
     }
     
+    func extractCurrentLocation() -> (latitude: Double, longitude: Double) {
+        let latitude = Double(locationManager.location?.coordinate.latitude ?? .zero)
+        let longitude = Double(locationManager.location?.coordinate.longitude ?? .zero)
+        
+        return (latitude, longitude)
+    }
+    
     func fetchURLFromLocation(locationAddress address: String) -> String {
         let type: RequestType = .getMapfromLocationInformation(location: address)
         

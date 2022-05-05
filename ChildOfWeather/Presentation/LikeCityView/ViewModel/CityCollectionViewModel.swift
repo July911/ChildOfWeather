@@ -2,7 +2,7 @@ import UIKit
 
 struct CityCellViewModel: Hashable {
     
-    let cityName: City
+    let cityName: String
     let image: UIImage
     let temperature: Double
 }

@@ -17,13 +17,21 @@ class CityCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.configureLayout()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
+    func configure(cellViewModel: CityCellViewModel) {
+        self.cityNameLabel.text = cellViewModel.cityName
+        self.cityImageView.image = cellViewModel.image
+    }
+    
+    private func configureLayout() {
+        
+    }
 }

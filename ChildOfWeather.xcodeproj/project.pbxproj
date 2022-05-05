@@ -282,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				18D4DD4027FBF9B400697F43 /* Coordinator */,
+				18D7BE0D28240AC200176968 /* LikeCityView */,
 				18C929742821409F00350B96 /* CurrentLocationView */,
 				18D4DD2227FBD00800697F43 /* SearchView */,
 				18D4DD4927FC0BFC00697F43 /* DetailView */,
@@ -436,6 +437,37 @@
 				18D4DD2327FBD39B00697F43 /* Constant.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		18D7BE0D28240AC200176968 /* LikeCityView */ = {
+			isa = PBXGroup;
+			children = (
+				18D7BE1128240B0900176968 /* Coordinator */,
+				18D7BE1028240AFA00176968 /* ViewModel */,
+				18D7BE0E28240AEC00176968 /* ViewController */,
+			);
+			path = LikeCityView;
+			sourceTree = "<group>";
+		};
+		18D7BE0E28240AEC00176968 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		18D7BE1028240AFA00176968 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		18D7BE1128240B0900176968 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		18DEE317281A6083006A82E8 /* Extension */ = {

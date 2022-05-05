@@ -49,7 +49,6 @@
 		18D7BE1328243F3500176968 /* LikeCityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7BE1228243F3500176968 /* LikeCityCoordinator.swift */; };
 		18D7BE1528243F6300176968 /* LikeCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7BE1428243F6300176968 /* LikeCityViewModel.swift */; };
 		18D7BE1728243F8200176968 /* LikeCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7BE1628243F8200176968 /* LikeCityViewController.swift */; };
-		18D7BE1928243FCF00176968 /* CityCollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7BE1828243FCF00176968 /* CityCollectionViewAdapter.swift */; };
 		18DDE2F62807E553000775FB /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DDE2F52807E553000775FB /* DateFormatter.swift */; };
 		18DEE319281A6099006A82E8 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DEE318281A6099006A82E8 /* String + Extension.swift */; };
 		18DEE31D281A6C01006A82E8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18DEE31F281A6C01006A82E8 /* Localizable.strings */; };
@@ -117,7 +116,6 @@
 		18D7BE1228243F3500176968 /* LikeCityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeCityCoordinator.swift; sourceTree = "<group>"; };
 		18D7BE1428243F6300176968 /* LikeCityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeCityViewModel.swift; sourceTree = "<group>"; };
 		18D7BE1628243F8200176968 /* LikeCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeCityViewController.swift; sourceTree = "<group>"; };
-		18D7BE1828243FCF00176968 /* CityCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCollectionViewAdapter.swift; sourceTree = "<group>"; };
 		18DDE2F52807E553000775FB /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		18DEE318281A6099006A82E8 /* String + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extension.swift"; sourceTree = "<group>"; };
 		18DEE31E281A6C01006A82E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -465,7 +463,6 @@
 			isa = PBXGroup;
 			children = (
 				18D7BE1628243F8200176968 /* LikeCityViewController.swift */,
-				18D7BE1828243FCF00176968 /* CityCollectionViewAdapter.swift */,
 				18A6FA97282443DF00CFF151 /* CityCollectionViewCell.swift */,
 			);
 			path = ViewController;
@@ -642,7 +639,6 @@
 				18DDE2F62807E553000775FB /* DateFormatter.swift in Sources */,
 				18D7B1F127FFC9590077119A /* ImageProvideRepository.swift in Sources */,
 				18D7BE1728243F8200176968 /* LikeCityViewController.swift in Sources */,
-				18D7BE1928243FCF00176968 /* CityCollectionViewAdapter.swift in Sources */,
 				18D7BE1328243F3500176968 /* LikeCityCoordinator.swift in Sources */,
 				18DEE319281A6099006A82E8 /* String + Extension.swift in Sources */,
 				18C92981282159AE00350B96 /* RxCocoa + Extension.swift in Sources */,

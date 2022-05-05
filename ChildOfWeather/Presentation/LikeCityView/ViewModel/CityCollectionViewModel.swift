@@ -4,5 +4,6 @@ struct CityCellViewModel: Hashable {
     
     let cityName: String
     let image: UIImage
-    let temperature: Double
+    let highTemperature: Double
+    let lowTemperature: Double
 }

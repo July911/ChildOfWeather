@@ -21,6 +21,7 @@ final class AppCoordinator: Coordinator {
         
         let firstItem = UITabBarItem(title: "AllCity", image: nil, tag: 0)
         let secondItem = UITabBarItem(title: "Current", image: nil, tag: 1)
+        let thirdItem = UITabBarItem(title: "Like", image: nil, tag: 2)
         
         let searchViewCoordinator = SearchViewCoordinator(navigationController: .init())
         searchViewCoordinator.parentCoordinator = self
@@ -34,7 +35,17 @@ final class AppCoordinator: Coordinator {
         let currentLocationViewController = CurrentLocationViewController()
         currentLocationViewController.tabBarItem = secondItem
         
-        tabBarController.viewControllers = [searchViewController, currentLocationViewController]
+        let likeCityCoordinator = LikeCityCoordinator(navigationController: .init())
+        likeCityCoordinator.parentCoordinator = self
+        self.childCoordinator.append(likeCityCoordinator)
+        let likeCityViewController = LikeCityViewController()
+        likeCityViewController.tabBarItem = thirdItem
+        
+        tabBarController.viewControllers = [
+            searchViewController,
+            currentLocationViewController,
+            likeCityViewController
+        ]
         
         return tabBarController
     }

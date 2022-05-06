@@ -9,12 +9,13 @@ final class LikeCityViewController: UIViewController {
     var viewModel: LikeCityViewModel?
     var dataSource: diffableDataSource?
     
-    private let collectionView: UICollectionView = {
+    private let cityCollectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: configureLayout()
         )
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         return collectionView
     }()
     
@@ -23,7 +24,7 @@ final class LikeCityViewController: UIViewController {
     }
     
     private func configureDataSource() -> diffableDataSource {
-        return diffableDataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+        return diffableDataSource(collectionView: cityCollectionView) { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CityCollectionViewCell.self), for: indexPath) as? CityCollectionViewCell
             cell?.configure(cellViewModel: itemIdentifier)
         

@@ -1,6 +1,6 @@
 import Foundation
 
-struct City: Decodable, Hashable {
+struct City: Decodable {
     
     let id: Int
     let name: String

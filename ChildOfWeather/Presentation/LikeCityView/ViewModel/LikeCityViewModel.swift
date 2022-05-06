@@ -12,11 +12,12 @@ final class LikeCityViewModel {
     }
     
     struct Input {
-        
+        let viewWillApeear: Observable<Void>
+        let didTappedCell: Observable<CityCellViewModel>
     }
     
     struct Ouput {
-        
+        let likedCities: Observable<[CityCellViewModel]>
     }
     
     func transform(input: Input) -> Ouput {

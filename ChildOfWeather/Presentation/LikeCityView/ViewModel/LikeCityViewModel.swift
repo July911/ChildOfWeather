@@ -13,7 +13,7 @@ final class LikeCityViewModel {
     
     struct Input {
         let viewWillApeear: Observable<Void>
-        let didTappedCell: Observable<CityCellViewModel>
+        let didTappedCell: Observable<IndexPath>
     }
     
     struct Ouput {

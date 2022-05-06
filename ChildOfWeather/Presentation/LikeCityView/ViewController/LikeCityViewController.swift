@@ -1,6 +1,6 @@
 import UIKit
 
-class LikeCityViewController: UIViewController {
+final class LikeCityViewController: UIViewController {
     
     typealias diffableDataSource = UICollectionViewDiffableDataSource<Int,CityCellViewModel>
     typealias snapshot = NSDiffableDataSourceSnapshot<Int,CityCellViewModel>
@@ -32,15 +32,35 @@ class LikeCityViewController: UIViewController {
     }
     
     static func configureLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { section, _ in
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: 5,
+            leading: 5,
+            bottom: 5,
+            trailing: 5
+        )
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.5),
+            heightDimension: .fractionalHeight(1.0)
+        )
         
-        //item
-        
-        //row
-        
-        //section
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+
+        let section = NSCollectionLayoutSection(group: group)
+            
+        return section
+      }
     }
     
-    private func applySnapShot() {
+    private func bindToViewModel() {
         
     }
 }

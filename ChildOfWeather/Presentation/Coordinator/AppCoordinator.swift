@@ -4,11 +4,13 @@ final class AppCoordinator: Coordinator {
     
     private var childCoordinator: [Coordinator]
     private let window: UIWindow?
+    private var imageCacheUseCase: ImageCacheUseCase
     
     init(_ window: UIWindow?) {
         self.window = window
         self.childCoordinator = .init()
         window?.makeKeyAndVisible()
+        self.imageCacheUseCase = self.configureImageCacheUseCase()
     }
     
     func start() {
@@ -23,22 +25,34 @@ final class AppCoordinator: Coordinator {
         let secondItem = UITabBarItem(title: "Current", image: nil, tag: 1)
         let thirdItem = UITabBarItem(title: "Like", image: nil, tag: 2)
         
-        let searchViewCoordinator = SearchViewCoordinator(navigationController: .init())
+        let searchViewController = SearchViewController()
+        let searchViewCoordinator = SearchViewCoordinator(
+            navigationController: .init(),
+            viewController: searchViewController,
+            imageCacheUseCase: self.imageCacheUseCase
+        )
         searchViewCoordinator.parentCoordinator = self
         self.childCoordinator.append(searchViewCoordinator)
-        let searchViewController = SearchViewController()
         searchViewController.tabBarItem = firstItem
         
-        let currentLocationCoordinator = CurrentLocationCoordinator(navigationController: .init())
+        let currentLocationViewController = CurrentLocationViewController()
+        let currentLocationCoordinator = CurrentLocationCoordinator(
+            navigationController: .init(),
+            viewController: currentLocationViewController,
+            imageCacheUseCase: self.imageCacheUseCase
+            )
         currentLocationCoordinator.parentCoordinator = self
         self.childCoordinator.append(currentLocationCoordinator)
-        let currentLocationViewController = CurrentLocationViewController()
         currentLocationViewController.tabBarItem = secondItem
         
-        let likeCityCoordinator = LikeCityCoordinator(navigationController: .init())
+        let likeCityViewController = LikeCityViewController()
+        let likeCityCoordinator = LikeCityCoordinator(
+            navigationController: .init(),
+            viewController: likeCityViewController,
+            imageCacheUseCase: self.imageCacheUseCase
+        )
         likeCityCoordinator.parentCoordinator = self
         self.childCoordinator.append(likeCityCoordinator)
-        let likeCityViewController = LikeCityViewController()
         likeCityViewController.tabBarItem = thirdItem
         
         tabBarController.viewControllers = [
@@ -48,5 +62,9 @@ final class AppCoordinator: Coordinator {
         ]
         
         return tabBarController
+    }
+    
+    private func configureImageCacheUseCase() -> ImageCacheUseCase {
+        return ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
     }
 }

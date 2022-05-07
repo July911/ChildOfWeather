@@ -5,13 +5,14 @@ import RxSwift
 final class SearchViewCoordinator: Coordinator {
     
     weak var parentCoordinator: Coordinator?
+    weak var viewController: SearchViewController?
+    private let imageCacheUseCase: ImageCacheUseCase
     private let navigationController: UINavigationController
-    private let imageCacheUseCase = ImageCacheUseCase(
-        imageProvideRepository: DefaultImageProvideRepository()
-    )
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, viewController: SearchViewController, imageCacheUseCase: ImageCacheUseCase) {
         self.navigationController = navigationController
+        self.viewController = viewController
+        self.imageCacheUseCase = imageCacheUseCase
     }
 
     func start() {

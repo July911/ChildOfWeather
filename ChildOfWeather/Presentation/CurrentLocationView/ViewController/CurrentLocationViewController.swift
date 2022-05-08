@@ -19,6 +19,7 @@ final class CurrentLocationViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.isHidden = true 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -78,12 +79,28 @@ final class CurrentLocationViewController: UIViewController {
     
     private func configureLayout() {
         self.addUIComponentsToStackView()
+        let safeArea = view.safeAreaLayoutGuide
         self.view.addSubview(entireStackView)
         
-        let stackViewLayout: [NSLayoutConstraint] = [
-        
+        let webViewLayout: [NSLayoutConstraint] = [
+            self.webView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.4),
+            self.webView.heightAnchor.constraint(equalTo: self.webView.widthAnchor)
         ]
         
+        let imageViewLayout: [NSLayoutConstraint] = [
+            self.imageView.widthAnchor.constraint(equalTo: self.webView.widthAnchor, multiplier: 1.0),
+            self.imageView.heightAnchor.constraint(equalTo: self.webView.heightAnchor)
+        ]
+        
+        let stackViewLayout: [NSLayoutConstraint] = [
+            self.entireStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            self.entireStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            self.entireStackView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            self.entireStackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(webViewLayout)
+        NSLayoutConstraint.activate(imageViewLayout)
         NSLayoutConstraint.activate(stackViewLayout)
     }
     

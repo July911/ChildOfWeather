@@ -23,10 +23,30 @@ final class LikeCityViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.cityCollectionView.dataSource = configureDataSource()
+        self.configureCollectionViewDataSource()
+        self.configureLayout()
+        self.bindToViewModel()
     }
     
-    private func configureDataSource() -> diffableDataSource {
+    private func configureCollectionViewDataSource() {
+        self.cityCollectionView.dataSource = extractDataSource()
+    }
+    
+    private func configureLayout() {
+        let safeArea = view.safeAreaLayoutGuide
+        self.view.addSubview(self.cityCollectionView)
+        
+        let collectionViewLayout: [NSLayoutConstraint] = [
+            self.cityCollectionView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            self.cityCollectionView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            self.cityCollectionView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
+            self.cityCollectionView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(collectionViewLayout)
+    }
+    
+    private func extractDataSource() -> diffableDataSource {
         return diffableDataSource(collectionView: cityCollectionView) { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CityCollectionViewCell.self), for: indexPath) as? CityCollectionViewCell
             cell?.configure(cellViewModel: itemIdentifier)

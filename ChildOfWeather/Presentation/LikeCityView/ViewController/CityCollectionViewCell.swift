@@ -17,7 +17,7 @@ class CityCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let latLabel: UILabel = {
+    private let highTemperatureLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .caption1)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +25,7 @@ class CityCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let lonLabel: UILabel = {
+    private let lowTemperatureLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .caption1)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +33,7 @@ class CityCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let locationStackView: UIStackView = {
+    private let temperatureStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
@@ -55,6 +55,8 @@ class CityCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.addViewsToStackView()
+        self.addStackViewToView()
         self.configureLayout()
     }
     
@@ -64,10 +66,30 @@ class CityCollectionViewCell: UICollectionViewCell {
     
     func configure(cellViewModel: CityCellViewModel) {
         self.cityNameLabel.text = cellViewModel.cityName
-        self.cityImageView.image = cellViewModel.image
+    }
+    
+    private func addViewsToStackView() {
+        self.temperatureStackView.addArrangedSubview(highTemperatureLabel)
+        self.temperatureStackView.addArrangedSubview(lowTemperatureLabel)
+        
+        self.entireStackView.addArrangedSubview(cityNameLabel)
+        self.entireStackView.addArrangedSubview(cityImageView)
+        self.entireStackView.addArrangedSubview(temperatureStackView)
+    }
+    
+    private func addStackViewToView() {
+        self.addSubview(entireStackView)
     }
     
     private func configureLayout() {
+        let cellView = self.contentView
+        
+        let stackViewLayout: [NSLayoutConstraint] = [
+            self.entireStackView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
+            self.entireStackView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor),
+            self.entireStackView.topAnchor.constraint(equalTo: cellView.topAnchor),
+            self.entireStackView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor)
+        ]
         
     }
 }

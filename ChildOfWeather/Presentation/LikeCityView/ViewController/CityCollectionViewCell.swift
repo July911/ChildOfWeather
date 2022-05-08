@@ -91,5 +91,6 @@ class CityCollectionViewCell: UICollectionViewCell {
             self.entireStackView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor)
         ]
         
+        NSLayoutConstraint.activate(stackViewLayout)
     }
 }

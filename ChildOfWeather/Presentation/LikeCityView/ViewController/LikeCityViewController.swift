@@ -48,7 +48,10 @@ final class LikeCityViewController: UIViewController {
     
     private func extractDataSource() -> diffableDataSource {
         return diffableDataSource(collectionView: cityCollectionView) { collectionView, indexPath, itemIdentifier in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CityCollectionViewCell.self), for: indexPath) as? CityCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: String(describing: CityCollectionViewCell.self),
+                for: indexPath
+            ) as? CityCollectionViewCell
             cell?.configure(cellViewModel: itemIdentifier)
             
             return cell

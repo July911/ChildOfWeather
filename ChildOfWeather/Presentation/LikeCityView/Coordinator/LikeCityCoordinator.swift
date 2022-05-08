@@ -4,7 +4,7 @@ final class LikeCityCoordinator: Coordinator {
     
     weak var parentCoordinator: Coordinator?
     weak var viewController: LikeCityViewController?
-    private let imageCacheUseCase: ImageCacheUseCase?
+    private let imageCacheUseCase: ImageCacheUseCase
     private let navigationController: UINavigationController
     
     init(navigationController: UINavigationController, viewController: LikeCityViewController, imageCacheUseCase: ImageCacheUseCase) {
@@ -14,14 +14,15 @@ final class LikeCityCoordinator: Coordinator {
     }
     
     func start() {
-        guard let viewController = self.viewController, let imageCacheUseCase = self.imageCacheUseCase
+        
+        guard let viewController = self.viewController
         else {
             return
         }
         
         viewController.viewModel = LikeCityViewModel(
             citySearchUseCase: CitySearchUseCase(searchRepository: DefaultCitySearchRepository()),
-            imageCacheUseCase: imageCacheUseCase
+            imageCacheUseCase: self.imageCacheUseCase
         )
         
         self.navigationController.setViewControllers([viewController], animated: false)

@@ -83,7 +83,7 @@ final class DetailShowViewModel {
     }
     
     private func extractWeatherDescription(city: City) -> Observable<String> {
-        return self.detailShowUseCase.extractTodayWeather(cityName: city.name)
+        return self.detailShowUseCase.fetchTodayWeather(cityName: city.name)
             .asObservable()
             .map { (weather) -> String in
             let sunrise = weather.sunrise.toKoreanTime

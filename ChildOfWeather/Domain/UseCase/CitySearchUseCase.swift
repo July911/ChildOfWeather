@@ -12,7 +12,7 @@ final class CitySearchUseCase {
         self.searchRepository.search(name: string)
     }
     
-    func extractCities() -> [City] {
+    func fetchCities() -> [City] {
         self.searchRepository.extractCities(by: .kr)
     }
 }

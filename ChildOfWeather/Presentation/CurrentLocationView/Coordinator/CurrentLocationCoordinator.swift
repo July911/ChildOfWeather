@@ -17,10 +17,16 @@ final class CurrentLocationCoordinator: Coordinator {
     }
     
     func start() {
-        CurrentLocationViewModel(
-            detailShowUseCase: <#T##DetailShowUseCase#>,
-            imageCacheUseCase: <#T##ImageCacheUseCase#>,
+        let detailShowUseCase = DetailShowUseCase(
+            weatherRepository: DefaultWeatherRepository(service: APIService())
+        )
+        let currentLocationViewModel = CurrentLocationViewModel(
+            detailShowUseCase: detailShowUseCase,
+            imageCacheUseCase: self.imageCacheUseCase,
             coordinator: self
         )
+        self.viewController.viewModel = currentLocationViewModel
+        
+        self.navigationController.setViewControllers([self.viewController], animated: false)
     }
 }

@@ -9,7 +9,7 @@ final class DetailShowUseCase {
         self.weatherRepository = weatherRepository
     }
     
-    func extractTodayWeather(
+    func fetchTodayWeather(
         cityName: String
     ) -> Single<TodayWeather> {
         return self.weatherRepository.fetchWeatherInformation(cityName: cityName)

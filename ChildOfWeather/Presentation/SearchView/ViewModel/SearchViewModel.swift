@@ -28,7 +28,7 @@ final class SearchViewModel {
         let dismiss = input.viewWillDismiss.map { _ in
             self.searchUseCase.search("") ?? []
         }
-        let cities = self.searchUseCase.extractCities()
+        let cities = self.searchUseCase.fetchCities()
         let filteredCities = input.searchBarText
             .map { (text) -> [City] in
                 return self.searchUseCase.search(text ?? "") ?? []

@@ -3,16 +3,16 @@ import RxSwift
 
 final class CurrentLocationViewModel {
     // MARK: - Properties
-    private let detailShowUseCase: DetailShowUseCase
+    private let weatherFetchUseCase: DetailWeatherFetchUseCase
     private let imageCacheUseCase: ImageCacheUseCase
     private let coordinator: Coordinator
     // MARK: - Initailizer
     init(
-        detailShowUseCase: DetailShowUseCase,
+        detailShowUseCase: DetailWeatherFetchUseCase,
         imageCacheUseCase: ImageCacheUseCase,
         coordinator: Coordinator
     ) {
-        self.detailShowUseCase = detailShowUseCase
+        self.weatherFetchUseCase = detailShowUseCase
         self.imageCacheUseCase = imageCacheUseCase
         self.coordinator = coordinator
     }
@@ -43,9 +43,13 @@ final class CurrentLocationViewModel {
             return LocationManager.shared.searchLocation(latitude: latitude, longitude: longitude)
         }
         
-        let weatherDescription = locationCoodinate.flatMap { (coodinate) -> Observable<String> in
+        let weatherDescription = locationCoodinate.flatMap { (coodinate) -> Observable<TodayWeather> in
+            return self.weatherFetchUseCase.fetchTodayWeather(
+                latitude: coodinate.latitude,
+                longitude: coodinate.longitude
+            ).asObservable()
+        }.map { todayWeather -> String in
             
-            //TODO: detailUseCase에 lat, lon 으로 날씨정보 받아올 수 있게 구현
         }
         
         let currentAddressWebViewURL = currentAddress.map { (address) -> URLRequest? in

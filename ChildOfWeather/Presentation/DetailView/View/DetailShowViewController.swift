@@ -3,9 +3,9 @@ import WebKit
 import RxSwift
 import RxCocoa
 
-final class DetailShowUIViewController: UIViewController {
+final class DetailWeatherViewController: UIViewController {
     // MARK: - Property
-    var viewModel: DetailShowViewModel?
+    var viewModel: DetailWeatherViewModel?
     private var backButtonItem: UIBarButtonItem?
     private let bag = DisposeBag()
     // MARK: - UI Components
@@ -122,7 +122,7 @@ final class DetailShowUIViewController: UIViewController {
                 self.webView.rx.takeSnapShot(city: city)
             }
     
-        let input = DetailShowViewModel.Input(
+        let input = DetailWeatherViewModel.Input(
             viewWillAppear: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in },
             capturedImage: imageCache,
             touchUpbackButton: backButtonEvent.asObservable()

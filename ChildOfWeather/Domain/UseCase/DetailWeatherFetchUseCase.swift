@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 
-final class DetailShowUseCase {
+final class DetailWeatherFetchUseCase {
     
     private let weatherRepository: WeatherRepository
     
@@ -13,6 +13,15 @@ final class DetailShowUseCase {
         cityName: String
     ) -> Single<TodayWeather> {
         return self.weatherRepository.fetchWeatherInformation(cityName: cityName)
+    }
+    
+    func fetchTodayWeather(latitude: Double,
+        longitude: Double
+    ) -> Single<TodayWeather> {
+        return self.weatherRepository.fetchWeatherInformation(
+            latitude: latitude,
+            longitude: longitude
+        )
     }
 }
 

@@ -5,15 +5,15 @@ final class LikeCityViewModel {
     
     let citySearchUseCase: CitySearchUseCase
     let imageCacheUseCase: ImageCacheUseCase
-    let weatherUseCase: DetailShowUseCase
+    let weatherFetchUseCase: DetailWeatherFetchUseCase
     
     init(citySearchUseCase: CitySearchUseCase,
          imageCacheUseCase: ImageCacheUseCase,
-         weatherUseCase: DetailShowUseCase
+         weatherUseCase: DetailWeatherFetchUseCase
     ) {
         self.citySearchUseCase = citySearchUseCase
         self.imageCacheUseCase = imageCacheUseCase
-        self.weatherUseCase = weatherUseCase
+        self.weatherFetchUseCase = weatherUseCase
     }
     
     struct Input {
@@ -34,7 +34,7 @@ final class LikeCityViewModel {
             
             imageCacheData.forEach { data in
                 let key = data.key
-                self.weatherUseCase.fetchTodayWeather(cityName: key as String).asObservable()
+                self.weatherFetchUseCase.fetchTodayWeather(cityName: key as String).asObservable()
                     .do(onNext: { weather in
                         let city = CityCellViewModel(cityName: key as String, image: data, highTemperature: weather.maxTemperature, lowTemperature: weather.minTemperature)
                         cities.append(city)

@@ -17,4 +17,11 @@ final class DefaultWeatherRepository: WeatherRepository {
         return self.service.request(decodedType: WeatherInformation.self, requestType: request)
             .map { $0.toDomain() }
     }
+    
+    func fetchWeatherInformation(latitude: Double, longitude: Double) -> Single<TodayWeather> {
+        let request: RequestType = .getWeatherFromLocation(latitude: latitude, longitude: longitude)
+        
+        return self.service.request(decodedType: WeatherInformation.self, requestType: request)
+            .map { $0.toDomain() }
+    }
 }

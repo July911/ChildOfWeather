@@ -17,7 +17,7 @@ final class CurrentLocationCoordinator: Coordinator {
     }
     
     func start() {
-        let detailShowUseCase = DetailShowUseCase(
+        let detailShowUseCase = DetailWeatherFetchUseCase(
             weatherRepository: DefaultWeatherRepository(service: APIService())
         )
         let currentLocationViewModel = CurrentLocationViewModel(

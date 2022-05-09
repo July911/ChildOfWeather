@@ -3,11 +3,11 @@ import XCTest
 
 class DetailShowUseCaseTests: XCTestCase {
     
-    var sut: DetailShowUseCase?
+    var sut: DetailWeatherFetchUseCase?
 
     override func setUpWithError() throws {
         let repository = DefaultWeatherRepository(service: MockAPIService())
-        sut = DetailShowUseCase(weatherRepository: repository)
+        sut = DetailWeatherFetchUseCase(weatherRepository: repository)
     }
 
     override func tearDownWithError() throws {

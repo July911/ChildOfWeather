@@ -1,20 +1,20 @@
 import Foundation
 import RxSwift
 
-final class DetailShowViewModel {
+final class DetailWeatherViewModel {
     // MARK: - Private Property
     private let city: City
     private let coordinator: SearchViewCoordinator
-    private let detailShowUseCase: DetailShowUseCase
+    private let weatherFetchUseCase: DetailWeatherFetchUseCase
     private let imageCacheUseCase: ImageCacheUseCase
     // MARK: - Initializer
     init(
-        detailShowUseCase: DetailShowUseCase,
+        detailShowUseCase: DetailWeatherFetchUseCase,
         imageCacheUseCase: ImageCacheUseCase,
         coodinator: SearchViewCoordinator,
         city: City
     ) {
-        self.detailShowUseCase = detailShowUseCase
+        self.weatherFetchUseCase = detailShowUseCase
         self.imageCacheUseCase = imageCacheUseCase
         self.coordinator = coodinator
         self.city = city
@@ -83,7 +83,7 @@ final class DetailShowViewModel {
     }
     
     private func extractWeatherDescription(city: City) -> Observable<String> {
-        return self.detailShowUseCase.fetchTodayWeather(cityName: city.name)
+        return self.weatherFetchUseCase.fetchTodayWeather(cityName: city.name)
             .asObservable()
             .map { (weather) -> String in
             let sunrise = weather.sunrise.toKoreanTime

@@ -33,21 +33,21 @@ final class SearchViewCoordinator: Coordinator {
 
         switch event {
         case .presentDetailShowUIViewController(let cityName):
-            let detailShowViewController = self.configureDetailShowViewController(city: cityName)
-            detailShowViewController.modalPresentationStyle = .fullScreen
-            self.navigationController.present(detailShowViewController, animated: false)
+            let detailWeatherViewController = self.configureDetailShowViewController(city: cityName)
+            detailWeatherViewController.modalPresentationStyle = .fullScreen
+            self.navigationController.present(detailWeatherViewController, animated: false)
         case .dismissDetailShowUIViewController:
             self.navigationController.dismiss(animated: false)
         }
     }
 
     private func configureDetailShowViewController(city: City) -> UINavigationController {
-        let viewController = DetailShowUIViewController()
+        let viewController = DetailWeatherViewController()
         let weatherRepository =  DefaultWeatherRepository(service: APIService())
-        let detailShowUseCase = DetailShowUseCase(
+        let detailShowUseCase = DetailWeatherFetchUseCase(
             weatherRepository: weatherRepository
         )
-        viewController.viewModel = DetailShowViewModel(
+        viewController.viewModel = DetailWeatherViewModel(
             detailShowUseCase: detailShowUseCase,
             imageCacheUseCase: self.imageCacheUseCase,
             coodinator: self, city: city

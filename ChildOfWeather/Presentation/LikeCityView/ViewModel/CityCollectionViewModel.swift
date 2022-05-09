@@ -7,4 +7,8 @@ struct CityCellViewModel: Hashable {
     let highTemperature: Double
     let lowTemperature: Double
     let identifier = UUID()
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
 }

@@ -30,6 +30,7 @@
 - Step4 
 
         AppCoordinator를 사용해 의존성 주입 및 TabBarController 를 통한 화면전환
+        Compositional Layout을 사용한 CollectionView 및 DiffableDataSource활용
         
 4. 키워드 
         

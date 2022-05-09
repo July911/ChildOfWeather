@@ -119,7 +119,7 @@ final class DetailWeatherViewController: UIViewController {
         
         let imageCache = self.rx.methodInvoked(#selector(UIViewController.viewWillDisappear(_:))).map { _ in }
                 .flatMap { (event) -> Observable<ImageCacheData> in
-                self.webView.rx.takeSnapShot(city: city)
+                    self.webView.rx.takeSnapShot(name: city.name)
             }
     
         let input = DetailWeatherViewModel.Input(
@@ -166,39 +166,5 @@ final class DetailWeatherViewController: UIViewController {
             .disposed(by: self.bag)
     }
 }
-// MARK: - Reactive Extension 
-private extension Reactive where Base: WKWebView {
-    func takeSnapShot(city: City) -> Observable<ImageCacheData> {
-        return Observable<ImageCacheData>.create { emitter in
-            let configuration = WKSnapshotConfiguration()
-            base.takeSnapshot(with: configuration) { image, error in
-                guard error == nil
-                else {
-                    emitter.onError(APICallError.dataNotfetched)
-                    return
-                }
-                
-                guard let image = image
-                else {
-                    emitter.onError(APICallError.errorExist)
-                    return
-                }
-                let imageCacheData = ImageCacheData(key: city.name as NSString, value: image)
-                emitter.onNext(imageCacheData)
-                emitter.onCompleted()
-            }
-            return Disposables.create()
-        }
-    }
-}
 
-private extension Reactive where Base: UIImageView {
-    func loadCacheView(webView: WKWebView) -> Binder<UIImage> {
-        return Binder(self.base) { ImageView, image in
-            webView.isHidden = true
-            base.isHidden = false
-            ImageView.image = image
-        }
-    }
-}
 

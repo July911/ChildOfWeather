@@ -69,7 +69,7 @@ final class CurrentLocationViewController: UIViewController {
         }
         let input = CurrentLocationViewModel.Input(
             viewWillAppear: self.rx.viewWillAppear.asObservable(),
-            cachedImage: nil,
+            cachedImage: self.webView.rx.takeSnapShot(name: "current")
             locationChange: leftBarButtonEvent,
             dismiss: self.rx.viewWillDisappear.asObservable()
         )

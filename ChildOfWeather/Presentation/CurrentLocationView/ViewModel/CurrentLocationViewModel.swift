@@ -19,19 +19,33 @@ final class CurrentLocationViewModel {
     // MARK: - Nested Type
     struct Input {
         let viewWillAppear: Observable<Void>
-        let cachedImage: Observable<ImageCacheData>?
+        let cachedImage: Observable<ImageCacheData>
         let locationChange: Observable<Void>
         let dismiss: Observable<Void>
     }
     
     struct Output {
         let currentImage: Observable<ImageCacheData>
+        let isImageCached: Observable<Bool>
         let currentAddressDescription: Observable<String>
         let weatherDescription: Observable<String>
         let currentAddressWebViewURL: Observable<URLRequest?>
     }
     // MARK: - Method 
     func transform(input: Input) -> Output {
+        
+        let isImageCache = input.locationChange.withLatestFrom(input.cachedImage)
+            .do { imageCacheData in
+                let newImageCacheData = ImageCacheData(key: "current" as NSString, value: imageCacheData.value)
+                self.imageCacheUseCase.setCache(object: newImageCacheData)
+            }.flatMap { _ -> Observable<Bool> in
+                let isCahced = self.imageCacheUseCase.hasCacheExist(cityName: "current")
+                return Observable.of(isCahced)
+            }
+        
+        let imageCacheData = input.viewWillAppear.compactMap {
+            self.imageCacheUseCase.fetchImage(cityName: "current")
+        }
         
         let locationCoodinate = input.viewWillAppear.map {
             LocationManager.shared.extractCurrentLocation()
@@ -41,7 +55,7 @@ final class CurrentLocationViewModel {
             let latitude = coordinate.latitude
             let longitude = coordinate.longitude
             return LocationManager.shared.searchLocation(latitude: latitude, longitude: longitude)
-        }
+        }.share(replay: 1)
         
         let weatherDescription = locationCoodinate.flatMap { (coodinate) -> Observable<TodayWeather> in
             return self.weatherFetchUseCase.fetchTodayWeather(
@@ -49,7 +63,11 @@ final class CurrentLocationViewModel {
                 longitude: coodinate.longitude
             ).asObservable()
         }.map { todayWeather -> String in
-            
+            let sunSet = todayWeather.sunset.description
+            let sunRise = todayWeather.sunrise.description
+            let minTemperature = todayWeather.minTemperature.description
+            let maxTemperature = todayWeather.maxTemperature.description
+            return "오늘의 일출은 \(sunRise)시, 일몰은 \(sunSet) 최고기온은 \(maxTemperature) 최저기온은 \(minTemperature)입니다."
         }
         
         let currentAddressWebViewURL = currentAddress.map { (address) -> URLRequest? in
@@ -68,6 +86,12 @@ final class CurrentLocationViewModel {
             return URLRequest(url: url)
         }
         
-        return Output(currentImage: <#T##Observable<ImageCacheData>#>, currentAddressDescription: currentAddress, weatherDescription: <#T##Observable<String>#>, currentAddressWebViewURL: currentAddressWebViewURL)
+        return Output(
+            currentImage: imageCacheData,
+            isImageCached: isImageCache,
+            currentAddressDescription: currentAddress,
+            weatherDescription: weatherDescription,
+            currentAddressWebViewURL: currentAddressWebViewURL
+        )
     }
 }

@@ -52,7 +52,18 @@ final class LikeCityViewController: UIViewController {
                 withReuseIdentifier: String(describing: CityCollectionViewCell.self),
                 for: indexPath
             ) as? CityCollectionViewCell
-            cell?.configure(cellViewModel: itemIdentifier)
+            
+            DispatchQueue.main.async {
+                
+                guard let cell = cell
+                else {
+                    return
+                }
+                
+                if indexPath == self.cityCollectionView.indexPath(for: cell) {
+                    cell.configure(cellViewModel: itemIdentifier)
+                }
+            }
             
             return cell
         }
@@ -101,22 +112,14 @@ final class LikeCityViewController: UIViewController {
         let output = viewModel?.transform(input: input)
         
         output?.likedCities.asDriver(onErrorJustReturn: [])
-            .drive(dataSource.rx.applySnapshot())
+            .drive(onNext: { cities in
+                var snapshot = NSDiffableDataSourceSnapshot<Int,CityCellViewModel>()
+                snapshot.appendSections([0])
+                snapshot.appendItems(cities)
+                dataSource.apply(snapshot)
+            })
             .disposed(by: self.bag)
     }
 }
 
-                   
-                   
-extension Reactive where Base: UICollectionViewDiffableDataSource<Int, CityCellViewModel> {
-       
-    func applySnapshot(section: Int = 0) -> Binder<[CityCellViewModel]> {
-        return Binder(self.base) { dataSource, cellViewModels in
-            var snapshot = NSDiffableDataSourceSnapshot<Int,CityCellViewModel>()
-            snapshot.appendSections([section])
-            snapshot.appendItems(cellViewModels)
-            base.apply(snapshot)
-        }
-    }
-}
 

@@ -3,20 +3,19 @@ import UIKit
 final class CurrentLocationCoordinator: Coordinator {
     
     weak var parentCoordinator: Coordinator?
-    private let viewController: CurrentLocationViewController
-    private let navigationController: UINavigationController
     private let imageCacheUseCase: ImageCacheUseCase
     
-    init(navigationController: UINavigationController,
-         viewController: CurrentLocationViewController,
+    init(
          imageCacheUseCase: ImageCacheUseCase
     ) {
-        self.navigationController = navigationController
-        self.viewController = viewController
         self.imageCacheUseCase = imageCacheUseCase
     }
     
-    func start() {
+    func start() -> UINavigationController {
+        
+        let viewController = CurrentLocationViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        
         let detailShowUseCase = DetailWeatherFetchUseCase(
             weatherRepository: DefaultWeatherRepository(service: APIService())
         )
@@ -25,8 +24,10 @@ final class CurrentLocationCoordinator: Coordinator {
             imageCacheUseCase: self.imageCacheUseCase,
             coordinator: self
         )
-        self.viewController.viewModel = currentLocationViewModel
+        viewController.viewModel = currentLocationViewModel
         
-        self.navigationController.setViewControllers([self.viewController], animated: false)
+        navigationController.setViewControllers([viewController], animated: false)
+        
+        return navigationController
     }
 }

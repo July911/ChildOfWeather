@@ -64,8 +64,15 @@ class CityCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+    
     func configure(cellViewModel: CityCellViewModel) {
         self.cityNameLabel.text = cellViewModel.cityName
+        self.lowTemperatureLabel.text = cellViewModel.lowTemperature.description
+        self.highTemperatureLabel.text = cellViewModel.highTemperature.description
+        self.cityImageView.image = cellViewModel.image.value
     }
     
     private func addViewsToStackView() {

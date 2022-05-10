@@ -25,7 +25,7 @@ final class SearchViewController: UIViewController {
         self.configureSearchController()
         self.bindViewModel()
         self.configureNavigationItem()
-        self.addGradientToNavigationController()
+//        self.addGradientToNavigationController()
     }
     // MARK: - Private Method
     private func configureNavigationItem() {

@@ -3,22 +3,16 @@ import UIKit
 final class LikeCityCoordinator: Coordinator {
     
     weak var parentCoordinator: Coordinator?
-    weak var viewController: LikeCityViewController?
     private let imageCacheUseCase: ImageCacheUseCase
-    private let navigationController: UINavigationController
     
-    init(navigationController: UINavigationController, viewController: LikeCityViewController, imageCacheUseCase: ImageCacheUseCase) {
-        self.navigationController = navigationController
-        self.viewController = viewController
+    init(imageCacheUseCase: ImageCacheUseCase) {
         self.imageCacheUseCase = imageCacheUseCase
     }
     
-    func start() {
+    func start() -> UINavigationController {
         
-        guard let viewController = self.viewController
-        else {
-            return
-        }
+        let viewController = LikeCityViewController()
+        let navigaionController = UINavigationController(rootViewController: viewController)
         
         viewController.viewModel = LikeCityViewModel(
             citySearchUseCase: CitySearchUseCase(searchRepository: DefaultCitySearchRepository()),
@@ -26,6 +20,8 @@ final class LikeCityCoordinator: Coordinator {
             weatherUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: APIService()))
         )
         
-        self.navigationController.setViewControllers([viewController], animated: false)
+        navigaionController.setViewControllers([viewController], animated: false)
+        
+        return navigaionController
     }
 }

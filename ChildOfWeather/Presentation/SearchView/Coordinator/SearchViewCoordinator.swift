@@ -5,17 +5,15 @@ import RxSwift
 final class SearchViewCoordinator: Coordinator {
     
     weak var parentCoordinator: Coordinator?
-    weak var viewController: SearchViewController?
     private let imageCacheUseCase: ImageCacheUseCase
     private let navigationController: UINavigationController
     
-    init(navigationController: UINavigationController, viewController: SearchViewController, imageCacheUseCase: ImageCacheUseCase) {
-        self.navigationController = navigationController
-        self.viewController = viewController
+    init(imageCacheUseCase: ImageCacheUseCase) {
         self.imageCacheUseCase = imageCacheUseCase
+        self.navigationController = .init()
     }
 
-    func start() {
+    func start() -> UINavigationController {
         let viewController = SearchViewController()
         let citySearchRepository = DefaultCitySearchRepository()
         let searchUseCase = CitySearchUseCase(
@@ -28,6 +26,7 @@ final class SearchViewCoordinator: Coordinator {
         viewController.viewModel = searchViewModel
         self.navigationController.setViewControllers([viewController], animated: false)
         
+        return self.navigationController
     }
 
     func occuredViewEvent(with event: Event.View) {

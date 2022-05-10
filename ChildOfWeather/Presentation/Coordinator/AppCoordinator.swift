@@ -4,13 +4,13 @@ final class AppCoordinator: Coordinator {
     
     private var childCoordinator: [Coordinator]
     private let window: UIWindow?
-    private var imageCacheUseCase: ImageCacheUseCase
+    private let imageCacheUseCase: ImageCacheUseCase
     
     init(_ window: UIWindow?) {
         self.window = window
         self.childCoordinator = .init()
         window?.makeKeyAndVisible()
-        self.imageCacheUseCase = self.configureImageCacheUseCase()
+        self.imageCacheUseCase = ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
     }
     
     func start() {

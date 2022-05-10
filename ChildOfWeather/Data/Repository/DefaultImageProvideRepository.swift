@@ -16,7 +16,7 @@ final class DefaultImageProvideRepository: ImageProvideRepository {
     }
     
     func fetchAllCacheData() -> [ImageCacheData] {
-        var cachedData: [ImageCacheData]
+        var cachedData: [ImageCacheData] = [] 
         cacheKeys.forEach { key in
             guard let data = service.cache.object(forKey: key)
             else {

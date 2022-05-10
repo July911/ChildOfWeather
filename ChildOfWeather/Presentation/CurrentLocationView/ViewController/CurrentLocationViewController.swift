@@ -7,6 +7,7 @@ final class CurrentLocationViewController: UIViewController {
 // MARK: - Properties 
     var viewModel: CurrentLocationViewModel?
     private var refreshNavigationButton: UIBarButtonItem?
+    private let bag = DisposeBag()
 // MARK: - UI Components
     private let cityNameLabel: UILabel = {
         let label = UILabel()
@@ -69,12 +70,40 @@ final class CurrentLocationViewController: UIViewController {
         }
         let input = CurrentLocationViewModel.Input(
             viewWillAppear: self.rx.viewWillAppear.asObservable(),
-            cachedImage: self.webView.rx.takeSnapShot(name: "current")
+            cachedImage: self.webView.rx.takeSnapShot(name: "current"),
             locationChange: leftBarButtonEvent,
             dismiss: self.rx.viewWillDisappear.asObservable()
         )
         
         let output = self.viewModel?.transform(input: input)
+        
+        output?.weatherDescription.asDriver(onErrorJustReturn: "")
+            .drive(self.weatherDescriptionTextView.rx.text)
+            .disposed(by: self.bag)
+        
+        output?.currentAddressDescription.asDriver(onErrorJustReturn: "")
+            .drive(self.cityNameLabel.rx.text)
+            .disposed(by: self.bag)
+        
+        output?.isImageCached.subscribe { _ in
+            
+        }.disposed(by: self.bag)
+        
+        output?.currentAddressWebViewURL.subscribe(onNext: { [weak self] urlRequest in
+            guard let urlRequest = urlRequest
+            else {
+                return
+            }
+                self?.webView.load(urlRequest)
+            }).disposed(by: self.bag)
+        
+        output?.currentImage.asDriver(onErrorJustReturn: ImageCacheData(key: "", value: UIImage()))
+            .filter { $0.value != UIImage() }
+            .map { (imageCached) -> UIImage in
+                return imageCached.value
+            }
+            .drive(self.imageView.rx.loadCacheView(webView: self.webView))
+            .disposed(by: self.bag)
     }
     
     private func configureLayout() {

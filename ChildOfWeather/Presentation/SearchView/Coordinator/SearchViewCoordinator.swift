@@ -27,6 +27,7 @@ final class SearchViewCoordinator: Coordinator {
         )
         viewController.viewModel = searchViewModel
         self.navigationController.setViewControllers([viewController], animated: false)
+        
     }
 
     func occuredViewEvent(with event: Event.View) {

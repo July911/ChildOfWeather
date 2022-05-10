@@ -109,16 +109,21 @@ final class CurrentLocationViewController: UIViewController {
     private func configureLayout() {
         self.addUIComponentsToStackView()
         let safeArea = view.safeAreaLayoutGuide
-        self.view.addSubview(entireStackView)
+        self.view.addSubview(self.imageView)
+        self.view.addSubview(self.entireStackView)
         
         let webViewLayout: [NSLayoutConstraint] = [
-            self.webView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.4),
-            self.webView.heightAnchor.constraint(equalTo: self.webView.widthAnchor)
+            self.webView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 1.0),
+            self.webView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.3)
         ]
         
         let imageViewLayout: [NSLayoutConstraint] = [
-            self.imageView.widthAnchor.constraint(equalTo: self.webView.widthAnchor, multiplier: 1.0),
-            self.imageView.heightAnchor.constraint(equalTo: self.webView.heightAnchor)
+            self.imageView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 1.0),
+            self.imageView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.3),
+            self.imageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            self.imageView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            self.imageView.topAnchor.constraint(equalTo: self.cityNameLabel.bottomAnchor, constant: 10),
+            self.imageView.bottomAnchor.constraint(equalTo: self.weatherDescriptionTextView.topAnchor, constant: 10)
         ]
         
         let stackViewLayout: [NSLayoutConstraint] = [

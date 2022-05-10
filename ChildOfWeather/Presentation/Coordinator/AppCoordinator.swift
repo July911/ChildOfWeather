@@ -33,6 +33,7 @@ final class AppCoordinator: Coordinator {
         )
         searchViewCoordinator.parentCoordinator = self
         self.childCoordinator.append(searchViewCoordinator)
+        searchViewCoordinator.start()
         searchViewController.tabBarItem = firstItem
         
         let currentLocationViewController = CurrentLocationViewController()
@@ -43,6 +44,7 @@ final class AppCoordinator: Coordinator {
             )
         currentLocationCoordinator.parentCoordinator = self
         self.childCoordinator.append(currentLocationCoordinator)
+        currentLocationCoordinator.start()
         currentLocationViewController.tabBarItem = secondItem
         
         let likeCityViewController = LikeCityViewController()
@@ -53,6 +55,7 @@ final class AppCoordinator: Coordinator {
         )
         likeCityCoordinator.parentCoordinator = self
         self.childCoordinator.append(likeCityCoordinator)
+        likeCityCoordinator.start()
         likeCityViewController.tabBarItem = thirdItem
         
         tabBarController.viewControllers = [
@@ -60,6 +63,8 @@ final class AppCoordinator: Coordinator {
             currentLocationViewController,
             likeCityViewController
         ]
+        
+        tabBarController.tabBar.isTranslucent = false
         
         return tabBarController
     }

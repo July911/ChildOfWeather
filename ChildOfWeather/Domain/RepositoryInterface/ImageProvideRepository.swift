@@ -7,5 +7,5 @@ protocol ImageProvideRepository {
 
     func fetchCache(key: String) -> ImageCacheData?
     
-    func fetchAllCacheData() -> Observable<[ImageCacheData]>?
+    func fetchAllCacheData() -> Observable<[ImageCacheData]>
 }

@@ -25,7 +25,7 @@ final class ImageCacheUseCase {
         self.imageProvideRepository.fetchCache(key: cityName) == nil ? false : true
     }
     
-    func fetchAllCachedCities() -> Observable<[ImageCacheData]>? {
+    func fetchAllCachedCities() -> Observable<[ImageCacheData]> {
         self.imageProvideRepository.fetchAllCacheData()
     }
 }

@@ -23,22 +23,11 @@ final class DefaultImageProvideRepository: ImageProvideRepository {
         self.service.cache.object(forKey: key as NSString)
     }
     
-    func fetchAllCacheData() -> Observable<[ImageCacheData]>? {
+    func fetchAllCacheData() -> Observable<[ImageCacheData]> {
+        let cachedData = cacheKeys.asObservable().map { strings in
+            strings.compactMap { self.fetchCache(key: $0) }
+        }.debug()
         
-        guard let currentValue = try? cacheKeys.value()
-        else {
-            return nil
-        }
-        
-        var cachedData: [ImageCacheData] = [] 
-        currentValue.forEach { key in
-            guard let data = service.cache.object(forKey: key as NSString)
-            else {
-                return
-            }
-            cachedData.append(data)
-        }
-        
-        return Observable.of(cachedData)
+        return cachedData
     }
 }

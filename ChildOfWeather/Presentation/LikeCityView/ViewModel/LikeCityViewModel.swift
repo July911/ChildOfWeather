@@ -27,22 +27,28 @@ final class LikeCityViewModel {
     
     func transform(input: Input) -> Ouput {
         
-        let likeCities = input.viewWillApeear.map { _ -> [ImageCacheData] in
+        let imageCachedData = input.viewWillApeear.compactMap {
             self.imageCacheUseCase.fetchAllCachedCities()
-        }.map { imageCacheData -> [CityCellViewModel] in
-            var cities: [CityCellViewModel] = []
+        }.flatMap { $0 }
             
-            imageCacheData.forEach { data in
-                let key = data.key
-                self.weatherFetchUseCase.fetchTodayWeather(cityName: key as String).asObservable()
-                    .do(onNext: { weather in
-                        let city = CityCellViewModel(cityName: key as String, image: data, highTemperature: weather.maxTemperature, lowTemperature: weather.minTemperature)
-                        cities.append(city)
-                    })
-            }
-            return cities
+        let todayWeather = imageCachedData.flatMap { cities -> Observable<[TodayWeather]> in
+            let todayWeathers = cities.map { self.weatherFetchUseCase.fetchTodayWeather(cityName: $0.key as String).asObservable() }
+            return Observable.zip(todayWeathers)
         }
         
+        let likeCities = Observable.zip(imageCachedData, todayWeather).map { (imageCache, todayWeather) -> [CityCellViewModel] in
+            let cityCellViewModels = zip(imageCache, todayWeather).map {
+                CityCellViewModel(
+                    cityName: $0.0.key as String,
+                    image: $0.0,
+                    highTemperature: $0.1.maxTemperature,
+                    lowTemperature: $0.1.minTemperature
+                )
+            }
+            
+            return cityCellViewModels
+        }
+            
         return Ouput(likedCities: likeCities)
     }
 }

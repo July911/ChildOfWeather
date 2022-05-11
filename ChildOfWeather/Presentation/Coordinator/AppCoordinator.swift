@@ -13,7 +13,7 @@ final class AppCoordinator: Coordinator {
         self.imageCacheUseCase = ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
     }
     
-    func start() -> UINavigationController{
+    func start() -> UINavigationController {
         let tabBarController = self.setTapBarController()
         self.window?.rootViewController = tabBarController
         

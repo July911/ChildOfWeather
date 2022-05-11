@@ -1,4 +1,5 @@
 import Foundation
+import RxSwift
 
 protocol ImageProvideRepository {
             
@@ -6,5 +7,5 @@ protocol ImageProvideRepository {
 
     func fetchCache(key: String) -> ImageCacheData?
     
-    func fetchAllCacheData() -> [ImageCacheData] 
+    func fetchAllCacheData() -> Observable<[ImageCacheData]>?
 }

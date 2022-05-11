@@ -23,9 +23,19 @@ final class LikeCityViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureView()
+        self.configureNavigationController()
         self.configureCollectionViewDataSource()
         self.configureLayout()
         self.bindToViewModel()
+    }
+    
+    private func configureView() {
+        self.view.backgroundColor = .white
+    }
+    
+    private func configureNavigationController() {
+        self.navigationItem.title = "캐싱된 날씨"
     }
     
     private func configureCollectionViewDataSource() {
@@ -113,7 +123,7 @@ final class LikeCityViewController: UIViewController {
         
         output?.likedCities.asDriver(onErrorJustReturn: [])
             .drive(onNext: { cities in
-                var snapshot = NSDiffableDataSourceSnapshot<Int,CityCellViewModel>()
+                var snapshot = snapshot()
                 snapshot.appendSections([0])
                 snapshot.appendItems(cities)
                 dataSource.apply(snapshot)

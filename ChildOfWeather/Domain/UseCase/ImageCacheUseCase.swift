@@ -1,4 +1,5 @@
 import Foundation
+import RxSwift
 
 final class ImageCacheUseCase {
     
@@ -24,7 +25,7 @@ final class ImageCacheUseCase {
         self.imageProvideRepository.fetchCache(key: cityName) == nil ? false : true
     }
     
-    func fetchAllCachedCities() -> [ImageCacheData] {
+    func fetchAllCachedCities() -> Observable<[ImageCacheData]>? {
         self.imageProvideRepository.fetchAllCacheData()
     }
 }

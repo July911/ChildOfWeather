@@ -39,7 +39,11 @@ final class LikeCityViewController: UIViewController {
     }
     
     private func configureCollectionViewDataSource() {
-        self.cityCollectionView.dataSource = extractDataSource()
+        self.dataSource = extractDataSource()
+        self.cityCollectionView.register(
+            CityCollectionViewCell.self,
+            forCellWithReuseIdentifier: String(describing: CityCollectionViewCell.self)
+        )
     }
     
     private func configureLayout() {

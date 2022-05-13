@@ -84,32 +84,29 @@ final class LikeCityViewController: UIViewController {
     }
     
     static func configureLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { section, _ in
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .fractionalHeight(1.0)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = NSDirectionalEdgeInsets(
-                top: 5,
-                leading: 5,
-                bottom: 5,
-                trailing: 5
-            )
-            let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(0.5),
-                heightDimension: .fractionalHeight(1.0)
-            )
             
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(0.25)
+            )
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
-                subitems: [item]
+                subitem: item,
+                count: 2
             )
+            group.interItemSpacing = .fixed(5)
             
             let section = NSCollectionLayoutSection(group: group)
+            section.interGroupSpacing = 5
             
-            return section
-        }
+            let layout = UICollectionViewCompositionalLayout(section: section)
+        
+            return layout
     }
     
     private func bindToViewModel() {
@@ -119,7 +116,7 @@ final class LikeCityViewController: UIViewController {
         }
 
         let input = LikeCityViewModel.Input(
-            viewWillApeear: self.rx.viewWillAppear.asObservable(),
+            viewDidLoad: self.rx.viewDidLoad.asObservable(),
             didTappedCell: self.cityCollectionView.rx.itemSelected.asObservable()
         )
         

@@ -14,6 +14,11 @@ extension Reactive where Base: UIViewController {
         let viewWillDisappear = self.methodInvoked(#selector(base.viewWillDisappear(_:))).map { _ in }
         return ControlEvent(events: viewWillDisappear)
     }
+    
+    var viewDidLoad: ControlEvent<Void> {
+        let viewDidLoad = self.methodInvoked(#selector(base.viewDidLoad)).map { _ in }
+        return ControlEvent(events: viewDidLoad)
+    }
 }
 
 extension Reactive where Base: WKWebView {

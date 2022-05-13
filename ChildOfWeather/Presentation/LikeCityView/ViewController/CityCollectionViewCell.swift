@@ -72,7 +72,9 @@ class CityCollectionViewCell: UICollectionViewCell {
         self.cityNameLabel.text = cellViewModel.cityName
         self.lowTemperatureLabel.text = cellViewModel.lowTemperature.description
         self.highTemperatureLabel.text = cellViewModel.highTemperature.description
-        self.cityImageView.image = cellViewModel.image.value
+        self.cityImageView.image = cellViewModel.image.value.resized(
+            for: CGSize(width: self.cityImageView.bounds.width,
+                        height: self.cityImageView.bounds.height))
     }
     
     private func addViewsToStackView() {
@@ -91,6 +93,14 @@ class CityCollectionViewCell: UICollectionViewCell {
     private func configureLayout() {
         let cellView = self.contentView
         
+        let imageViewLayout: [NSLayoutConstraint] = [
+            self.cityImageView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
+            self.cityImageView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor),
+            self.cityImageView.topAnchor.constraint(equalTo: self.cityNameLabel.topAnchor),
+            self.cityImageView.bottomAnchor.constraint(equalTo: self.temperatureStackView.bottomAnchor),
+        
+        ]
+        
         let stackViewLayout: [NSLayoutConstraint] = [
             self.entireStackView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
             self.entireStackView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor),
@@ -98,6 +108,7 @@ class CityCollectionViewCell: UICollectionViewCell {
             self.entireStackView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor)
         ]
         
+        NSLayoutConstraint.activate(imageViewLayout)
         NSLayoutConstraint.activate(stackViewLayout)
     }
 }

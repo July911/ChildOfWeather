@@ -17,7 +17,7 @@ final class LikeCityViewModel {
     }
     
     struct Input {
-        let viewWillApeear: Observable<Void>
+        let viewDidLoad: Observable<Void>
         let didTappedCell: Observable<IndexPath>
     }
     
@@ -27,7 +27,7 @@ final class LikeCityViewModel {
     
     func transform(input: Input) -> Ouput {
         
-        let imageCachedData = input.viewWillApeear.compactMap {
+        let imageCachedData = input.viewDidLoad.compactMap {
             self.imageCacheUseCase.fetchAllCachedCities()
         }.flatMap { $0 }
             .startWith([])
@@ -50,7 +50,7 @@ final class LikeCityViewModel {
             }
             
             return cityCellViewModels
-        }
+        }.debug()
             
         return Ouput(likedCities: likeCities)
     }

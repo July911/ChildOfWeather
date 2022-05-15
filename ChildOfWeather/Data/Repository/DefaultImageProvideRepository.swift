@@ -26,7 +26,7 @@ final class DefaultImageProvideRepository: ImageProvideRepository {
     func fetchAllCacheData() -> Observable<[ImageCacheData]> {
         let cachedData = cacheKeys.asObservable().map { strings in
             strings.compactMap { self.fetchCache(key: $0) }
-        }.debug()
+        }
         
         return cachedData
     }

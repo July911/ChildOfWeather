@@ -5,10 +5,10 @@ protocol WeatherRepository {
     
     func fetchWeatherInformation(
         cityName text: String
-    ) -> Single<TodayWeather>
+    ) -> Observable<TodayWeather>
     
     func fetchWeatherInformation(
         latitude: Double,
         longitude: Double
-    ) -> Single<TodayWeather>
+    ) -> Observable<TodayWeather>
 }

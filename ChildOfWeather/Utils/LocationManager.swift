@@ -44,8 +44,8 @@ final class LocationManager {
     }
     
     func fetchURLFromLocation(locationAddress address: String) -> String {
-        let type: RequestType = .getMapfromLocationInformation(location: address)
-        
-        return type.fullURL
+        let googleBaseURL = "https://www.google.com/maps?q="
+        let fullURL = googleBaseURL + address
+        return fullURL
     }
 }

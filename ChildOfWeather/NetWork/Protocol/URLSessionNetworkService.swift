@@ -3,8 +3,9 @@ import RxSwift
 
 protocol URLSessionNetworkService {
     
-    func request<T: Decodable>(
-        decodedType: T.Type,
-        requestType: RequestType) -> Single<T>
+    func request<T: APIRequest>(
+        requestType: T,
+        completion: @escaping (Result<T.ResponseType, APICallError>) -> Void
+    ) -> URLSessionDataTask?
 }
 

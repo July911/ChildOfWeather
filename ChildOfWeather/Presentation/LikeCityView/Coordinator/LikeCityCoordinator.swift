@@ -17,7 +17,7 @@ final class LikeCityCoordinator: Coordinator {
         viewController.viewModel = LikeCityViewModel(
             citySearchUseCase: CitySearchUseCase(searchRepository: DefaultCitySearchRepository()),
             imageCacheUseCase: self.imageCacheUseCase,
-            weatherUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: APIService()))
+            weatherUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: URLSessionService()))
         )
         
         navigaionController.setViewControllers([viewController], animated: false)

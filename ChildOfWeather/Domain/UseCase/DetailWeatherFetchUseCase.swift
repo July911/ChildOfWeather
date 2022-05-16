@@ -11,13 +11,13 @@ final class DetailWeatherFetchUseCase {
     
     func fetchTodayWeather(
         cityName: String
-    ) -> Single<TodayWeather> {
+    ) -> Observable<TodayWeather> {
         return self.weatherRepository.fetchWeatherInformation(cityName: cityName)
     }
     
     func fetchTodayWeather(latitude: Double,
         longitude: Double
-    ) -> Single<TodayWeather> {
+    ) -> Observable<TodayWeather> {
         return self.weatherRepository.fetchWeatherInformation(
             latitude: latitude,
             longitude: longitude

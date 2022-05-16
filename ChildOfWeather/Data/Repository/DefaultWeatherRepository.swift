@@ -10,14 +10,12 @@ final class DefaultWeatherRepository: WeatherRepository {
     }
     
     func fetchWeatherInformation(
-        cityName text: String) -> Single<TodayWeather> 
+        cityName text: String) -> Observable<TodayWeather>
     {
-        let request: RequestType = .getWeatherFromCityName(city: text)
-        let param = CoordinateWeatherRequestParams(latitude: <#T##Int#>, longitude: <#T##Int#>)
-        let request = CoordinateWeatherRequest(method: .GET, params: <#T##QueryParameters#>, urlString: <#T##String#>)
-        
-        return self.service.requestRx(decodedType: WeatherInformation.self, requestType: request)
-            .map { $0.toDomain() }
+        let param = CityWeatherRequestParams(city: text)
+        let request = CityWeatherRequest(method: .GET, params: param)
+
+        return self.service.requestRx(request: request).map { $0.toDomain() }
     }
     
     func fetchWeatherInformation(latitude: Double, longitude: Double) -> Observable<TodayWeather> {

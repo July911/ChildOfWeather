@@ -26,7 +26,7 @@ struct CityWeatherRequestParams: QueryParameters {
         var dictionary: [String: String] = [:]
         let city = self.city
         
-        dictionary.updateValue(city, forKey: "city")
+        dictionary.updateValue(city, forKey: "q")
         dictionary.updateValue(self.key, forKey: "appid")
         
         return dictionary

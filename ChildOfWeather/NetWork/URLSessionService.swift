@@ -14,9 +14,9 @@ final class URLSessionService: URLSessionNetworkService {
             completion(.failure(.errorExist))
             return nil
         }
-        
-        let task = self.session
-            .dataTask(with: request) { data, response, error in
+
+        let task = self.session.dataTask(with: request) { data, response, error in
+            
                 guard error == nil else {
                     completion(.failure(.errorExist))
                     return
@@ -28,6 +28,7 @@ final class URLSessionService: URLSessionNetworkService {
                 }
                 
                 guard (200...299) ~= httpResponse.statusCode else {
+                    print(httpResponse.statusCode)
                     completion(.failure(.notProperStatusCode(code: httpResponse.statusCode)))
                     return
                 }

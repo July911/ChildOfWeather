@@ -17,7 +17,7 @@ final class CurrentLocationCoordinator: Coordinator {
         let navigationController = UINavigationController(rootViewController: viewController)
         
         let detailShowUseCase = DetailWeatherFetchUseCase(
-            weatherRepository: DefaultWeatherRepository(service: APIService())
+            weatherRepository: DefaultWeatherRepository(service: URLSessionService())
         )
         let currentLocationViewModel = CurrentLocationViewModel(
             detailShowUseCase: detailShowUseCase,

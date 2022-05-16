@@ -39,8 +39,9 @@ final class LocationManager {
     func extractCurrentLocation() -> (latitude: Double, longitude: Double) {
         let latitude = Double(locationManager.location?.coordinate.latitude ?? .zero)
         let longitude = Double(locationManager.location?.coordinate.longitude ?? .zero)
-        
-        return (latitude, longitude)
+        let mockLatitude = 37.44463800000
+        let mockLongitude = 127.17296800000
+        return (mockLatitude, mockLongitude)
     }
     
     func fetchURLFromLocation(locationAddress address: String) -> String {

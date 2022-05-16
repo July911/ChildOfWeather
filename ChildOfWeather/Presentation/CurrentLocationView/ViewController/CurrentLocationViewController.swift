@@ -9,7 +9,7 @@ final class CurrentLocationViewController: UIViewController {
     private var refreshNavigationButton: UIBarButtonItem?
     private let bag = DisposeBag()
 // MARK: - UI Components
-    private let cityNameLabel: UILabel = {
+    private var cityNameLabel: UILabel = {
         let label = UILabel()
         label.tintColor = .yellow
         label.font = .preferredFont(forTextStyle: .largeTitle, compatibleWith: .none)
@@ -36,7 +36,7 @@ final class CurrentLocationViewController: UIViewController {
         return webView
     }()
     
-    private let weatherDescriptionTextView: UITextView = {
+    private var weatherDescriptionTextView: UITextView = {
         let textView = UITextView()
         textView.font = .preferredFont(forTextStyle: .headline)
         textView.textAlignment = .left
@@ -49,8 +49,6 @@ final class CurrentLocationViewController: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.distribution = .fillEqually
-        stackView.spacing = 10
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
@@ -58,9 +56,9 @@ final class CurrentLocationViewController: UIViewController {
 // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bindViewModel()
-        self.configureLayout()
         self.configureNavigationItem()
+        self.configureLayout()
+        self.bindViewModel()
     }
 // MARK: - Private Method
     private func bindViewModel() {
@@ -68,9 +66,15 @@ final class CurrentLocationViewController: UIViewController {
         else {
             return
         }
+        
+        let imageCache = self.rx.methodInvoked(#selector(UIViewController.viewWillDisappear(_:))).map { _ in }
+                .flatMap { (event) -> Observable<ImageCacheData> in
+                    self.webView.rx.takeSnapShot(name: "current")
+            }
+        
         let input = CurrentLocationViewModel.Input(
             viewWillAppear: self.rx.viewWillAppear.asObservable(),
-            cachedImage: self.webView.rx.takeSnapShot(name: "current"),
+            cachedImage: imageCache,
             locationChange: leftBarButtonEvent,
             dismiss: self.rx.viewWillDisappear.asObservable()
         )
@@ -86,7 +90,6 @@ final class CurrentLocationViewController: UIViewController {
             .disposed(by: self.bag)
         
         output?.isImageCached.subscribe { _ in
-            
         }.disposed(by: self.bag)
         
         output?.currentAddressWebViewURL.subscribe(onNext: { [weak self] urlRequest in
@@ -114,12 +117,22 @@ final class CurrentLocationViewController: UIViewController {
         
         let webViewLayout: [NSLayoutConstraint] = [
             self.webView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 1.0),
-            self.webView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.3)
+            self.webView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.5)
+        ]
+        
+        let cityNameLabelLayout: [NSLayoutConstraint] = [
+            self.imageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            self.imageView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
+        ]
+        
+        let descriptionLayout: [NSLayoutConstraint] = [
+            self.weatherDescriptionTextView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            self.weatherDescriptionTextView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
         ]
         
         let imageViewLayout: [NSLayoutConstraint] = [
             self.imageView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 1.0),
-            self.imageView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.3),
+            self.imageView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.5),
             self.imageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             self.imageView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             self.imageView.topAnchor.constraint(equalTo: self.cityNameLabel.bottomAnchor, constant: 10),
@@ -128,12 +141,14 @@ final class CurrentLocationViewController: UIViewController {
         
         let stackViewLayout: [NSLayoutConstraint] = [
             self.entireStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            self.entireStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            self.entireStackView.trailingAnchor.constraint(equalTo:safeArea.trailingAnchor),
             self.entireStackView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             self.entireStackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ]
-        
+    
         NSLayoutConstraint.activate(webViewLayout)
+        NSLayoutConstraint.activate(cityNameLabelLayout)
+        NSLayoutConstraint.activate(descriptionLayout)
         NSLayoutConstraint.activate(imageViewLayout)
         NSLayoutConstraint.activate(stackViewLayout)
     }
@@ -145,8 +160,9 @@ final class CurrentLocationViewController: UIViewController {
     }
     
     private func configureNavigationItem() {
-        self.navigationController?.navigationItem.title = "현재 위치"
-        self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
-        self.refreshNavigationButton = self.navigationController?.navigationItem.leftBarButtonItem
+        self.navigationItem.title = "현재 위치"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
+        self.refreshNavigationButton = self.navigationItem.leftBarButtonItem
+        self.view.backgroundColor = .white
     }
 }

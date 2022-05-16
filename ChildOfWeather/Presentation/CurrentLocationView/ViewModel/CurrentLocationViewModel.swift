@@ -84,7 +84,7 @@ final class CurrentLocationViewModel {
             }
             
             return URLRequest(url: url)
-        }
+        }.debug()
         
         return Output(
             currentImage: imageCacheData,

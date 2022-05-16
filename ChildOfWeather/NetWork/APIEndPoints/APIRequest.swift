@@ -17,7 +17,7 @@ protocol APIRequest {
 }
 
 extension APIRequest {
-    
+                        
     var url: URL? {
         return URL(string: self.urlString)
     }

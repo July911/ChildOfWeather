@@ -35,7 +35,7 @@ final class LikeCityViewController: UIViewController {
     }
     
     private func configureNavigationController() {
-        self.navigationItem.title = "캐싱된 날씨"
+        self.navigationItem.title = "둘러본 날씨"
     }
     
     private func configureCollectionViewDataSource() {
@@ -92,7 +92,7 @@ final class LikeCityViewController: UIViewController {
             
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(0.25)
+                heightDimension: .fractionalHeight(0.5)
             )
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
@@ -116,7 +116,7 @@ final class LikeCityViewController: UIViewController {
         }
 
         let input = LikeCityViewModel.Input(
-            viewDidLoad: self.rx.viewDidLoad.asObservable(),
+            viewDidLoad: self.rx.viewWillAppear.asObservable(),
             didTappedCell: self.cityCollectionView.rx.itemSelected.asObservable()
         )
         

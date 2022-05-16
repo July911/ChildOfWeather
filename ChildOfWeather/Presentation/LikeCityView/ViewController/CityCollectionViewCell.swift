@@ -73,8 +73,8 @@ class CityCollectionViewCell: UICollectionViewCell {
         self.lowTemperatureLabel.text = cellViewModel.lowTemperature.description
         self.highTemperatureLabel.text = cellViewModel.highTemperature.description
         self.cityImageView.image = cellViewModel.image.value.resized(
-            for: CGSize(width: self.cityImageView.bounds.width,
-                        height: self.cityImageView.bounds.height))
+            for: CGSize(width: self.contentView.frame.width,
+                        height: self.contentView.frame.height * 0.9))
     }
     
     private func addViewsToStackView() {

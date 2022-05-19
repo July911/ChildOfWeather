@@ -35,7 +35,9 @@ final class DetailWeatherViewModel {
     }
     // MARK: - Open Method
     func transform(input: Input) -> Output {
-        let urlRequest = LocationManager.shared.searchLocation(latitude: self.city.coord.lat, longitude: self.city.coord.lon)
+        let urlRequest = LocationManager.shared.searchLocation(
+            latitude: self.city.coord.lat, longitude: self.city.coord.lon
+        )
             .map { LocationManager.shared.fetchURLFromLocation(locationAddress: $0) }
             .map { (urlString) -> URLRequest? in
                 guard let quaryAllowed = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -90,7 +92,7 @@ final class DetailWeatherViewModel {
             let sunset = weather.sunset.toKoreanTime
             let maxTemp = weather.maxTemperature.toCelsius
             let minTemp = weather.minTemperature.toCelsius
-            let weatherDescription = "일출은 오전\(sunrise)\n일몰은 오후\(sunset)\n최고 기온은  섭씨\(maxTemp)도\n최저 기온은 섭씨\(minTemp)도입니다."
+            let weatherDescription = "일출은 오전\(sunrise)\n\n일몰은 오후\(sunset)\n\n최고 기온은  섭씨\(maxTemp)도\n\n최저 기온은 섭씨\(minTemp)도입니다."
             return weatherDescription
         }
     }

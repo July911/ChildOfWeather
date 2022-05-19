@@ -6,4 +6,5 @@ struct TodayWeather {
     let minTemperature: Double
     let sunrise: Int
     let sunset: Int
+    let description: String
 }

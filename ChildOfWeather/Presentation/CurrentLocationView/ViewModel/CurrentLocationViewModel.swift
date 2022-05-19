@@ -63,11 +63,11 @@ final class CurrentLocationViewModel {
                 longitude: coodinate.longitude
             ).asObservable()
         }.map { todayWeather -> String in
-            let sunSet = todayWeather.sunset.description
-            let sunRise = todayWeather.sunrise.description
-            let minTemperature = todayWeather.minTemperature.description
-            let maxTemperature = todayWeather.maxTemperature.description
-            return "오늘의 일출은 \(sunRise)시, 일몰은 \(sunSet) 최고기온은 \(maxTemperature) 최저기온은 \(minTemperature)입니다."
+            let sunSet = todayWeather.sunset.toKoreanTime.description
+            let sunRise = todayWeather.sunrise.toKoreanTime.description
+            let minTemperature = todayWeather.minTemperature.toCelsius.description
+            let maxTemperature = todayWeather.maxTemperature.toCelsius.description
+            return "오늘의 일출은 \(sunRise)시,\n\n 일몰은 \(sunSet) \n\n 최고기온은 \(maxTemperature) 최저기온은 \(minTemperature)입니다. 전체적인 날씨는 \(todayWeather.description)입니다."
         }
         
         let currentAddressWebViewURL = currentAddress.map { (address) -> URLRequest? in
@@ -84,7 +84,7 @@ final class CurrentLocationViewModel {
             }
             
             return URLRequest(url: url)
-        }.debug()
+        }
         
         return Output(
             currentImage: imageCacheData,

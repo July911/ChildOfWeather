@@ -14,7 +14,6 @@ final class DefaultWeatherRepository: WeatherRepository {
     {
         let param = CityWeatherRequestParams(city: text)
         let request = CityWeatherRequest(method: .GET, params: param)
-
         return self.service.requestRx(request: request).map { $0.toDomain() }
     }
     

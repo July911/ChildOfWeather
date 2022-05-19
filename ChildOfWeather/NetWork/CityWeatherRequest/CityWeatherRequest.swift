@@ -28,6 +28,7 @@ struct CityWeatherRequestParams: QueryParameters {
         
         dictionary.updateValue(city, forKey: "q")
         dictionary.updateValue(self.key, forKey: "appid")
+        dictionary.updateValue("kr", forKey: "lang")
         
         return dictionary
     }

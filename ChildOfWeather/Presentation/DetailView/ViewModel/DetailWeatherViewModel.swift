@@ -92,7 +92,8 @@ final class DetailWeatherViewModel {
             let sunset = weather.sunset.toKoreanTime
             let maxTemp = weather.maxTemperature.toCelsius
             let minTemp = weather.minTemperature.toCelsius
-            let weatherDescription = "일출은 오전\(sunrise)\n\n일몰은 오후\(sunset)\n\n최고 기온은  섭씨\(maxTemp)도\n\n최저 기온은 섭씨\(minTemp)도입니다."
+            let description = weather.description
+            let weatherDescription = "일출은 오전\(sunrise)\n\n일몰은 오후\(sunset)\n\n최고 기온은  섭씨\(maxTemp)도\n\n최저 기온은 섭씨\(minTemp)도입니다.\n\n 전체적으로 오늘의 날씨는 \(description)입니다."
             return weatherDescription
         }
     }
@@ -107,22 +108,4 @@ final class DetailWeatherViewModel {
         return Observable.just(image)
     }
 }
-// MARK: - Extension
-fileprivate extension Double {
-    
-    var toCelsius: Double {
-        let celsius = (self - 273.15)
-        let droppedCelsius = String(celsius).prefix(5)
-        return Double(droppedCelsius) ?? .zero
-    }
-}
 
-fileprivate extension Int {
-    
-    var toKoreanTime: String {
-        let time = Date(timeIntervalSince1970: TimeInterval(self))
-        let formatter = DefaultDateformatter.shared.dateformatter
-        formatter.dateFormat = "HH: mm"
-        return formatter.string(from: time)
-    }
-}

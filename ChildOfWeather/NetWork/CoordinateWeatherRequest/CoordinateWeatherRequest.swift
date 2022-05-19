@@ -31,6 +31,7 @@ struct CoordinateWeatherRequestParams: QueryParameters {
         dictionary.updateValue(latitude, forKey: "lat")
         dictionary.updateValue(longitude, forKey: "lon")
         dictionary.updateValue(self.key, forKey: "appid")
+        dictionary.updateValue("kr", forKey: "lang")
         
         return dictionary
     }

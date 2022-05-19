@@ -21,7 +21,7 @@ struct Main: Codable {
 
 struct Weather: Codable {
     let description: String
-    let id: Int
+    let main: String
 }
 
 struct Sys: Codable {
@@ -36,11 +36,14 @@ extension WeatherInformation {
         let minTeperature = self.main.minTemperature
         let sunSet = self.sys.sunset
         let sunRise = self.sys.sunrise
+        let description = self.weather.first?.main
+        
         return .init(
             maxTemperature: maxTemperature,
             minTemperature: minTeperature,
             sunrise: sunRise,
-            sunset: sunSet
+            sunset: sunSet,
+            description: description!
         )
     }
 }

@@ -97,8 +97,7 @@ class CityCollectionViewCell: UICollectionViewCell {
             self.cityImageView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
             self.cityImageView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor),
             self.cityImageView.topAnchor.constraint(equalTo: self.cityNameLabel.topAnchor),
-            self.cityImageView.bottomAnchor.constraint(equalTo: self.temperatureStackView.bottomAnchor),
-        
+            self.cityImageView.bottomAnchor.constraint(equalTo: self.temperatureStackView.bottomAnchor)
         ]
         
         let stackViewLayout: [NSLayoutConstraint] = [

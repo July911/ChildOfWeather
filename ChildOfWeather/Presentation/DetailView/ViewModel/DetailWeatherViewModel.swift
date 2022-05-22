@@ -33,7 +33,7 @@ final class DetailWeatherViewModel {
         let capturedSuccess: Observable<Void>
         let dismiss: Observable<Void>
     }
-    // MARK: - Open Method
+    // MARK: - Public Method
     func transform(input: Input) -> Output {
         let urlRequest = LocationManager.shared.searchLocation(
             latitude: self.city.coord.lat, longitude: self.city.coord.lon

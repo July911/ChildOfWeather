@@ -16,7 +16,7 @@ final class CurrentLocationViewModel {
         self.imageCacheUseCase = imageCacheUseCase
         self.coordinator = coordinator
     }
-    // MARK: - Nested Type
+    // MARK: - Input & Output Modeling 
     struct Input {
         let viewWillAppear: Observable<Void>
         let cachedImage: Observable<ImageCacheData>

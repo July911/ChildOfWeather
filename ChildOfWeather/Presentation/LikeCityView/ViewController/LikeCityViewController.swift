@@ -3,14 +3,14 @@ import RxSwift
 import RxCocoa
 
 final class LikeCityViewController: UIViewController {
-    
+    // MARK: - TypeLias
     typealias diffableDataSource = UICollectionViewDiffableDataSource<Int,CityCellViewModel>
     typealias snapshot = NSDiffableDataSourceSnapshot<Int,CityCellViewModel>
-
+    // MARK: - Properties
     private let bag = DisposeBag()
     var viewModel: LikeCityViewModel?
     var dataSource: diffableDataSource?
-    
+    // MARK: - UI Components
     private let cityCollectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
@@ -20,7 +20,7 @@ final class LikeCityViewController: UIViewController {
     
         return collectionView
     }()
-    
+    // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureView()
@@ -29,7 +29,7 @@ final class LikeCityViewController: UIViewController {
         self.configureLayout()
         self.bindToViewModel()
     }
-    
+    // MARK: - Method
     private func configureView() {
         self.view.backgroundColor = .white
     }

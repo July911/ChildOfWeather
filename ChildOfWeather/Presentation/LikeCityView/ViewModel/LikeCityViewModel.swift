@@ -2,11 +2,11 @@ import Foundation
 import RxSwift
 
 final class LikeCityViewModel {
-    
+    // MARK: - Properties
     let citySearchUseCase: CitySearchUseCase
     let imageCacheUseCase: ImageCacheUseCase
     let weatherFetchUseCase: DetailWeatherFetchUseCase
-    
+    // MARK: - Initializer
     init(citySearchUseCase: CitySearchUseCase,
          imageCacheUseCase: ImageCacheUseCase,
          weatherUseCase: DetailWeatherFetchUseCase
@@ -15,7 +15,7 @@ final class LikeCityViewModel {
         self.imageCacheUseCase = imageCacheUseCase
         self.weatherFetchUseCase = weatherUseCase
     }
-    
+    // MARK: - Input & Output Modeling
     struct Input {
         let viewDidLoad: Observable<Void>
         let didTappedCell: Observable<IndexPath>
@@ -24,7 +24,7 @@ final class LikeCityViewModel {
     struct Ouput {
         let likedCities: Observable<[CityCellViewModel]>
     }
-    
+    // MARK: - Public Method 
     func transform(input: Input) -> Ouput {
         
         let imageCachedData = input.viewDidLoad.compactMap {

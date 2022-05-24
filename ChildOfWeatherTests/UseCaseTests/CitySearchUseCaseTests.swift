@@ -1,4 +1,7 @@
 import XCTest
+import RxTest
+import Nimble
+import RxNimble
 @testable import ChildOfWeather
 
 class CitySearchUseCaseTests: XCTestCase {
@@ -19,7 +22,6 @@ class CitySearchUseCaseTests: XCTestCase {
         let repository = DefaultCitySearchRepository()
         
         let cityfromKr = repository.sortCity(by: .kr).count
-        
         XCTAssertEqual(cities, cityfromKr)
     }
     

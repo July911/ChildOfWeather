@@ -53,6 +53,8 @@
 		18D7BE1328243F3500176968 /* LikeCityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7BE1228243F3500176968 /* LikeCityCoordinator.swift */; };
 		18D7BE1528243F6300176968 /* LikeCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7BE1428243F6300176968 /* LikeCityViewModel.swift */; };
 		18D7BE1728243F8200176968 /* LikeCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7BE1628243F8200176968 /* LikeCityViewController.swift */; };
+		18DABF93283CB5100029E9AA /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 18DABF92283CB5100029E9AA /* Nimble */; };
+		18DABF96283CB5950029E9AA /* RxNimble in Frameworks */ = {isa = PBXBuildFile; productRef = 18DABF95283CB5950029E9AA /* RxNimble */; };
 		18DDE2F62807E553000775FB /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DDE2F52807E553000775FB /* DateFormatter.swift */; };
 		18DEE319281A6099006A82E8 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DEE318281A6099006A82E8 /* String + Extension.swift */; };
 		18DEE31D281A6C01006A82E8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18DEE31F281A6C01006A82E8 /* Localizable.strings */; };
@@ -154,6 +156,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18DABF93283CB5100029E9AA /* Nimble in Frameworks */,
+				18DABF96283CB5950029E9AA /* RxNimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,6 +603,10 @@
 				18E07786280B086B00CC17F2 /* PBXTargetDependency */,
 			);
 			name = ChildOfWeatherTests;
+			packageProductDependencies = (
+				18DABF92283CB5100029E9AA /* Nimble */,
+				18DABF95283CB5950029E9AA /* RxNimble */,
+			);
 			productName = ChildOfWeatherTests;
 			productReference = 18E07781280B086B00CC17F2 /* ChildOfWeatherTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -634,6 +642,8 @@
 			mainGroup = 18D4DCF627FBC15100697F43;
 			packageReferences = (
 				18E30DA728105422005AEF96 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				18DABF91283CB5100029E9AA /* XCRemoteSwiftPackageReference "Nimble" */,
+				18DABF94283CB5950029E9AA /* XCRemoteSwiftPackageReference "RxNimble" */,
 			);
 			productRefGroup = 18D4DD0027FBC15100697F43 /* Products */;
 			projectDirPath = "";
@@ -1012,6 +1022,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		18DABF91283CB5100029E9AA /* XCRemoteSwiftPackageReference "Nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Nimble";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		18DABF94283CB5950029E9AA /* XCRemoteSwiftPackageReference "RxNimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxNimble";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		18E30DA728105422005AEF96 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -1023,6 +1049,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		18DABF92283CB5100029E9AA /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18DABF91283CB5100029E9AA /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
+		18DABF95283CB5950029E9AA /* RxNimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18DABF94283CB5950029E9AA /* XCRemoteSwiftPackageReference "RxNimble" */;
+			productName = RxNimble;
+		};
 		18E30DA828105422005AEF96 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 18E30DA728105422005AEF96 /* XCRemoteSwiftPackageReference "RxSwift" */;

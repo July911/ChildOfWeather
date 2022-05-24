@@ -36,8 +36,7 @@ class CityCollectionViewCell: UICollectionViewCell {
     private let temperatureStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 15
+        stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
@@ -74,7 +73,7 @@ class CityCollectionViewCell: UICollectionViewCell {
         self.highTemperatureLabel.text = cellViewModel.highTemperature.description
         self.cityImageView.image = cellViewModel.image.value.resized(
             for: CGSize(width: self.contentView.frame.width,
-                        height: self.contentView.frame.height * 0.9))
+                        height: self.contentView.frame.height * 0.5))
     }
     
     private func addViewsToStackView() {
@@ -93,6 +92,16 @@ class CityCollectionViewCell: UICollectionViewCell {
     private func configureLayout() {
         let cellView = self.contentView
         
+        let temperatureStackViewLayout: [NSLayoutConstraint] = [
+            self.temperatureStackView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
+            self.temperatureStackView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor)
+        ]
+        
+        let cityNameLabelLayout: [NSLayoutConstraint] = [
+            self.cityNameLabel.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
+            self.cityNameLabel.trailingAnchor.constraint(equalTo: cellView.trailingAnchor)
+        ]
+        
         let imageViewLayout: [NSLayoutConstraint] = [
             self.cityImageView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
             self.cityImageView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor),
@@ -107,6 +116,8 @@ class CityCollectionViewCell: UICollectionViewCell {
             self.entireStackView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor)
         ]
         
+        NSLayoutConstraint.activate(temperatureStackViewLayout)
+        NSLayoutConstraint.activate(cityNameLabelLayout)
         NSLayoutConstraint.activate(imageViewLayout)
         NSLayoutConstraint.activate(stackViewLayout)
     }

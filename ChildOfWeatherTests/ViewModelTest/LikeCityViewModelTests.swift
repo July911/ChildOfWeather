@@ -1,43 +1,64 @@
 //
-//  LikeCityViewModelTests.swift
+//  CurrentViewModelTests.swift
 //  ChildOfWeatherTests
 //
 //  Created by 조영민 on 2022/05/25.
 //
-
-import XCTest
-import RxNimble
-import Nimble
-import RxSwift
 import RxTest
+import Nimble
+import RxNimble
+import XCTest
+import RxSwift
 
 @testable import ChildOfWeather
 
-class CurrentLocationViewModelTests: XCTestCase {
+class LikeCityViewModelTests: XCTestCase {
     
-    var viewModel: CurrentLocationViewModel!
-    var output: CurrentLocationViewModel.Output!
+    var viewModel: LikeCityViewModel!
+    var output: LikeCityViewModel.Ouput!
     var bag: DisposeBag!
     var scheduler: TestScheduler!
-    var viewWillAppear: PublishSubject<Void>!
-    var cachedImage: PublishSubject<ImageCacheData>!
-    var locationChange: PublishSubject<Void>!
-    var dismiss: PublishSubject<Void>!
+    var viewDidLoda: PublishSubject<Void>!
+    var didTappedCell: PublishSubject<IndexPath>!
     
     override func setUp() {
-        self.viewModel = CurrentLocationViewModel(
-            detailShowUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: MockAPIService())),
-            imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()),
-            coordinator: CurrentLocationCoordinator(imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()))
-        )
         self.bag = DisposeBag()
         self.scheduler = TestScheduler(initialClock: 0)
-        self.viewWillAppear = PublishSubject<Void>()
-        self.cachedImage = PublishSubject<ImageCacheData>()
-        self.locationChange = PublishSubject<Void>()
-        self.dismiss = PublishSubject<Void>()
-        self.output = self.viewModel.transform(
-            input: .init(viewWillAppear: self.viewWillAppear.asObserver(), cachedImage: self.cachedImage.asObserver(), locationChange: self.locationChange.asObserver(), dismiss: self.dismiss.asObserver())
+        self.viewModel = LikeCityViewModel(
+            citySearchUseCase: CitySearchUseCase(searchRepository: DefaultCitySearchRepository()),
+ imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()),
+ weatherUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: MockAPIService()))
+        )
+        self.viewDidLoda = PublishSubject<Void>()
+        self.didTappedCell = PublishSubject<IndexPath>()
+        self.output = viewModel.transform(
+            input: .init(viewDidLoad: self.viewDidLoda.asObserver(), didTappedCell: self.didTappedCell.asObserver())
         )
     }
+    
+    func testemptyCached() {
+        self.scheduler.createColdObservable(
+        [
+            .next(0, ())
+        
+        ]).bind(to: viewDidLoda).disposed(by: self.bag)
+        
+        expect(self.output.likedCities).events(scheduler: scheduler, disposeBag: self.bag).to(equal([
+            .next(0, [])
+        ]))
+    }
+    
+    func testCachedSuccess() {
+        let cachedData1 = ImageCacheData(key: "test1", value: UIImage())
+        let cachedData2 = ImageCacheData(key: "test2", value: UIImage())
+        self.viewModel.imageCacheUseCase.setCache(object: cachedData1)
+        let cityCell = CityCellViewModel(cityName: "test", image: cachedData1, highTemperature: <#T##Double#>, lowTemperature: <#T##Double#>)
+        expect(self.output.likedCities).events(scheduler: scheduler, disposeBag: self.bag).to(equal([
+            .next(0, cachedData1)
+        ]))
+    }
+    
+
+    
+    
 }

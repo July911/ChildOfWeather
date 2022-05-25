@@ -36,28 +36,22 @@ class CitySearchUseCaseTests: XCTestCase {
     }
     
     func testSearchBarText() {
-     
-        schduler.createColdObservable(
-        [.next(10, ()),
-            .next(20, ()),
-            .next(30, ())
-        ]
-    ).bind(to: plusSubject).disposed(by: disposeBag)
-
-    scheduler.createColdObservable(
-        [
-            .next(25, ())
-        ]
-    ).bind(to: subtractSubject).disposed(by: disposeBag)
-
-    expect(self.output.countedValue).events(scheduler: scheduler, disposeBag: disposeBag).to(equal(
-        [
-            .next(0, 0),
-            .next(10, 1),
-            .next(20, 2),
-            .next(25, 1),
-            .next(30, 2)
-        ]
-    ))
+        schduler.createColdObservable([
+            .next(0, "독산리")
+        ]).bind(to: searchBarTextPublish).disposed(by: self.disposeBag)
+        
+        expect(self.output.initialCities.map { $0.count }).events(scheduler: schduler, disposeBag: self.disposeBag).to(equal([
+            .next(0, 1)
+        ]))
+    }
+    
+    func testPresentView() {
+        schduler.createColdObservable([
+            .next(0, City(id: 1, name: "", state: nil, country: "123", coord: Coord(lat: 12, lon: 33)))
+        ]).bind(to: self.cellClickPublish).disposed(by: self.disposeBag)
+        
+        expect(self.output.presentDetailView).to(equal([
+            .next(0, ())
+        ]))
+    }
 }
-

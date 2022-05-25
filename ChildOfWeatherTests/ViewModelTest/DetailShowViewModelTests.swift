@@ -34,10 +34,8 @@ class DetailShowUseCaseTests: XCTestCase {
             detailShowUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: MockAPIService())),
             imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()),
             coodinator: SearchViewCoordinator(
-                imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()),
-                city: ""
+                imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
             )
-            )
-        self.output = viewModel.transform(input: .init(viewWillAppear: <#T##Observable<Void>#>, capturedImage: <#T##Observable<ImageCacheData>#>, touchUpbackButton: <#T##Observable<Void>#>))
+            self.output = viewModel.transform(input: .init(viewWillAppear: self.viewWillAppearPusblish.asObserver(), capturedImage: <#T##Observable<ImageCacheData>#>, touchUpbackButton: <#T##Observable<Void>#>))
     }
 }

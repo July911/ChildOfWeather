@@ -1,3 +1,10 @@
+//
+//  CitySearchViewModelTests.swift
+//  ChildOfWeatherTests
+//
+//  Created by 조영민 on 2022/05/25.
+//
+
 import XCTest
 import RxTest
 import Nimble
@@ -34,30 +41,31 @@ class CitySearchUseCaseTests: XCTestCase {
             viewWillDismiss: self.viewWillDismissPublish.asObserver())
         )
     }
-    
-    func testSearchBarText() {
-     
-        schduler.createColdObservable(
-        [.next(10, ()),
-            .next(20, ()),
-            .next(30, ())
-        ]
-    ).bind(to: plusSubject).disposed(by: disposeBag)
-
-    scheduler.createColdObservable(
-        [
-            .next(25, ())
-        ]
-    ).bind(to: subtractSubject).disposed(by: disposeBag)
-
-    expect(self.output.countedValue).events(scheduler: scheduler, disposeBag: disposeBag).to(equal(
-        [
-            .next(0, 0),
-            .next(10, 1),
-            .next(20, 2),
-            .next(25, 1),
-            .next(30, 2)
-        ]
-    ))
+//
+//    func testSearchBarText() {
+//
+//        schduler.createColdObservable(
+//        [.next(10, ()),
+//            .next(20, ()),
+//            .next(30, ())
+//        ]
+//    ).bind(to: plusSubject).disposed(by: disposeBag)
+//
+//    scheduler.createColdObservable(
+//        [
+//            .next(25, ())
+//        ]
+//    ).bind(to: subtractSubject).disposed(by: disposeBag)
+//
+//    expect(self.output.countedValue).events(scheduler: scheduler, disposeBag: disposeBag).to(equal(
+//        [
+//            .next(0, 0),
+//            .next(10, 1),
+//            .next(20, 2),
+//            .next(25, 1),
+//            .next(30, 2)
+//        ]
+//    ))
 }
+
 

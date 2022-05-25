@@ -19,7 +19,7 @@ class LikeCityViewModelTests: XCTestCase {
     var bag: DisposeBag!
     var scheduler: TestScheduler!
     var viewDidLoda: PublishSubject<Void>!
-    var didTappedCell: PublishSubject<Void>!
+    var didTappedCell: PublishSubject<IndexPath>!
     
     override func setUp() {
         self.bag = DisposeBag()
@@ -30,7 +30,7 @@ class LikeCityViewModelTests: XCTestCase {
  weatherUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: MockAPIService()))
         )
         self.viewDidLoda = PublishSubject<Void>()
-        self.didTappedCell = PublishSubject<Void>()
+        self.didTappedCell = PublishSubject<IndexPath>()
         self.output = viewModel.transform(
             input: .init(viewDidLoad: self.viewDidLoda.asObserver(), didTappedCell: self.didTappedCell.asObserver())
         )

@@ -12,7 +12,7 @@ import RxSwift
 
 @testable import ChildOfWeather
 
-class DetailShowUseCaseTests: XCTestCase {
+class DetailShowViewModelTests: XCTestCase {
     
     var viewModel: DetailWeatherViewModel!
     var output: DetailWeatherViewModel.Output!

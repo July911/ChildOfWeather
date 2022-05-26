@@ -1,57 +1,53 @@
 import XCTest
-import RxTest
-import Nimble
-import RxNimble
-import RxSwift
-
 @testable import ChildOfWeather
 
 class CitySearchUseCaseTests: XCTestCase {
     
-    var viewModel: SearchViewModel!
-    var output: SearchViewModel.Output!
-    var schduler: TestScheduler!
-    var disposeBag: DisposeBag!
-    var viewWillAppearPusblish: PublishSubject<Void>!
-    var cellClickPublish: PublishSubject<City>!
-    var searchBarTextPublish: PublishSubject<String?>!
-    var viewWillDismissPublish: PublishSubject<Void>!
-    
-    override func setUp() {
-        self.schduler = TestScheduler(initialClock: 0)
-        self.disposeBag = DisposeBag()
-        self.cellClickPublish = PublishSubject<City>()
-        self.viewWillAppearPusblish = PublishSubject<Void>()
-        self.viewWillDismissPublish = PublishSubject<Void>()
-        self.searchBarTextPublish = PublishSubject<String?>()
-        self.viewModel = SearchViewModel(
-            searchUseCase: CitySearchUseCase(searchRepository: DefaultCitySearchRepository()), coodinator: SearchViewCoordinator(imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()))
-        )
-        self.output = viewModel.transform(input: .init(
-            viewWillAppear: self.viewWillAppearPusblish.asObserver(),
-            didSelectedCell: self.cellClickPublish.asObserver(),
-            searchBarText: self.searchBarTextPublish.asObserver(),
-            viewWillDismiss: self.viewWillDismissPublish.asObserver())
-        )
+    var sut: CitySearchUseCase?
+
+    override func setUpWithError() throws {
+        let cityRepository = DefaultCitySearchRepository()
+        sut = CitySearchUseCase(searchRepository: cityRepository)
     }
     
-    func testSearchBarText() {
-        schduler.createColdObservable([
-            .next(0, "독산리")
-        ]).bind(to: searchBarTextPublish).disposed(by: self.disposeBag)
-        
-        expect(self.output.initialCities.map { $0.count }).events(scheduler: schduler, disposeBag: self.disposeBag).to(equal([
-            .next(0, 1)
-        ]))
+    override func tearDownWithError() throws {
+        sut = nil
     }
     
-    func testPresentView() {
-        schduler.createColdObservable([
-            .next(0, City(id: 1, name: "", state: nil, country: "123", coord: Coord(lat: 12, lon: 33)))
-        ]).bind(to: self.cellClickPublish).disposed(by: self.disposeBag)
+    func test_CitySearchUseCase_아무것도_입력하지_않았을때_데이터를_전부_받아온다() {
+        let cities = self.sut?.extractAll().count
+        let repository = DefaultCitySearchRepository()
         
-        expect(self.output.presentDetailView).to(equal([
-            .next(0, ())
-        ]))
+        let cityfromKr = repository.sortCity(by: .kr).count
+        
+        XCTAssertEqual(cities, cityfromKr)
+    }
+    
+    func test_CitySearchUseCase_yongin을_search했을때_값은_yongin이다() {
+        let city = self.sut?.search("yong")?.first
+        let cityName = city?.name
+        
+        XCTAssertEqual(cityName!, "Yongin")
+    }
+    
+    func test_존재하지_않는_도시명을_검색하면_nil이_나온다() {
+        let city = self.sut?.search("London")?.first
+        let cityName = city?.name
+        
+        XCTAssertNil(cityName)
+    }
+    
+    func test_DataLayer의_DTO인_WeatherInformation이_Model로_정상적으로_변환된다() {
+        let main = Main(temp: 32, maxTemperature: 35, minTemperature: 28)
+        let sys = Sys(sunrise: 14, sunset: 2)
+        let weather = Weather(description: "", id: 1)
+        let weatherInformation = WeatherInformation(name: "이매동", main: main, weather: [weather], sys: sys)
+        
+        let weatherFromEntity = weatherInformation.toDomain()
+        
+        XCTAssertEqual(weatherInformation.sys.sunset, weatherFromEntity.sunset)
+        XCTAssertEqual(weatherInformation.sys.sunrise, weatherFromEntity.sunrise)
+        XCTAssertEqual(weatherInformation.main.maxTemperature, weatherFromEntity.maxTemperature)
+        XCTAssertEqual(weatherInformation.main.minTemperature, weatherFromEntity.minTemperature)
     }
 }

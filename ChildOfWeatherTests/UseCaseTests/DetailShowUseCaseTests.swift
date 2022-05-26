@@ -1,37 +1,22 @@
 import XCTest
-import RxTest
-import Nimble
-import RxNimble
-import RxSwift
-
 @testable import ChildOfWeather
 
 class DetailShowUseCaseTests: XCTestCase {
     
-    var viewModel: DetailWeatherViewModel!
-    var output: DetailWeatherViewModel.Output!
-    var schduler: TestScheduler!
-    var disposeBag: DisposeBag!
-    var viewWillAppearPusblish: PublishSubject<Void>!
-    var cellClickPublish: PublishSubject<City>!
-    var searchBarTextPublish: PublishSubject<String?>!
-    var viewWillDismissPublish: PublishSubject<Void>!
+    var sut: DetailShowUseCase?
+
+    override func setUpWithError() throws {
+        let repository = DefaultWeatherRepository(service: MockAPIService())
+        sut = DetailShowUseCase(weatherRepository: repository)
+    }
+
+    override func tearDownWithError() throws {
+        sut = nil
+    }
     
-    override func setUp() {
-        self.schduler = TestScheduler(initialClock: 0)
-        self.disposeBag = DisposeBag()
-        self.cellClickPublish = PublishSubject<City>()
-        self.viewWillAppearPusblish = PublishSubject<Void>()
-        self.viewWillDismissPublish = PublishSubject<Void>()
-        self.searchBarTextPublish = PublishSubject<String?>()
-        self.viewModel = DetailWeatherViewModel(
-            detailShowUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: MockAPIService())),
-            imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()),
-            coodinator: SearchViewCoordinator(
-                imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()),
-                city: ""
-            )
-            )
-        self.output = viewModel.transform(input: .init(viewWillAppear: <#T##Observable<Void>#>, capturedImage: <#T##Observable<ImageCacheData>#>, touchUpbackButton: <#T##Observable<Void>#>))
+    func test_주소를_정상적으로_입력했을때_제대로된_URL이_나온다() {
+        let URL = sut?.fetchURL(from: "153-2 Imae-dong")
+        
+        XCTAssertEqual(URL, "https://www.google.com/maps?q=153-2 Imae-dong")
     }
 }

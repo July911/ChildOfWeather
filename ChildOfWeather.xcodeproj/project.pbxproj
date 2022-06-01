@@ -24,6 +24,7 @@
 		18C9297F2821413800350B96 /* CurrentLocationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C9297E2821413800350B96 /* CurrentLocationCoordinator.swift */; };
 		18C92981282159AE00350B96 /* RxCocoa + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C92980282159AE00350B96 /* RxCocoa + Extension.swift */; };
 		18CE9DE1282ED3A1005ECC81 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CE9DE0282ED3A1005ECC81 /* Image+Extension.swift */; };
+		18CF32782847C0EF006482C5 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CF32772847C0EF006482C5 /* Operators.swift */; };
 		18D4DD0327FBC15100697F43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD0227FBC15100697F43 /* AppDelegate.swift */; };
 		18D4DD0527FBC15100697F43 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD0427FBC15100697F43 /* SceneDelegate.swift */; };
 		18D4DD0727FBC15100697F43 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4DD0627FBC15100697F43 /* SearchViewController.swift */; };
@@ -101,6 +102,7 @@
 		18C9297E2821413800350B96 /* CurrentLocationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationCoordinator.swift; sourceTree = "<group>"; };
 		18C92980282159AE00350B96 /* RxCocoa + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxCocoa + Extension.swift"; sourceTree = "<group>"; };
 		18CE9DE0282ED3A1005ECC81 /* Image+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
+		18CF32772847C0EF006482C5 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		18D4DCFF27FBC15100697F43 /* ChildOfWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChildOfWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D4DD0227FBC15100697F43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18D4DD0427FBC15100697F43 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				18E00262280E77BD00C63E71 /* MockAPIService.swift */,
+				18CF32772847C0EF006482C5 /* Operators.swift */,
 			);
 			path = TestDouble;
 			sourceTree = "<group>";
@@ -755,6 +758,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18D77A2A280CF6C9002CED15 /* CitySearchUseCaseTests.swift in Sources */,
+				18CF32782847C0EF006482C5 /* Operators.swift in Sources */,
 				18DB59EB283E077900EB5190 /* CitySearchViewModelTests.swift in Sources */,
 				18DB59F1283E07EA00EB5190 /* LikeCityViewModelTests.swift in Sources */,
 				18DB59ED283E07B300EB5190 /* DetailShowViewModelTests.swift in Sources */,

@@ -19,23 +19,46 @@ class DetailShowViewModelTests: XCTestCase {
     var schduler: TestScheduler!
     var disposeBag: DisposeBag!
     var viewWillAppearPusblish: PublishSubject<Void>!
-    var cellClickPublish: PublishSubject<City>!
-    var searchBarTextPublish: PublishSubject<String?>!
-    var viewWillDismissPublish: PublishSubject<Void>!
+    var capturedPublish: PublishSubject<ImageCacheData>!
+    var touchUpbackButtonPublish: PublishSubject<Void>!
+    var scheduler: TestScheduler!
     
     override func setUp() {
         self.schduler = TestScheduler(initialClock: 0)
         self.disposeBag = DisposeBag()
-        self.cellClickPublish = PublishSubject<City>()
+        self.capturedPublish = PublishSubject<ImageCacheData>()
         self.viewWillAppearPusblish = PublishSubject<Void>()
-        self.viewWillDismissPublish = PublishSubject<Void>()
-        self.searchBarTextPublish = PublishSubject<String?>()
+        self.touchUpbackButtonPublish = PublishSubject<Void>()
+        self.schduler = TestScheduler(initialClock: 0)
         self.viewModel = DetailWeatherViewModel(
             detailShowUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: MockAPIService())),
             imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()),
             coodinator: SearchViewCoordinator(
-                imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
+                imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())),
+                city: City.EMPTY
             )
-            self.output = viewModel.transform(input: .init(viewWillAppear: self.viewWillAppearPusblish.asObserver(), capturedImage: <#T##Observable<ImageCacheData>#>, touchUpbackButton: <#T##Observable<Void>#>))
+            
+        self.output = viewModel.transform(input: .init(viewWillAppear: self.viewWillAppearPusblish.asObserver(), capturedImage: self.capturedPublish.asObserver(), touchUpbackButton: self.touchUpbackButtonPublish.asObserver()))
+    }
+    
+    func testCapturedImage() {
+        let imageCachedData = ImageCacheData(key: "123", value: UIImage())
+        schduler.createColdObservable([
+            .next(3, imageCachedData)
+        ]).bind(to: self.capturedPublish).disposed(by: self.disposeBag)
+        
+        expect(self.output.cachedImage).events(scheduler: scheduler, disposeBag: self.disposeBag).to(equal([
+            .next(4, imageCachedData)
+        ]))
+    }
+    
+    func testBackButtonRunDismiss() {
+        scheduler.createColdObservable([
+            .next(5, ())
+        ]).bind(to: self.touchUpbackButtonPublish).disposed(by: self.disposeBag)
+        
+        expect(self.output.dismiss).events(scheduler: self.scheduler, disposeBag: self.disposeBag).to(equal([
+            .next(5, ())
+        ]))
     }
 }

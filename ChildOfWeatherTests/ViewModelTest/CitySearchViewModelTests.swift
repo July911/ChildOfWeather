@@ -6,7 +6,7 @@ import RxSwift
 
 @testable import ChildOfWeather
 
-class CitySearchUseCaseTests: XCTestCase {
+class CitySearchViewModelTests: XCTestCase {
     
     var viewModel: SearchViewModel!
     var output: SearchViewModel.Output!
@@ -50,8 +50,20 @@ class CitySearchUseCaseTests: XCTestCase {
             .next(0, City(id: 1, name: "", state: nil, country: "123", coord: Coord(lat: 12, lon: 33)))
         ]).bind(to: self.cellClickPublish).disposed(by: self.disposeBag)
         
-        expect(self.output.presentDetailView).to(equal([
+        expect(self.output.presentDetailView).events(scheduler: schduler, disposeBag: self.disposeBag).to(equal([
             .next(0, ())
         ]))
     }
+    
+    func testFetchAllData() {
+        schduler.createColdObservable([
+            .next(0, ())
+        ]).bind(to: viewWillAppearPusblish).disposed(by: self.disposeBag)
+        
+        expect(self.output.initialCities.map { $0.count }).events(scheduler: schduler, disposeBag: self.disposeBag).to(equal([
+            .next(0, 245)
+        ]))
+    }
 }
+
+

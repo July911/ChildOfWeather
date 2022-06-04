@@ -33,7 +33,9 @@ final class LikeCityViewModel {
             .distinctUntilChanged()
             
         let todayWeather = imageCachedData.flatMap { cities -> Observable<[TodayWeather]> in
-            let todayWeathers = cities.map { self.weatherFetchUseCase.fetchTodayWeather(cityName: $0.key as String).asObservable() }
+            let todayWeathers = cities.map { self.weatherFetchUseCase.fetchTodayWeather(
+                cityName: $0.key as String).asObservable()
+            }
             return Observable.zip(todayWeathers)
         }
         

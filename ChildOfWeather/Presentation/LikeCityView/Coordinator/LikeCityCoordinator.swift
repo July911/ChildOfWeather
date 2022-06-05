@@ -12,7 +12,9 @@ final class LikeCityCoordinator: Coordinator {
     func start() -> UINavigationController {
         
         let viewController = LikeCityViewController()
-        let navigaionController = UINavigationController(rootViewController: viewController)
+        let navigaionController = UINavigationController(
+            rootViewController: viewController
+        )
         
         viewController.viewModel = LikeCityViewModel(
             citySearchUseCase: CitySearchUseCase(searchRepository: DefaultCitySearchRepository()),

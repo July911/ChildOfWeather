@@ -7,7 +7,10 @@ final class SearchViewModel {
     private let coordinator: SearchViewCoordinator
     private let searchUseCase: CitySearchUseCase
     // MARK: - Initializer
-    init(searchUseCase: CitySearchUseCase, coodinator: SearchViewCoordinator) {
+    init(
+        searchUseCase: CitySearchUseCase,
+        coodinator: SearchViewCoordinator
+    ) {
         self.searchUseCase = searchUseCase
         self.coordinator = coodinator
     }

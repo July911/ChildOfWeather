@@ -40,7 +40,9 @@ final class DetailWeatherViewModel {
         )
             .map { LocationManager.shared.fetchURLFromLocation(locationAddress: $0) }
             .map { (urlString) -> URLRequest? in
-                guard let quaryAllowed = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                guard let quaryAllowed = urlString.addingPercentEncoding(
+                    withAllowedCharacters: .urlQueryAllowed
+                )
                 else {
                     return nil
                 }
@@ -69,7 +71,13 @@ final class DetailWeatherViewModel {
                 self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
             }).map { _ in }
         
-        return Output(selectedURLForMap: urlRequest, cachedImage: cache, weatehrDescription: weatherDescription, capturedSuccess: capturedSuccess, dismiss: dismiss)
+        return Output(
+            selectedURLForMap: urlRequest,
+            cachedImage: cache,
+            weatehrDescription: weatherDescription,
+            capturedSuccess: capturedSuccess,
+            dismiss: dismiss
+        )
     }
     
     func extractCity() -> City {

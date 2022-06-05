@@ -37,8 +37,9 @@ final class LocationManager {
     }
     
     func extractCurrentLocation() -> (latitude: Double, longitude: Double) {
-        let latitude = Double(locationManager.location?.coordinate.latitude ?? .zero)
-        let longitude = Double(locationManager.location?.coordinate.longitude ?? .zero)
+//        let latitude = Double(locationManager.location?.coordinate.latitude ?? .zero)
+//        let longitude = Double(locationManager.location?.coordinate.longitude ?? .zero)
+        //TODO: 현재위치를 받아오는 코드 추가
         let mockLatitude = 37.44463800000
         let mockLongitude = 127.17296800000
         return (mockLatitude, mockLongitude)
@@ -47,6 +48,7 @@ final class LocationManager {
     func fetchURLFromLocation(locationAddress address: String) -> String {
         let googleBaseURL = "https://www.google.com/maps?q="
         let fullURL = googleBaseURL + address
+        
         return fullURL
     }
 }

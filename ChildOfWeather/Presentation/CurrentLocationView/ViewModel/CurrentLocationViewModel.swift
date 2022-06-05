@@ -36,7 +36,10 @@ final class CurrentLocationViewModel {
         
         let isImageCache = input.locationChange.withLatestFrom(input.cachedImage)
             .do { imageCacheData in
-                let newImageCacheData = ImageCacheData(key: "current" as NSString, value: imageCacheData.value)
+                let newImageCacheData = ImageCacheData(
+                    key: "current" as NSString,
+                    value: imageCacheData.value
+                )
                 self.imageCacheUseCase.setCache(object: newImageCacheData)
             }.flatMap { _ -> Observable<Bool> in
                 let isCahced = self.imageCacheUseCase.hasCacheExist(cityName: "current")
@@ -73,7 +76,9 @@ final class CurrentLocationViewModel {
         let currentAddressWebViewURL = currentAddress.map { (address) -> URLRequest? in
             let urlString = LocationManager.shared.fetchURLFromLocation(locationAddress: address)
             
-            guard let encodedAddress = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            guard let encodedAddress = urlString.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            )
             else {
                 return nil
             }

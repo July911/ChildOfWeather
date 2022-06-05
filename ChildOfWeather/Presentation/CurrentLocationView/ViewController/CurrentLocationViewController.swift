@@ -67,7 +67,7 @@ final class CurrentLocationViewController: UIViewController {
             return
         }
         
-        let imageCache = self.rx.methodInvoked(#selector(UIViewController.viewWillDisappear(_:))).map { _ in }
+        let imageCache = self.rx.viewWillDisappear.asObservable()
                 .flatMap { (event) -> Observable<ImageCacheData> in
                     self.webView.rx.takeSnapShot(name: "current")
             }
@@ -135,8 +135,14 @@ final class CurrentLocationViewController: UIViewController {
             self.imageView.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 0.5),
             self.imageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             self.imageView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            self.imageView.topAnchor.constraint(equalTo: self.cityNameLabel.bottomAnchor, constant: 10),
-            self.imageView.bottomAnchor.constraint(equalTo: self.weatherDescriptionTextView.topAnchor, constant: 10)
+            self.imageView.topAnchor.constraint(
+                equalTo: self.cityNameLabel.bottomAnchor,
+                constant: 10
+            ),
+            self.imageView.bottomAnchor.constraint(
+                equalTo: self.weatherDescriptionTextView.topAnchor,
+                constant: 10
+            )
         ]
         
         let stackViewLayout: [NSLayoutConstraint] = [
@@ -161,7 +167,11 @@ final class CurrentLocationViewController: UIViewController {
     
     private func configureNavigationItem() {
         self.navigationItem.title = "현재 위치"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .refresh,
+            target: self,
+            action: nil
+        )
         self.refreshNavigationButton = self.navigationItem.leftBarButtonItem
         self.view.backgroundColor = .white
     }

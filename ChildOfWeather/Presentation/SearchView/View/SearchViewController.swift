@@ -39,7 +39,12 @@ final class SearchViewController: UIViewController {
             UIColor.clear.cgColor,
             UIColor.systemBackground.cgColor
         ]
-        gradient.frame = self.navigationController?.navigationBar.frame ?? CGRect(x: 0, y: 0, width: self.view.safeAreaLayoutGuide.layoutFrame.width, height: self.view.safeAreaLayoutGuide.layoutFrame.height)
+        gradient.frame = self.navigationController?.navigationBar.frame ?? CGRect(
+            x: 0,
+            y: 0,
+            width: self.view.safeAreaLayoutGuide.layoutFrame.width,
+            height: self.view.safeAreaLayoutGuide.layoutFrame.height
+        )
         self.view.layer.addSublayer(gradient)
     }
     
@@ -80,10 +85,10 @@ final class SearchViewController: UIViewController {
             }).disposed(by: self.bag)
         
         let input = SearchViewModel.Input(
-            viewWillAppear: (self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in }),
+            viewWillAppear: self.rx.viewWillAppear.asObservable(),
             didSelectedCell: self.listTableView.rx.modelSelected(City.self).asObservable(),
             searchBarText: text,
-            viewWillDismiss: self.rx.methodInvoked(#selector(UIViewController.viewWillDisappear(_:))).map { _ in }
+            viewWillDismiss: self.rx.viewWillDisappear.asObservable()
         )
         
         let output = self.viewModel?.transform(input: input)

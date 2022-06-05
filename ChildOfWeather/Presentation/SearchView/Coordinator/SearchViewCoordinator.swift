@@ -43,7 +43,9 @@ final class SearchViewCoordinator: Coordinator {
 
     private func configureDetailShowViewController(city: City) -> UINavigationController {
         let viewController = DetailWeatherViewController()
-        let weatherRepository =  DefaultWeatherRepository(service: URLSessionService())
+        let weatherRepository =  DefaultWeatherRepository(
+            service: URLSessionService()
+        )
         let detailShowUseCase = DetailWeatherFetchUseCase(
             weatherRepository: weatherRepository
         )
@@ -52,7 +54,9 @@ final class SearchViewCoordinator: Coordinator {
             imageCacheUseCase: self.imageCacheUseCase,
             coodinator: self, city: city
         )
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let navigationController = UINavigationController(
+            rootViewController: viewController
+        )
 
         return navigationController
     }

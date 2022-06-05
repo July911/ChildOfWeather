@@ -10,7 +10,9 @@ final class AppCoordinator: Coordinator {
         self.window = window
         self.childCoordinator = .init()
         window?.makeKeyAndVisible()
-        self.imageCacheUseCase = ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
+        self.imageCacheUseCase = ImageCacheUseCase(
+            imageProvideRepository: DefaultImageProvideRepository()
+        )
     }
     
     func start() -> UINavigationController {
@@ -63,6 +65,8 @@ final class AppCoordinator: Coordinator {
     }
     
     private func configureImageCacheUseCase() -> ImageCacheUseCase {
-        return ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository())
+        return ImageCacheUseCase(
+            imageProvideRepository: DefaultImageProvideRepository()
+        )
     }
 }

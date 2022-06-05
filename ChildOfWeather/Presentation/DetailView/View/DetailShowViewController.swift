@@ -117,13 +117,13 @@ final class DetailWeatherViewController: UIViewController {
             return
         }
         
-        let imageCache = self.rx.methodInvoked(#selector(UIViewController.viewWillDisappear(_:))).map { _ in }
+        let imageCache = self.rx.viewWillDisappear.asObservable()
                 .flatMap { (event) -> Observable<ImageCacheData> in
                     self.webView.rx.takeSnapShot(name: city.name)
             }
     
         let input = DetailWeatherViewModel.Input(
-            viewWillAppear: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear(_:))).map { _ in },
+            viewWillAppear: self.rx.viewWillAppear.asObservable(),
             capturedImage: imageCache,
             touchUpbackButton: backButtonEvent.asObservable()
         )
@@ -138,7 +138,9 @@ final class DetailWeatherViewController: UIViewController {
             .drive(self.weatherTextView.rx.attributedText)
             .disposed(by: self.bag)
         
-        output.cachedImage?.asDriver(onErrorJustReturn: ImageCacheData(key: "", value: UIImage()))
+        output.cachedImage?.asDriver(
+            onErrorJustReturn: ImageCacheData(key: "", value: UIImage())
+        )
             .filter { $0.value != UIImage() }
             .map { (imageCached) -> UIImage in
                 return imageCached.value

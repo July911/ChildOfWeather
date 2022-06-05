@@ -12,6 +12,7 @@ extension Double {
     var toCelsius: Double {
         let celsius = (self - 273.15)
         let droppedCelsius = String(celsius).prefix(5)
+        
         return Double(droppedCelsius) ?? .zero
     }
 }

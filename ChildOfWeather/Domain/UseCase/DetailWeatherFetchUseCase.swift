@@ -15,7 +15,8 @@ final class DetailWeatherFetchUseCase {
         return self.weatherRepository.fetchWeatherInformation(cityName: cityName)
     }
     
-    func fetchTodayWeather(latitude: Double,
+    func fetchTodayWeather(
+        latitude: Double,
         longitude: Double
     ) -> Observable<TodayWeather> {
         return self.weatherRepository.fetchWeatherInformation(

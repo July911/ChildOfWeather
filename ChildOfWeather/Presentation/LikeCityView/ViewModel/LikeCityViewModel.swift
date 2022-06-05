@@ -39,7 +39,8 @@ final class LikeCityViewModel {
             return Observable.zip(todayWeathers)
         }
         
-        let likeCities = Observable.zip(imageCachedData, todayWeather).map { (imageCache, todayWeather) -> [CityCellViewModel] in
+        let likeCities = Observable.zip(imageCachedData, todayWeather)
+            .map { (imageCache, todayWeather) -> [CityCellViewModel] in
             let cityCellViewModels = zip(imageCache, todayWeather).map {
                 CityCellViewModel(
                     cityName: $0.0.key as String,

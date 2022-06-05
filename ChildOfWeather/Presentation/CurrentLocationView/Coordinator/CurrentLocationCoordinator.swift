@@ -14,7 +14,9 @@ final class CurrentLocationCoordinator: Coordinator {
     func start() -> UINavigationController {
         
         let viewController = CurrentLocationViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let navigationController = UINavigationController(
+            rootViewController: viewController
+        )
         
         let detailShowUseCase = DetailWeatherFetchUseCase(
             weatherRepository: DefaultWeatherRepository(service: URLSessionService())

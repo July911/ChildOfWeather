@@ -79,21 +79,33 @@ final class DetailWeatherViewController: UIViewController {
         self.view.addSubview(self.imageView)
 
         let webViewLayout: [NSLayoutConstraint] = [
-            self.webView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6),
+            self.webView.heightAnchor.constraint(
+                equalTo: self.view.heightAnchor,
+                multiplier: 0.6
+            ),
             self.webView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.webView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.webView.topAnchor.constraint(equalTo: self.view.topAnchor)
         ]
         
         let entireStackViewLayout: [NSLayoutConstraint] = [
-            self.weatherTextView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.4),
-            self.weatherTextView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+            self.weatherTextView.heightAnchor.constraint(
+                equalTo: self.view.heightAnchor,
+                multiplier: 0.4
+            ),
+            self.weatherTextView.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: 10
+            ),
             self.weatherTextView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.weatherTextView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ]
         
         let imageViewLayout: [NSLayoutConstraint] = [
-            self.imageView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.6),
+            self.imageView.heightAnchor.constraint(
+                equalTo: self.view.heightAnchor,
+                multiplier: 0.6
+            ),
             self.imageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.imageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.imageView.topAnchor.constraint(equalTo: self.view.topAnchor),

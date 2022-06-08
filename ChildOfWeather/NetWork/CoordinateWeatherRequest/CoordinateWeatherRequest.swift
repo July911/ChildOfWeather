@@ -16,7 +16,7 @@ struct CoordinateWeatherRequestParams: QueryParameters {
     var longitude: Double
     var key: String = "37bcd5b2997285a9b4a7fa952b140766"
     
-    var queryParam: [String : String] {
+    var queryParam: [String: String] {
         var dictionary: [String: String] = [:]
         let latitude = self.latitude.description
         let longitude = self.longitude.description

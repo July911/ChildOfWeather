@@ -40,4 +40,35 @@ class CurrentLocationViewModelTests: XCTestCase {
             input: .init(viewWillAppear: self.viewWillAppear.asObserver(), cachedImage: self.cachedImage.asObserver(), locationChange: self.locationChange.asObserver(), dismiss: self.dismiss.asObserver())
         )
     }
+    
+    func testCacheSuccess() {
+        let imageCacheData = ImageCacheData(key: "123", value: UIImage())
+        scheduler.createColdObservable([
+            .next(0, ())
+        ]).bind(to: viewWillAppear).disposed(by: self.bag)
+        
+        expect(self.output.currentImage).events(scheduler: self.scheduler, disposeBag: self.bag).to(equal([
+            .next(0, imageCacheData)
+        ]))
+    }
+    
+    func testCaptureWhenDismiss() {
+        let imageCacheData = ImageCacheData(key: "123", value: UIImage())
+        // MARK: - Capture Current Location
+        scheduler.createColdObservable([
+            .next(0, ())
+        ]).bind(to: viewWillAppear).disposed(by: self.bag)
+        
+        expect(self.output.currentImage).events(scheduler: self.scheduler, disposeBag: self.bag).to(equal([
+            .next(0, imageCacheData)
+        ]))
+        // MARK: - Cache Check 
+        scheduler.createColdObservable([
+            .next(0, ())
+        ]).bind(to: self.dismiss).disposed(by: self.bag)
+        
+        expect(self.output.isImageCached).events(scheduler: self.scheduler, disposeBag: self.bag).to(equal([
+            .next(0, imageCacheData)
+        ]))
+    }
 }

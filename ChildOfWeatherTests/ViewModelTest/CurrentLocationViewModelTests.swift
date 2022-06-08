@@ -62,13 +62,13 @@ class CurrentLocationViewModelTests: XCTestCase {
         expect(self.output.currentImage).events(scheduler: self.scheduler, disposeBag: self.bag).to(equal([
             .next(0, imageCacheData)
         ]))
-        // MARK: - Cache Check 
+        // MARK: - Cache Check
         scheduler.createColdObservable([
             .next(0, ())
         ]).bind(to: self.dismiss).disposed(by: self.bag)
         
         expect(self.output.isImageCached).events(scheduler: self.scheduler, disposeBag: self.bag).to(equal([
-            .next(0, imageCacheData)
+            .next(0, true)
         ]))
     }
 }

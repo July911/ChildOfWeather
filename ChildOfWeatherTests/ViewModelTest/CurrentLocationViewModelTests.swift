@@ -71,4 +71,14 @@ class CurrentLocationViewModelTests: XCTestCase {
             .next(0, true)
         ]))
     }
+    
+    func testLocationchangebuttonTapped() {
+        scheduler.createColdObservable([
+            .next(0, ())
+        ]).bind(to: self.locationChange).disposed(by: self.bag)
+        
+        expect(self.output.isImageCached.asObservable()).events(scheduler: self.scheduler, disposeBag: self.bag).to(equal([
+            .next(1, false)
+        ]))
+    }
 }

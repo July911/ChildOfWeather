@@ -14,17 +14,20 @@ import RxSwift
 
 class LikeCityViewModelTests: XCTestCase {
     
-    var likeCityViewModel: LikeCityViewModel!
-    var output: LikeCityViewModel.Ouput!
+    //MARK: Share
     var bag: DisposeBag!
     var scheduler: TestScheduler!
-    var viewDidLoda: PublishSubject<Void>!
+    //MARK: LikeCityViewModel Components
+    var likeCityViewModel: LikeCityViewModel!
+    var likcCityViewModeloutput: LikeCityViewModel.Ouput!
+    var viewDidLoad: PublishSubject<Void>!
     var didTappedCell: PublishSubject<IndexPath>!
-    
+    //MARK: DetailViewModel To Change CacheCities
     var detailShowViewModel: DetailWeatherViewModel!
     var capturedPublish: PublishSubject<ImageCacheData>!
     var touchUpBackButtonPublish: PublishSubject<Void>!
-    
+    var detailViewModelOutput: DetailWeatherViewModel.Output!
+    var viewWillAppearPublish: PublishSubject<Void>!
     
     override func setUp() {
         //MARK: LikeCityViewModel SetUP
@@ -35,15 +38,18 @@ class LikeCityViewModelTests: XCTestCase {
  imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()),
  weatherUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: MockAPIService()))
         )
-        self.viewDidLoda = PublishSubject<Void>()
+        self.viewDidLoad = PublishSubject<Void>()
         self.didTappedCell = PublishSubject<IndexPath>()
-        self.output = likeCityViewModel.transform(
-            input: .init(viewDidLoad: self.viewDidLoda.asObserver(), didTappedCell: self.didTappedCell.asObserver())
+        self.likcCityViewModeloutput = likeCityViewModel.transform(
+            input: .init(viewDidLoad: self.viewDidLoad.asObserver(),
+                         didTappedCell: self.didTappedCell.asObserver())
         )
         
         //MARK: detailShowViewModelSetUp
         self.capturedPublish = PublishSubject<ImageCacheData>()
-        self.touchUpbackButtonPublish = PublishSubject<Void>()
+        self.touchUpBackButtonPublish = PublishSubject<Void>()
+        self.viewWillAppearPublish = PublishSubject<Void>()
+        self.touchUpBackButtonPublish = PublishSubject<Void>()
         self.detailShowViewModel = DetailWeatherViewModel(
             detailShowUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: MockAPIService())),
             imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()),
@@ -52,7 +58,11 @@ class LikeCityViewModelTests: XCTestCase {
                 city: City.EMPTY
             )
             
-        self.output = viewModel.transform(input: .init(viewWillAppear: self.viewWillAppearPusblish.asObserver(), capturedImage: self.capturedPublish.asObserver(), touchUpbackButton: self.touchUpbackButtonPublish.asObserver()))
+        self.detailViewModelOutput = detailShowViewModel.transform(
+            input: .init(viewWillAppear: self.viewWillAppearPublish.asObservable(),
+                         capturedImage: self.capturedPublish.asObservable(),
+                         touchUpbackButton: self.touchUpBackButtonPublish.asObservable())
+        )
     }
     
     func testemptyCached() {
@@ -60,9 +70,9 @@ class LikeCityViewModelTests: XCTestCase {
         [
             .next(0, ())
         
-        ]).bind(to: viewDidLoda).disposed(by: self.bag)
+        ]).bind(to: viewDidLoad).disposed(by: self.bag)
         
-        expect(self.output.likedCities).events(scheduler: scheduler, disposeBag: self.bag).to(equal([
+        expect(self.likcCityViewModeloutput.likedCities).events(scheduler: scheduler, disposeBag: self.bag).to(equal([
             .next(0, [])
         ]))
     }
@@ -71,17 +81,14 @@ class LikeCityViewModelTests: XCTestCase {
         let cachedData1 = ImageCacheData(key: "test1", value: UIImage())
         let cachedData2 = ImageCacheData(key: "test2", value: UIImage())
         self.likeCityViewModel.imageCacheUseCase.setCache(object: cachedData1)
-        let cityCell = CityCellViewModel(cityName: "test", image: cachedData1, highTemperature: <#T##Double#>, lowTemperature: <#T##Double#>)
-        scheduler.createColdObservable([
-            .next(0, cityCell)
-        ]).bind(to: self.)
+        let cityCell = CityCellViewModel(cityName: "test", image: cachedData1, highTemperature: 120.0, lowTemperature: 60.0)
         
-        expect(self.output.likedCities).events(scheduler: scheduler, disposeBag: self.bag).to(equal([
+        scheduler.createColdObservable([
+            .next(0, cachedData1)
+        ]).bind(to: self.capturedPublish).disposed(by: self.bag)
+        
+        expect(self.output.likedCities).events(scheduler: self.scheduler, disposeBag: self.bag).to(equal([
             .next(0, cityCell)
         ]))
     }
-    
-
-    
-    
 }

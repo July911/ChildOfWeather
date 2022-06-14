@@ -161,7 +161,7 @@ final class DetailWeatherViewController: UIViewController {
             .disposed(by: self.bag)
         
         output.selectedURLForMap
-            .withUnretained(self)
+            .withUnretained(DetailviewController)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { (DetailviewController ,urlRequest) in
                 guard let urlRequest = urlRequest

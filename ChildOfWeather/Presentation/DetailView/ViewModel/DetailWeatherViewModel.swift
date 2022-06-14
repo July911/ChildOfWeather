@@ -58,7 +58,7 @@ final class DetailWeatherViewModel {
         
         let capturedSuccess = input.capturedImage
             .withUnretained(self)
-            .filter { _ in
+            .filter { (self, _) in
                 self.imageCacheUseCase.hasCacheExist(cityName: self.extractCity().name) == false }
             .do(onNext: { (self, image) in
                 self.imageCacheUseCase.setCache(object: image)
@@ -67,7 +67,7 @@ final class DetailWeatherViewModel {
         let dismiss = input.touchUpbackButton
             .withUnretained(self)
             .observe(on: MainScheduler.instance)
-            .do(onNext: { _ in
+            .do(onNext: { (self, _) in
                 self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
             }).map { _ in }
         

@@ -32,8 +32,8 @@ final class SearchViewCoordinator: Coordinator {
     func occuredViewEvent(with event: Event.View) {
 
         switch event {
-        case .presentDetailShowUIViewController(let cityName):
-            let detailWeatherViewController = self.configureDetailShowViewController(city: cityName)
+        case .presentDetailShowUIViewController(let city):
+            let detailWeatherViewController = self.configureDetailShowViewController(city: city)
             detailWeatherViewController.modalPresentationStyle = .fullScreen
             self.navigationController.present(detailWeatherViewController, animated: false)
         case .dismissDetailShowUIViewController:
@@ -66,7 +66,7 @@ enum Event {
 
     enum View {
 
-        case presentDetailShowUIViewController(cityName: City)
+        case presentDetailShowUIViewController(city: City)
         case dismissDetailShowUIViewController
     }
 }

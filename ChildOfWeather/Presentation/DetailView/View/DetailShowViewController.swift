@@ -161,14 +161,14 @@ final class DetailWeatherViewController: UIViewController {
             .disposed(by: self.bag)
         
         output.selectedURLForMap
-            .withUnretained(DetailviewController)
+            .withUnretained(self)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { (DetailviewController ,urlRequest) in
+            .subscribe(onNext: { (self ,urlRequest) in
                 guard let urlRequest = urlRequest
                 else {
                     return
                 }
-                DetailviewController.webView.load(urlRequest)
+                self.webView.load(urlRequest)
             }).disposed(by: self.bag)
         
         output.capturedSuccess.asDriver(onErrorJustReturn: ())

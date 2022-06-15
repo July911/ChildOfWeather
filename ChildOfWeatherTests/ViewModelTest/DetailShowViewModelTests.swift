@@ -16,7 +16,6 @@ class DetailShowViewModelTests: XCTestCase {
     
     var viewModel: DetailWeatherViewModel!
     var output: DetailWeatherViewModel.Output!
-    var schduler: TestScheduler!
     var disposeBag: DisposeBag!
     var viewWillAppearPusblish: PublishSubject<Void>!
     var capturedPublish: PublishSubject<ImageCacheData>!
@@ -24,12 +23,11 @@ class DetailShowViewModelTests: XCTestCase {
     var scheduler: TestScheduler!
     
     override func setUp() {
-        self.schduler = TestScheduler(initialClock: 0)
+        self.scheduler = TestScheduler(initialClock: 0)
         self.disposeBag = DisposeBag()
         self.capturedPublish = PublishSubject<ImageCacheData>()
         self.viewWillAppearPusblish = PublishSubject<Void>()
         self.touchUpbackButtonPublish = PublishSubject<Void>()
-        self.schduler = TestScheduler(initialClock: 0)
         self.viewModel = DetailWeatherViewModel(
             detailShowUseCase: DetailWeatherFetchUseCase(weatherRepository: DefaultWeatherRepository(service: MockAPIService())),
             imageCacheUseCase: ImageCacheUseCase(imageProvideRepository: DefaultImageProvideRepository()),
@@ -42,8 +40,12 @@ class DetailShowViewModelTests: XCTestCase {
     }
     
     func testCapturedImage() {
+        scheduler.createColdObservable([
+            .next(0, ())
+        ]).bind(to: self.viewWillAppearPusblish).disposed(by: self.disposeBag)
+        
         let imageCachedData = ImageCacheData(key: "123", value: UIImage())
-        schduler.createColdObservable([
+        scheduler.createColdObservable([
             .next(3, imageCachedData)
         ]).bind(to: self.capturedPublish).disposed(by: self.disposeBag)
         
@@ -53,6 +55,10 @@ class DetailShowViewModelTests: XCTestCase {
     }
     
     func testBackButtonRunDismiss() {
+        scheduler.createColdObservable([
+            .next(0, ())
+        ]).bind(to: self.viewWillAppearPusblish).disposed(by: self.disposeBag)
+        
         scheduler.createColdObservable([
             .next(5, ())
         ]).bind(to: self.touchUpbackButtonPublish).disposed(by: self.disposeBag)

@@ -37,6 +37,10 @@ class CitySearchViewModelTests: XCTestCase {
     
     func testSearchBarText() {
         schduler.createColdObservable([
+            .next(0, ())
+        ]).bind(to: self.viewWillAppearPusblish).disposed(by: self.disposeBag)
+        
+        schduler.createColdObservable([
             .next(0, "독산리")
         ]).bind(to: searchBarTextPublish).disposed(by: self.disposeBag)
         
@@ -46,6 +50,10 @@ class CitySearchViewModelTests: XCTestCase {
     }
     
     func testPresentView() {
+        schduler.createColdObservable([
+            .next(0, ())
+        ]).bind(to: self.viewWillAppearPusblish).disposed(by: self.disposeBag)
+        
         schduler.createColdObservable([
             .next(0, City(id: 1, name: "", state: nil, country: "123", coord: Coord(lat: 12, lon: 33)))
         ]).bind(to: self.cellClickPublish).disposed(by: self.disposeBag)

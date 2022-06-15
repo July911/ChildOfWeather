@@ -76,19 +76,19 @@ class LikeCityViewModelTests: XCTestCase {
             .next(0, [])
         ]))
     }
-    
+
     func testCachedSuccess() {
         let cachedData1 = ImageCacheData(key: "test1", value: UIImage())
         let cachedData2 = ImageCacheData(key: "test2", value: UIImage())
         self.likeCityViewModel.imageCacheUseCase.setCache(object: cachedData1)
         let cityCell = CityCellViewModel(cityName: "test", image: cachedData1, highTemperature: 120.0, lowTemperature: 60.0)
-        
+
         scheduler.createColdObservable([
             .next(0, cachedData1)
         ]).bind(to: self.capturedPublish).disposed(by: self.bag)
-        
-        expect(self.output.likedCities).events(scheduler: self.scheduler, disposeBag: self.bag).to(equal([
-            .next(0, cityCell)
+
+        expect(self.likcCityViewModeloutput.likedCities).events(scheduler: self.scheduler, disposeBag: self.bag).to(equal([
+            .next(0, [cityCell])
         ]))
     }
 }

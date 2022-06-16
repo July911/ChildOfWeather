@@ -53,7 +53,10 @@ final class DetailWeatherViewModel {
                 return URLRequest(url: url)
             }
        
-        let cache = self.loadCacheImage(city: self.city)?.sample(input.viewWillAppear)
+        let cache = input.viewWillAppear.withUnretained(self)
+            .compactMap { (self, _) in
+                self.imageCacheUseCase.fetchImage(cityName: self.city.name)
+            }
         let weatherDescription = self.extractWeatherDescription(city: city)
         
         let capturedSuccess = input.capturedImage
@@ -104,16 +107,6 @@ final class DetailWeatherViewModel {
             let weatherDescription = "일출은 오전\(sunrise)\n\n일몰은 오후\(sunset)\n\n최고 기온은  섭씨\(maxTemp)도\n\n최저 기온은 섭씨\(minTemp)도입니다.\n\n 전체적으로 오늘의 날씨는 \(description)입니다."
             return weatherDescription
         }
-    }
-        
-    private func loadCacheImage(city: City) -> Observable<ImageCacheData>? {
-        
-        guard let image = self.imageCacheUseCase.fetchImage(cityName: city.name)
-        else {
-            return nil
-        }
-        
-        return Observable.just(image)
     }
 }
 

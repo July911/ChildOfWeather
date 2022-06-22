@@ -1,45 +1,32 @@
 # ChildOfWeather 
 
-0. 참여자:   July 
-
-1. 프로젝트 기간: 2022.04.01 ~
-
-2. 커밋 규칙
-
-- 단위:
-      기능 단위
-
-- 커밋 스타일: 
-      카르마 스타일
-
-
-3. Steps
+## 0. 개발자: July 
+## 1. 프로젝트 기간: 2022.04.01 ~
+## 2. 커밋 규칙
+- 단위: 기능 단위
+- 커밋 스타일: 카르마 스타일
+## 3. Steps
 - Step1 
-
-          외부 라이브러리 없이 모든 기능 구현 
-          목표: 이전까지 진행했던 프로젝트와는 다르게 라이브러리없이 구현하여 라이브러리 의존성을 낮춘다    
+>외부 라이브러리 없이 모든 기능 구현<br>
+>목표: 이전까지 진행했던 프로젝트와는 다르게 라이브러리없이 구현하여 라이브러리 의존성을 낮춘다 
+   
 - Step2 
-
-          테스트 코드 구현 
+>테스트 코드 구현
           
 - Step3 
-
-          RxSwift를 import하여 단방향 바인딩 
-          목표: RxSwift와 RxCocoa 사용, 클린아키텍쳐 규칙 준수 
+>RxSwift를 import하여 단방향 바인딩<br>
+>목표: RxSwift와 RxCocoa 사용, 클린아키텍쳐 규칙 준수 
           
 - Step4 
-
-        AppCoordinator를 사용해 의존성 주입 및 TabBarController 를 통한 화면전환
-        Compositional Layout을 사용한 CollectionView 및 DiffableDataSource활용
-        RxNimble을 활용한 ViewModel, UseCase 테스트 
+>AppCoordinator를 사용해 의존성 주입 및 TabBarController 를 통한 화면전환<br>
+>Compositional Layout을 사용한 CollectionView 및 DiffableDataSource활용<br>
+>RxNimble을 활용한 ViewModel, UseCase 테스트 
         
-4. 키워드 
-        
-        RxSwift, Clean Architecture MVVM, RxCocoa, Swift Package Manager
-        Coordinator, WebView, Localization 
+## 4. 키워드      
+`RxSwift`, `Clean Architecture MVVM`, `RxCocoa`, `Swift Package Manager` 
+`Coordinator`, `WebView`, `Localization`
 
-5. 목차 
-
+## 5. 목차 
 - [Step1 라이브러리 없이 기본 구현](#step1-라이브러리-없이-기본-구현)
   * [Step1 PR후 개선사항](#step1-pr후-개선사항) 
   
@@ -53,23 +40,19 @@
 
 - [트러블슈팅](#트러블슈팅)
   
-6. 사용 
+## 6. 사용 
+|도시 검색|검색창노출|
+|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/90888402/175020931-6a8f8c4b-dd30-4523-99ec-5e1f0c714c91.gif" width="70%">|<img src="https://user-images.githubusercontent.com/90888402/175021189-bac1d416-d1b2-4597-bd82-55ac399ba58b.gif" width="70%">|
 
-### 기본화면 
-<img src="https://user-images.githubusercontent.com/90888402/166178392-2bc5259f-74b3-420b-85c7-51aed551c44a.png" width="25%">
+|날씨 정보|현재 위치 표시|
+|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/90888402/175023793-14a7cc2b-5051-4752-b5fe-bc25c6d7c8a7.gif" width="70%">|<img src="https://user-images.githubusercontent.com/90888402/175023653-06d7f182-d1b5-4676-bc4f-f7cabc08679e.gif" width="70%">|
 
-### 검색창 노출 
-<img src="https://user-images.githubusercontent.com/90888402/166178405-b194b4c8-aa3e-4b0a-9b27-f375f559e021.png" width="25%">
 
-### 검색 
-<img src="https://user-images.githubusercontent.com/90888402/166178412-fb3d1b34-8b5b-4739-9d1d-b3503be1c4c0.png" width="25%">
 
-### 도시 상세 정보 
-<img src="https://user-images.githubusercontent.com/90888402/166178421-e33ad6fc-185b-47e9-a5c7-efd5ae83084a.png" width="25%">
 
-### 현재 위치 표시
-<img src="https://user-images.githubusercontent.com/90888402/172264029-5407ef8d-b130-4ffc-82a5-47376f05cf35.png" width="25%">
-
+----
 # Step1 라이브러리 없이 기본 구현 
 
 ### API 통신 Generic 구현
@@ -128,6 +111,7 @@ final class DefaultImageProvideRepository: ImageProvideRepository {
 ```
 WebView로 지도를 띄어주고 지역상세 페이지에 들어가면 캐싱되는 형태로 구현되어있어 NSCache를 사용하였습니다.
 
+
 ### CoreLocation 사용
 ```swift
 import CoreLocation
@@ -169,6 +153,8 @@ private let webView: WKWebView = {
  ```
 WebView를 WKWebView를 사용하여 띄어주었습니다. 위의 위경도를 통해 받은 주소를 통해 구글에서 주소를 검색한 결과를 보여주게 했습니다. 또한 takeSnapShot 메서드를 통해 UIImage로 변환하여 이 이미지를 캐싱했습니다.
 
+---
+
 ## 트러블슈팅
 ### SearchController
 
@@ -193,6 +179,8 @@ UseCase 단에서 UIKit이 Import 되어있으면 안된다고 생각하여 Imag
 
 캐싱을 도와주는 라이브러리인 KingFisher 의 구현코드 에서도 객체 자체를 캐싱해주는 것을 참고하였습니다.
 
+---
+
 ## Step1 PR후 개선사항
 
 ### Class Generic -> Method Generic
@@ -207,6 +195,7 @@ final class APIService {
 
 하나의 APIService 인스턴스로 여러가지 Decodable 타입을 디코딩 할 수 있게 변경하였습니다.
 
+---
 # Step2 테스트 코드
 
 ### SystemUnderTest와 setUpWithError/ tearDownWithError 메서드로 테스트 사용성 개선
@@ -243,6 +232,7 @@ final class APIService {
 ```  
 promised와 fulfill 그리고 wait 을 사용하여 비동기 메서드를 테스트하였습니다.
 
+---
 ## Step2 PR후 개선사항
 
 ### 네트워크와 무관한 테스트
@@ -286,6 +276,7 @@ final class LocationManager {
 
 기존 Repository -> UseCase -> ViewModel 까지 이어지던 흐름으로 CLGeocoder를 구현하였는데 , 데이터를 보관할 필요 없다는 점과 앱 전역적으로 매번 쓰이는 기능이라 생각이들어 CLGeocoder 인스턴스 생성비용이 데이터 영역에 계속 남아있는 싱글톤의 비용보다 크다 생각이 들어 LocationManager라는 공용 인스턴스를 두게 되었습니다. 이와 마찬가지로 Dateformatter 역시 인스턴스 생성 비용이 커서 공용 인스턴스로 만들어 성능과 편의성을 개선시켰습니다.
 
+---
 # Step3 RxSwift 적용
 
 ### Reactive Extension 으로 필요한 부분 구현
@@ -336,6 +327,7 @@ RxCocoa를 사용하면서, 있는 메서드만 사용하는 것이 아니라 Re
 ```
 원본 데이터는 유지한상태로 SearchBar의 Search를 리턴값이 있는 상태로 구현하여 몇번을 시도해도 값이 변하지 않게 구현했습니다.
 
+---
 ## Step3 PR후 개선사항
 
 ### Input에서부터 이어지는 스트림
@@ -361,6 +353,7 @@ Output으로 보내주는 스트림이 Input의 이벤트부터 시작하게 하
 ```
 do(onNext:) 메서드를 사용하여, 구독이 되었을 때 실행할 메서드만 내부에 정의하고 모든 구독은 ViewController가 하게 구현했습니다. 개선 후 단방향으로 모든 메서드가 바인딩 되어 조금 더 RxSwift스럽게 코드가 개선되었습니다.
 
+---
 # Step4 RxNimble을 통한 ViewModel 테스트 
 
 ### 각 ViewModel 별로 setUp 메서드를 통한 독립적 테스트 
@@ -433,6 +426,8 @@ func testCapturedImage() {
     }
 ```
 
+---
+
 # 트러블슈팅 
 
 ## **<첫번째 문제: Domain Layer와 ViewModel에서 UIkit 을 import 하던 문제 >**
@@ -451,7 +446,7 @@ func testCapturedImage() {
 
 하지만 캐싱이 제대로 되지 않는 문제가 생겼고, ViewController에서 결국 이 데이터를 변환해서 UIImage로 사용해야 했습니다. 클린아키텍쳐 그리고 MVVM에서  ViewController는 최대한 수동적인 역할을 해야한다고 생각했기에 WebView처럼 부득이하게 load를 ViewController에서 해주는 경우가 아니면 지향해야 한다고 생각했습니다. 
 
-1. **하나의 타입으로 묶는 방법** 
+2. **하나의 타입으로 묶는 방법** 
 
       그 다음으로 떠올린 방법은 현업에서 자주 사용하는 라이브러리 Kingfisher를 보고 참고하였는데, 하나의 타입 내부에 Key, Value 쌍을 두어 Value 값에 UIImage를 가지게 하는 방법이었습니다. 이 타입은 Domain Layer의 Model로 두어 클린아키텍쳐에 위반되지도 않은 뿐더러 캐싱이 잘 작동하는 지 역시도 테스트를 통해 확인 할 수 있었습니다. 
 

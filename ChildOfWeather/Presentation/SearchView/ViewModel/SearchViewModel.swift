@@ -35,11 +35,11 @@ final class SearchViewModel {
         let filteredCities = input.searchBarText
             .map { (text) -> [City] in
                 return self.searchUseCase.search(text ?? "") ?? []
-        }
-        let combined = filteredCities.flatMap {
-            $0.isEmpty ? Observable.of(cities) : Observable.of($0)
-        }
-        let merge = Observable.merge(dismiss, combined)
+            }
+            .flatMap {
+                $0.isEmpty ? Observable.of(cities) : Observable.of($0)
+            }
+        let merge = Observable.merge(dismiss, filteredCities)
         
         let presentDetailView = input.didSelectedCell.do(onNext: { city in
             self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(city: city))

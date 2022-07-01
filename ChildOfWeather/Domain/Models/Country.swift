@@ -1,6 +1,7 @@
 import Foundation
 
 enum Country {
+    
     case kr
     case eu
     case us

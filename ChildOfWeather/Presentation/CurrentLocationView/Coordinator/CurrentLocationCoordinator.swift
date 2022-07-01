@@ -11,6 +11,7 @@ final class CurrentLocationCoordinator: Coordinator {
         self.imageCacheUseCase = imageCacheUseCase
     }
     
+    @discardableResult
     func start() -> UINavigationController {
         
         let viewController = CurrentLocationViewController()

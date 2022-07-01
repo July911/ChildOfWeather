@@ -82,7 +82,8 @@ final class SearchViewController: UIViewController {
             .withUnretained(self)
             .subscribe(onNext: { (self,index) in
             self.listTableView.deselectRow(at: index, animated: true)
-            }).disposed(by: self.bag)
+            })
+            .disposed(by: self.bag)
         
         let input = SearchViewModel.Input(
             viewWillAppear: self.rx.viewWillAppear.asObservable(),

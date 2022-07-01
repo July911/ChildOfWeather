@@ -65,14 +65,16 @@ final class DetailWeatherViewModel {
                 self.imageCacheUseCase.hasCacheExist(cityName: self.extractCity().name) == false }
             .do(onNext: { (self, image) in
                 self.imageCacheUseCase.setCache(object: image)
-            }).map { _ in }
+            })
+            .map { _ in }
         
         let dismiss = input.touchUpbackButton
             .withUnretained(self)
             .observe(on: MainScheduler.instance)
             .do(onNext: { (self, _) in
                 self.coordinator.occuredViewEvent(with: .dismissDetailShowUIViewController)
-            }).map { _ in }
+            })
+            .map { _ in }
         
         return Output(
             selectedURLForMap: urlRequest,

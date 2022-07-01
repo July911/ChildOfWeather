@@ -67,9 +67,10 @@ final class CurrentLocationViewController: UIViewController {
             return
         }
         
-        let imageCache = self.rx.viewWillDisappear.asObservable()
-                .flatMap { (event) -> Observable<ImageCacheData> in
-                    self.webView.rx.takeSnapShot(name: "current")
+        let imageCache = self.rx.viewWillDisappear
+            .asObservable()
+            .flatMap { (event) -> Observable<ImageCacheData> in
+                self.webView.rx.takeSnapShot(name: "current")
             }
         
         let input = CurrentLocationViewModel.Input(
@@ -81,16 +82,18 @@ final class CurrentLocationViewController: UIViewController {
         
         let output = self.viewModel?.transform(input: input)
         
-        output?.weatherDescription.asDriver(onErrorJustReturn: "")
+        output?.weatherDescription
+            .asDriver(onErrorJustReturn: "")
             .drive(self.weatherDescriptionTextView.rx.text)
             .disposed(by: self.bag)
         
-        output?.currentAddressDescription.asDriver(onErrorJustReturn: "")
+        output?.currentAddressDescription
+            .asDriver(onErrorJustReturn: "")
             .drive(self.cityNameLabel.rx.text)
             .disposed(by: self.bag)
         
-        output?.isImageCached.subscribe { _ in
-        }.disposed(by: self.bag)
+        output?.isImageCached.subscribe { _ in }
+        .disposed(by: self.bag)
         
         output?.currentAddressWebViewURL.subscribe(onNext: { [weak self] urlRequest in
             guard let urlRequest = urlRequest
@@ -98,9 +101,11 @@ final class CurrentLocationViewController: UIViewController {
                 return
             }
                 self?.webView.load(urlRequest)
-            }).disposed(by: self.bag)
+            })
+            .disposed(by: self.bag)
         
-        output?.currentImage.asDriver(onErrorJustReturn: ImageCacheData(key: "", value: UIImage()))
+        output?.currentImage
+            .asDriver(onErrorJustReturn: ImageCacheData(key: "", value: UIImage()))
             .filter { $0.value != UIImage() }
             .map { (imageCached) -> UIImage in
                 return imageCached.value

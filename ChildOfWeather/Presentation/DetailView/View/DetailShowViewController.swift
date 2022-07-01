@@ -28,7 +28,7 @@ final class DetailWeatherViewController: UIViewController {
     }()
     
     private let entireStackView: UIStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +43,7 @@ final class DetailWeatherViewController: UIViewController {
         
         return imageView
     }()
-    // MARK: - View Life Cycle 
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureSuperView()
@@ -77,7 +77,7 @@ final class DetailWeatherViewController: UIViewController {
         self.view.addSubview(self.webView)
         self.view.addSubview(self.weatherTextView)
         self.view.addSubview(self.imageView)
-
+        
         let webViewLayout: [NSLayoutConstraint] = [
             self.webView.heightAnchor.constraint(
                 equalTo: self.view.heightAnchor,
@@ -130,10 +130,10 @@ final class DetailWeatherViewController: UIViewController {
         }
         
         let imageCache = self.rx.viewWillDisappear.asObservable()
-                .flatMap { (event) -> Observable<ImageCacheData> in
-                    self.webView.rx.takeSnapShot(name: city.name)
+            .flatMap { (event) -> Observable<ImageCacheData> in
+                self.webView.rx.takeSnapShot(name: city.name)
             }
-    
+        
         let input = DetailWeatherViewModel.Input(
             viewWillAppear: self.rx.viewWillAppear.asObservable(),
             capturedImage: imageCache,
@@ -144,15 +144,17 @@ final class DetailWeatherViewController: UIViewController {
         else {
             return
         }
-    
-        output.weatehrDescription.asDriver(onErrorJustReturn: "")
+        
+        output.weatehrDescription
+            .asDriver(onErrorJustReturn: "")
             .map { $0.toBoldFontForText }
             .drive(self.weatherTextView.rx.attributedText)
             .disposed(by: self.bag)
         
-        output.cachedImage?.asDriver(
-            onErrorJustReturn: ImageCacheData(key: "", value: UIImage())
-        )
+        output.cachedImage?
+            .asDriver(
+                onErrorJustReturn: ImageCacheData(key: "", value: UIImage())
+            )
             .filter { $0.value != UIImage() }
             .map { (imageCached) -> UIImage in
                 return imageCached.value

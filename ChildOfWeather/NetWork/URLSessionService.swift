@@ -3,7 +3,7 @@ import RxSwift
 
 final class URLSessionService: URLSessionNetworkService {
     
-    let session = URLSession.shared
+    private let session = URLSession.shared
     
     func request<T: APIRequest>(
         requestType: T,

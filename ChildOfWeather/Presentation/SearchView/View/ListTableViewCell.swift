@@ -49,6 +49,7 @@ class ListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.configureLayout()
+        configureCellStyle()
     }
 
     required init?(coder: NSCoder) {
@@ -60,6 +61,10 @@ class ListTableViewCell: UITableViewCell {
         self.backgroundColor = .systemGray6
     }
     // MARK: - Private Method
+    private func configureCellStyle() {
+        self.selectionStyle = .none
+    }
+    
     private func configureLayout() {
         self.locationStackView.addArrangedSubview(lonLabel)
         self.locationStackView.addArrangedSubview(latLabel)

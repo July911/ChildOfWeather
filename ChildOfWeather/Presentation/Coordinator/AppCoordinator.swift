@@ -15,6 +15,7 @@ final class AppCoordinator: Coordinator {
         )
     }
     
+    @discardableResult
     func start() -> UINavigationController {
         let tabBarController = self.setTapBarController()
         self.window?.rootViewController = tabBarController

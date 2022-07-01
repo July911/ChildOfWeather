@@ -12,7 +12,8 @@ final class SearchViewCoordinator: Coordinator {
         self.imageCacheUseCase = imageCacheUseCase
         self.navigationController = .init()
     }
-
+    
+    @discardableResult
     func start() -> UINavigationController {
         let viewController = SearchViewController()
         let citySearchRepository = DefaultCitySearchRepository()

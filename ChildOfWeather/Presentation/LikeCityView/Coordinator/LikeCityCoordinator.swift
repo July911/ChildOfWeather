@@ -9,6 +9,7 @@ final class LikeCityCoordinator: Coordinator {
         self.imageCacheUseCase = imageCacheUseCase
     }
     
+    @discardableResult
     func start() -> UINavigationController {
         
         let viewController = LikeCityViewController()

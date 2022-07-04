@@ -7,6 +7,8 @@ protocol APIRequest {
     var method: HTTPMethod { get }
     var params: QueryParameters { get }
     var urlString: String { get }
+    var httpBody: Data? { get }
+    var httpHeader: [String: String] { get }
 }
 
 extension APIRequest {
@@ -18,11 +20,12 @@ extension APIRequest {
     var urlRequest: URLRequest? {
         var urlComponents = URLComponents(string: self.urlString)
         let urlQueries = self.params.queryParam.map { URLQueryItem(name: $0.key, value: $0.value) }
-        
         urlComponents?.queryItems = urlQueries
+        
         if let url = urlComponents?.url {
             var request = URLRequest(url: url)
             request.httpMethod = self.method.rawValue
+            request.allHTTPHeaderFields = self.httpHeader
             
             return request
         }

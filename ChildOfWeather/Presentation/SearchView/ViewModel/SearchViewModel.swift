@@ -42,7 +42,8 @@ final class SearchViewModel {
         let merge = Observable.merge(dismiss, filteredCities)
         
         let presentDetailView = input.didSelectedCell
-            .do(onNext: { city in
+            .withUnretained(self)
+            .do(onNext: { (self,city) in
                 self.coordinator.occuredViewEvent(with: .presentDetailShowUIViewController(city: city))
             })
             .map { _ in }

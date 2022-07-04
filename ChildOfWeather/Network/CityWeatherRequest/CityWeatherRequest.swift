@@ -6,12 +6,12 @@ struct CityWeatherRequest: APIRequest {
     
     var method: HTTPMethod
     var params: QueryParameters
-    var urlString: String = "https://api.openweathermap.org/data/2.5/weather?"
+    var URLString: String = "https://api.openweathermap.org/data/2.5/weather?"
     
-    var httpBody: Data? {
+    var HTTPBody: Data? {
         nil
     }
-    var httpHeader: [String : String] {
+    var HTTPHeader: [String : String] {
         ["Content-Type": "application/json"]
     }
 }
